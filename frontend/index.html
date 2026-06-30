@@ -4,14 +4,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home </title>
+    <title>IdeaBoard - Home </title>
     <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
-    This is home page.
+    <nav>
+        <div class="left">
+            <ul class="logo">
+                <span class="logo_design">
+                    I
+                </span>
+                <li class="logo_text">
+                    IdeaBoard
+                </li>
+            </ul>
+            <ul class="nav_items">
+                <li class="active">
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="./suggestions.html">
+                        Suggestion
+                    </a>
+                </li>
+            </ul>
 
-    <script src="./js/index.js"></script>
+        </div>
+        <div class=" left">
+            <ul class="nav_items">
+                <li>
+                    <a href="./login.html">
+                        Sign in
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section class="introduction">
+            <div class="left">
+                <h1>Ideas that move our college forward.</h1>
+                <p>IdeaBoard is the suggestion space for ABC College. Share idea, follow updates and see how college
+                    responds to it.</p>
+                <div class="btn-collection">
+                    <button class="button btn-view">
+                        View Suggestion Board
+                    </button>
+                    <button class="button btn-submit-suggestion disabled">
+                        Submit a suggestion
+                    </button>
+                </div>
+            </div>
+            <div class="right">
+
+                <div class="card">
+                    <p class="card-heading">
+                        RIGHT NOW
+                    </p>
+                    <div class="card-content">
+                        <span class="card_item">
+                            <span class="data">5</span>
+                            <span class="text">Suggestions</span>
+                        </span>
+                        <span class="card_item">
+                            <span class="data">3</span>
+                            <span class="text">OPEN</span>
+                        </span>
+                        <span class="card_item">
+                            <span class="data">2</span>
+                            <span class="text">IN PROGRESS</span>
+                        </span>
+                        <span class="card_item">
+                            <span class="data">1</span>
+                            <span class="text">COMPLETED</span>
+                        </span>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <section class="testimonials">
+            <div class="testimonials_cards">
+                <div class="testimonials_card">
+                    <h3 class="testimonials_title">
+                        Single College Focus
+                    </h3>
+                    <p class="testimonials_details">
+                        Describe the change you want and who it helps. Keep it concise and specific.
+                    </p>
+                </div>
+                <div class="testimonials_card">
+                    <h3 class="testimonials_title">
+                        Transparent status
+                    </h3>
+                    <p class="testimonials_details">
+                        Track each idea from submission to review, agenda, progress, and completion.
+                    </p>
+                </div>
+                <div class="testimonials_card">
+                    <h3 class="testimonials_title">
+                        Community first
+                    </h3>
+                    <p class="testimonials_details">
+                        Students, parents, and staff can all contribute with clear, respectful feedback.
+                    </p>
+                </div>
+            </div>
+            <div class="testimonials_cards">
+                <div class="testimonials_card">
+                    <span class="testimonials_step">Step 1</span>
+                    <h3 class="testimonials_title">
+                        Submit a suggestion
+                    </h3>
+                    <p class="testimonials_details">
+                        Describe the change you want and who it helps. Keep it concise and specific.
+                    </p>
+                </div>
+                <div class="testimonials_card">
+                    <span class="testimonials_step">Step 2</span>
+                    <h3 class="testimonials_title">
+                        The college reviews
+                    </h3>
+                    <p class="testimonials_details">
+                        Administrators review and assign a status for each suggestion. </p>
+                </div>
+                <div class="testimonials_card">
+                    <span class="testimonials_step">Step 3</span>
+                    <h3 class="testimonials_title">
+                        Follow the outcome
+                    </h3>
+                    <p class="testimonials_details">
+                        See what is approved, in progress, and completed throughout the term. </p>
+                </div>
+            </div>
+        </section>
+        <section class="guideline">
+            <h1 class="guideline_title">
+                Guidelines
+            </h1>
+            <p class="guideline_text">Be respectful, focus on college improvement, and keep posts constructive. Personal
+                data should not be included. The IdeaBoard team reviews every submission for clarity and relevance to
+                ABC College.
+
+            </p>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer_first">
+            <ul class="logo">
+                <span class="logo_design">
+                    I
+                </span>
+                <li class="logo_text">
+                    IdeaBoard
+                </li>
+            </ul>
+            <p class="footer_text">Suggestion board for ABC College. Built for transparent college decisions.
+            </p>
+        </div>
+        <div class="footer_middle">
+            <ul class="footer_list">
+                <li class="footer_title">
+                    Explore
+                </li>
+                <span class="footer_items">
+
+                    <li class="footer_link">
+                        <a href="./suggestion.html">Suggestion Board</a>
+                    </li>
+                    <li class="footer_link">
+                        <a href="./suggestion.html">Sign in</a>
+                    </li>
+                    <li class="footer_link">
+                        <a href="./suggestion.html">Create account</a>
+                    </li>
+                </span>
+            </ul>
+        </div>
+        <div class="footer_last">
+            <ul class="footer_list">
+                <li class="footer_title">
+                    Contact
+                </li>
+                <span class="footer_items">
+                    <li class="footer_info">
+                        ABC College
+                    </li>
+                    <li class="footer_info">
+                        info@ideaboard.edu.np
+                    </li>
+                    <li class="footer_info">
+                        +977 9841098036
+                    </li>
+                </span>
+            </ul>
+        </div>
+    </footer>
+    <p class="footer_copyright">
+        IdeaBoard · 2026 · All suggestions are public within the college community.
+    </p>
 </body>
 
 </html>

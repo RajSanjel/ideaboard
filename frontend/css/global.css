@@ -1,3 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Source+Serif+4:wght@200..900&display=swap');
+
+:root {
+    /* Backgrounds & surfaces */
+    --color-bg: #F9FAFC;
+    --color-bg-elevated: #FFFFFF;
+    --color-surface: #FFFFFF;
+    --color-surface-muted: #F5F7FA;
+    --color-surface-hover: #EEF0F4;
+
+    /* Borders */
+    --color-border: #DEE1E7;
+    --color-border-strong: #CED1D8;
+    --color-hairline: #E9EBF0;
+
+    /* Text */
+    --text-primary: #0F141D;
+    --text-secondary: #20242D;
+    --text-tertiary: #4B5059;
+    --text-muted: #70757D;
+    --text-faint: #979BA3;
+
+    /* Accent */
+    --color-accent: #4D6487;
+    --color-accent-hover: #3E567A;
+    --color-accent-soft: #4D64871A;
+    --color-accent-ring: #4D64874C;
+    --color-accent-foreground: #F9FAFD;
+
+    /* Status */
+    --status-open: #9EA5B2;
+    --status-open-bg: #9EA5B21F;
+    --status-review: #F4A437;
+    --status-review-bg: #F4A43724;
+    --status-planned: #00B4F0;
+    --status-planned-bg: #00B4F024;
+    --status-progress: #B97DF7;
+    --status-progress-bg: #B97DF724;
+    --status-done: #4AC777;
+    --status-done-bg: #4AC77724;
+    --status-danger: #F75D59;
+    --status-danger-bg: #F75D5924;
+    --status-danger-border: #F75D594C;
+    --status-danger-bg-hover: #F75D5938;
+
+    /* Typography */
+    --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-serif: "Source Serif 4", ui-serif, Georgia, "Iowan Old Style", serif;
+    --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.disabled:hover {
+    cursor: not-allowed;
+}
+
 * {
     padding: 0px;
     margin: 0px;
