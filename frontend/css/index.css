@@ -24,10 +24,11 @@ nav {
 
 .logo_text {
     font-size: 15px;
-    line-height: 0xp;
+    line-height: 0;
     letter-spacing: -1px;
     font-weight: bold;
     color: var(--text-primary);
+    list-style-type: none;
 }
 
 .nav_items li {
@@ -66,6 +67,7 @@ main {
     height: 100%;
     width: 100%;
     background-color: var(--color-bg);
+    padding-bottom: 1px;
 }
 
 .introduction {
@@ -227,4 +229,89 @@ main {
     font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 200;
+}
+
+/* Guideline area */
+
+.guideline {
+    width: 80%;
+    margin: 0 auto;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-hairline);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 80px;
+
+}
+
+.guideline_title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--text-primary);
+    padding-bottom: 10px;
+
+}
+
+.guideline_text {
+    color: var(--text-tertiary);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 300;
+}
+
+/* Footer area */
+.footer {
+    background-color: var(--color-bg-elevated);
+    padding: 30px 100px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 180px;
+}
+
+.footer_title,
+.footer_info,
+.footer_link a,
+.footer_link {
+    text-decoration: none;
+    list-style: none;
+}
+
+.footer_title {
+    font-family: var(--font-sans);
+    color: var(--text-tertiary);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.footer_link a,
+.footer_info,
+.footer_text {
+    color: var(--text-tertiary);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.footer_items {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.footer .logo {
+    padding: 0px;
+    margin-bottom: 10px;
+    border: 0px;
+}
+
+.footer_copyright {
+    background-color: var(--color-bg-elevated);
+    text-align: center;
+    padding-bottom: 30px;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
 }
