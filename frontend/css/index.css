@@ -6,6 +6,10 @@ nav {
     border-bottom: 1px solid var(--color-border);
 }
 
+.active {
+    border-bottom: 2px solid var(--color-accent);
+}
+
 .logo_design {
     height: 40px;
     width: 40px;
@@ -68,9 +72,8 @@ main {
 
     display: flex;
     margin: 0px auto;
-    padding: 80px;
+    padding: 30px 60px;
     align-items: center;
-
 }
 
 .introduction .left {
@@ -109,8 +112,6 @@ main {
     color: var(--color-surface);
     border-radius: 3px;
 }
-
-
 
 .btn-view {
     background-color: var(--color-accent);
@@ -174,4 +175,56 @@ main {
 .card_item .text {
     font-size: 15px;
     font-family: var(--font-sans);
+}
+
+/*  Testimonails part */
+
+.testimonials {
+    width: 90%;
+    margin: 0 auto;
+
+    padding: 30px 10px;
+    border-top: 1px solid var(--color-border-strong);
+
+}
+
+.testimonials_cards {
+    display: flex;
+    gap: 30px;
+    margin: 20px;
+    justify-content: center;
+    font-family: var(--font-sans);
+}
+
+.testimonials_card {
+    padding: 20px;
+    height: fit-content;
+    min-height: 70px;
+    max-height: 90px;
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid var(--color-hairline);
+    background-color: var(--color-bg-elevated);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.testimonials_title {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.testimonials_details {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.testimonials_step {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 200;
 }
