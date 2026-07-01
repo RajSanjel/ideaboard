@@ -1,0 +1,119 @@
+/* Header part  */
+nav {
+    display: flex;
+    padding: 0px 30px;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.active {
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.logo_design {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    background-color: var(--color-accent);
+    border-radius: 30%;
+    color: white;
+    font-size: 25px;
+    align-content: center;
+    text-align: center;
+}
+
+.logo_text {
+    font-size: 15px;
+    line-height: 0;
+    letter-spacing: -1px;
+    font-weight: bold;
+    color: var(--text-primary);
+    list-style-type: none;
+}
+
+.nav_items li {
+    height: 100%;
+    margin: 0 10px;
+
+}
+
+nav .left,
+.nav_items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--color-hairline);
+    height: 80%;
+    padding: 10px;
+    padding-right: 30px;
+}
+
+nav li,
+nav li a {
+    list-style: none;
+    text-decoration: none;
+    color: var(--text-tertiary);
+}
+
+
+/* Footer area */
+.footer {
+    background-color: var(--color-bg-elevated);
+    padding: 30px 100px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 180px;
+}
+
+.footer_title,
+.footer_info,
+.footer_link a,
+.footer_link {
+    text-decoration: none;
+    list-style: none;
+}
+
+.footer_title {
+    font-family: var(--font-sans);
+    color: var(--text-tertiary);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.footer_link a,
+.footer_info,
+.footer_text {
+    color: var(--text-tertiary);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.footer_items {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.footer .logo {
+    padding: 0px;
+    margin-bottom: 10px;
+    border: 0px;
+}
+
+.footer_copyright {
+    background-color: var(--color-bg-elevated);
+    text-align: center;
+    padding-bottom: 30px;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
