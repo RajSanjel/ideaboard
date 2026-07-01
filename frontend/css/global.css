@@ -51,10 +51,15 @@
 
 button:hover {
     cursor: pointer;
+    opacity: 0.95;
 }
 
 .disabled:hover {
     cursor: not-allowed;
+}
+
+.disabled {
+    opacity: 0.8;
 }
 
 * {
