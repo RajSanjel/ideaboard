@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
-import dbClient from "./db";
+import dbPool from "./db";
+import apiRoutes from "./routes/api";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,7 +13,10 @@ app.get("/", (_req, res) => {
 	});
 });
 
-dbClient.query("SELECT 1").then(() => console.log("DB is working"));
+dbPool.query("SELECT 1").then(() => console.log("DB is working"));
+
+app.use(express.json());
+app.use("/api", apiRoutes);
 
 app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
