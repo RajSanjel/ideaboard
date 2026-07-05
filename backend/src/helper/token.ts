@@ -34,7 +34,7 @@ export const VerifyJwtToken = (token: string) => {
 	try {
 		return jwt.verify(token, publicKey, {
 			algorithms: ["RS512"],
-		}) as { userid: string; iat: number; exp: number };
+		}) as { id: string; iat: number; exp: number };
 	} catch (err) {
 		if (err instanceof jwt.TokenExpiredError) {
 			throw new Error("Token has expired.");
@@ -52,5 +52,13 @@ export const setAuthCookie = (res: Response, jwt: string) => {
 		httpOnly: true,
 		sameSite: "strict",
 		maxAge: standardMaxAge,
+	});
+};
+
+export const clearAuthCookie = (res: Response) => {
+	res.cookie("auth_token", "", {
+		httpOnly: true,
+		sameSite: "strict",
+		expires: new Date(0),
 	});
 };
