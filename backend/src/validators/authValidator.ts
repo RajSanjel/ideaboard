@@ -65,3 +65,47 @@ export const validateSignUp = (
 
 	next();
 };
+
+export const validateLogin = (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	if (req.body == null) {
+		const errorResponse: ApiResponse = {
+			success: false,
+			httpCode: 400,
+			message: "Request body is missing",
+		};
+		res.status(errorResponse.httpCode).json(errorResponse);
+		return;
+	}
+
+	for (const key in req.body) {
+		if (typeof req.body[key] === "string") {
+			req.body[key] = req.body[key].trim();
+		}
+	}
+
+	const { email, password } = req.body as SignUpPayload;
+	const errors: Record<string, string> = {};
+	if (!isValidEmail(email)) {
+		errors.email = "Email address not valid";
+	}
+
+	if (!password || typeof password !== "string" || password.length < 8) {
+		errors.password = "Password must be atleast 8 character long.";
+	}
+
+	if (Object.keys(errors).length > 0) {
+		const errorResponse: ApiResponse = {
+			success: false,
+			httpCode: 422,
+			message: "Data Validation failed",
+			errors,
+		};
+		res.status(errorResponse.httpCode).json(errorResponse);
+		return;
+	}
+	next();
+};
