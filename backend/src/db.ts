@@ -1,9 +1,11 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 
-const dbClient = new Client({
+const dbPool = new Pool({
 	connectionString: process.env.DATABASE_URL,
+	max: 20,
+	idleTimeoutMillis: 30000,
 });
 
-dbClient.connect();
+dbPool.connect();
 
-export default dbClient;
+export default dbPool;

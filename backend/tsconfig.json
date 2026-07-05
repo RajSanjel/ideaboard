@@ -21,5 +21,10 @@
   "exclude": [
     "node_modules",
     "dist"
-  ]
+  ],
+  "paths": {
+    "@types/*": [
+      "@types/*"
+    ]
+  }
 }

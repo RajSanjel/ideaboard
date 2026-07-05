@@ -1,10 +1,11 @@
 import "dotenv/config";
 import express from "express";
-import dbClient from "./db";
+import dbPool from "./db";
+import apiRoutes from "./routes/api";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = process.env.PORT || 3000;
-console.log("DATABASE_URL =", process.env.DATABASE_URL);
 
 app.get("/", (_req, res) => {
 	res.status(200).json({
@@ -12,7 +13,11 @@ app.get("/", (_req, res) => {
 	});
 });
 
-dbClient.query("SELECT 1").then(() => console.log("DB is working"));
+dbPool.query("SELECT 1").then(() => console.log("DB is working"));
+
+app.use(cookieParser());
+app.use(express.json());
+app.use("/api", apiRoutes);
 
 app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
