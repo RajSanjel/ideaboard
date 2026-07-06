@@ -80,6 +80,10 @@ body {
     font-size: 15px;
 }
 
+.form_input:focus {
+    outline: none;
+}
+
 .form_footer {
     display: flex;
     flex-direction: column;
@@ -107,4 +111,20 @@ body {
 
 .form_link {
     color: var(--color-accent);
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    font-family: var(--font-sans);
+    margin-top: -10px;
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.invalid {
+    border: 1px solid red;
 }
