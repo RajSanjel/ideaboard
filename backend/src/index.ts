@@ -3,10 +3,11 @@ import express from "express";
 import dbPool from "./db";
 import apiRoutes from "./routes/api";
 import cookieParser from "cookie-parser";
-
+import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 app.get("/", (_req, res) => {
 	res.status(200).json({
 		message: "Server is running",
