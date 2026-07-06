@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/header_footer.css">
     <link rel="stylesheet" href="./css/auth.css">
+
+    <script src="./js/signup.js" defer></script>
 </head>
 
 <body>
@@ -47,42 +49,61 @@
     </nav>
 
     <main class="form_container">
+
         <form class="form">
+
             <div class="form_header">
+
                 <h1>
                     Create an account
                 </h1>
+
                 <p class="form_footer_text">
                     Anyone in the ABC College community can sign up. Already have an account?
                     <span> <a href="./login.html" class="form_link">Sign in</a></span>
                 </p>
+
             </div>
 
             <div class="form_details">
+
                 <div class="form_one_row">
+
                     <label for="firstname" class="form_label">First Name
                         <input type="text" name="firstname" id="firstname" placeholder="First Name" class="form_input">
                     </label>
+
                     <label for="lastname" class="form_label">First Name
                         <input type="text" name="lastname" id="lastname" placeholder="Last Name" class="form_input">
                     </label>
+
                 </div>
+
+                <span class="error" data-for="firstname"></span>
+                <span class="error" data-for="lastname"></span>
 
                 <label for="email" class="form_label">Email</label>
                 <input type="email" name="email" id="email" placeholder="username@email.com" class="form_input">
+                <span class="error" data-for="email"></span>
                 <label for="password" class="form_label">Password</label>
                 <input type="password" name="password" id="password" placeholder="password" class="form_input">
-                <label for="cpassword" class="form_label">Password</label>
+                <span class="error" data-for="password"></span>
+
+                <label for="cpassword" class="form_label"> Confirm Password</label>
                 <input type="password" name="cpassword" id="cpassword" placeholder="confirm password"
                     class="form_input">
+                <span class="error" id="cpasswordError" data-for="cpassword"></span>
+
             </div>
+
             <div class="form_footer">
                 <button type="button" class="form_button disabled" id="signUpButton">
                     Create Account
                 </button>
-
             </div>
+
         </form>
+
     </main>
 
     <footer class="footer">
