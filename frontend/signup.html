@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/header_footer.css">
     <link rel="stylesheet" href="./css/auth.css">
 
-    <script src="./js/signup.js" defer></script>
+    <script src="./js/signup.js" type="module" defer></script>
 </head>
 
 <body>
@@ -49,8 +49,10 @@
     </nav>
 
     <main class="form_container">
-
-        <form class="form">
+        <div class="backendFeedback hidden" id="signUpMessage">
+            <p id="feedbackMessage"></p>
+        </div>
+        <form class="form" id="signUpForm">
 
             <div class="form_header">
 

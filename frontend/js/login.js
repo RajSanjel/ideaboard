@@ -99,5 +99,4 @@ loginButton.addEventListener('click', (e) => {
 
     isButtonClickable();
 
-    // submit logic will be added here.
 });

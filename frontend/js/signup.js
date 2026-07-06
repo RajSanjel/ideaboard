@@ -1,4 +1,9 @@
+import API_CONFIG from "./config/api.js";
+const signUpForm = document.getElementById("signUpForm");
+
 const signUpButton = document.getElementById("signUpButton");
+const messageBox = document.getElementById("signUpMessage");
+const feedbackMessage = document.getElementById("feedbackMessage");
 
 
 function getErrorElement(fieldName) {
@@ -47,11 +52,14 @@ function setValid(field) {
 }
 
 function isButtonClickable() {
-    const allValid = Object.values(fields).every(
-        field => field.element.classList.contains('valid')
-    );
-    signUpButton.classList.toggle('disabled', !allValid);
+    const allValid = Object.values(fields).every(field => {
+        return field.element.classList.contains("valid");
+    });
+
+    signUpButton.classList.toggle("disabled", !allValid);
+    signUpButton.disabled = !allValid;
 }
+
 function validateFirstName() {
     const value = fields.firstName.element.value.trim();
     if (!value) {
@@ -169,7 +177,40 @@ fields.confirmPassword.element.addEventListener('input', () => {
     isButtonClickable();
 });
 
-signUpButton.addEventListener('click', (e) => {
+function showMessage(message, type = "error") {
+    messageBox.classList.remove("hidden");
+    messageBox.classList.add("visible");
+
+    feedbackMessage.classList.remove("msgErr", "msgSuc");
+
+    if (type === "success") {
+        feedbackMessage.classList.add("msgSuc");
+        feedbackMessage.innerHTML = `${message}`;
+    } else {
+        feedbackMessage.classList.add("msgErr");
+        feedbackMessage.textContent = message;
+    }
+
+    messageBox.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    })
+}
+
+function resetValidation() {
+    Object.values(fields).forEach(field => {
+        field.element.classList.remove("valid", "invalid");
+
+        if (field.errorElement) {
+            field.errorElement.textContent = "";
+            field.errorElement.classList.remove("visible");
+        }
+    });
+
+    signUpButton.classList.add("disabled");
+}
+
+signUpButton.addEventListener('click', async (e) => {
     e.preventDefault();
     const validations = [
         validateFirstName(),
@@ -178,8 +219,41 @@ signUpButton.addEventListener('click', (e) => {
         validatePassword(),
         confirmPassword()
     ];
-
     isButtonClickable();
 
-    // submit logic will be added here.
+    if (validations.every(Boolean)) {
+        const signUpData = {
+            firstName: fields.firstName.element.value.trim(),
+            lastName: fields.lastName.element.value.trim(),
+            email: fields.email.element.value.trim(),
+            password: fields.password.element.value,
+            confirmPassword: fields.confirmPassword.element.value,
+        };
+        try {
+            const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/register";
+            const resp = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(signUpData)
+            })
+            const data = await resp.json();
+
+            if (data.httpCode === 201) {
+                showMessage(data.message + ` You can now <a href="./login.html" class="form_link">sign in</a>.`, "success");
+                signUpForm.reset();
+                resetValidation();
+                isButtonClickable();
+            } else {
+                showMessage(data.message, "error");
+            }
+        } catch (error) {
+            showMessage("Sign up failed, please try again later", "error");
+
+            console.error(error)
+
+        }
+        console.log(signUpData);
+    }
 });
