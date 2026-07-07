@@ -117,3 +117,13 @@ nav li a {
     color: var(--text-muted);
     font-size: 12px;
 }
+
+/* logout section */
+.button_logout {
+    padding: 5px 8px;
+    color: var(--status-danger);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}

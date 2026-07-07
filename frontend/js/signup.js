@@ -1,3 +1,4 @@
+import { me } from "./global/auth.js"
 import API_CONFIG from "./config/api.js";
 import {
     showMessage,
@@ -8,6 +9,12 @@ import {
     validateEmail,
     validatePassword
 } from "./util/auth-ui.js";
+
+const user = await me();
+
+if (user) {
+    window.location.replace("index.html");
+}
 
 const signUpForm = document.getElementById("signUpForm");
 const signUpButton = document.getElementById("signUpButton");

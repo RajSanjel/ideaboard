@@ -1,3 +1,4 @@
+import { me } from "./global/auth.js"
 import API_CONFIG from "./config/api.js";
 import {
     showMessage,
@@ -7,11 +8,17 @@ import {
     validatePassword
 } from "./util/auth-ui.js";
 
+
 const loginButton = document.getElementById("signInBtn");
 const loginForm = document.getElementById("loginForm");
 const messageBox = document.getElementById("signUpMessage");
 const feedbackMessage = document.getElementById("feedbackMessage");
 
+const user = await me();
+
+if (user) {
+    window.location.replace("index.html");
+}
 const fields = {
 
     email: {
