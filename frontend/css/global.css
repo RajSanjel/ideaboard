@@ -47,6 +47,16 @@
     --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-serif: "Source Serif 4", ui-serif, Georgia, "Iowan Old Style", serif;
     --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    /* Error and Success message */
+    --success-text: #1e7e34;
+    --success-bg: #d4edda;
+    --success-border: #c3e6cb;
+
+    --error-text: #a71d2a;
+    --error-bg: #f8d7da;
+    --error-border: #f5c2c7;
+
 }
 
 button:hover {

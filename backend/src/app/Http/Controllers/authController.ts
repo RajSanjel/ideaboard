@@ -39,6 +39,10 @@ const AuthController = {
 			res.status(errorResponse.httpCode).json(errorResponse);
 		}
 	},
+	me: async (req: Request, res: Response) => {
+		const meResult = await AuthProvider.me(req);
+		res.status(meResult.httpCode).json(meResult);
+	},
 };
 
 export default AuthController;

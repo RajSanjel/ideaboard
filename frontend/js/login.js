@@ -1,10 +1,24 @@
+import { me } from "./global/auth.js"
+import API_CONFIG from "./config/api.js";
+import {
+    showMessage,
+    isButtonClickable,
+    getErrorElement,
+    validateEmail,
+    validatePassword
+} from "./util/auth-ui.js";
+
+
 const loginButton = document.getElementById("signInBtn");
+const loginForm = document.getElementById("loginForm");
+const messageBox = document.getElementById("signUpMessage");
+const feedbackMessage = document.getElementById("feedbackMessage");
 
+const user = await me();
 
-function getErrorElement(fieldName) {
-    return document.querySelector(`.error[data-for="${fieldName}"]`);
+if (user) {
+    window.location.replace("index.html");
 }
-
 const fields = {
 
     email: {
@@ -17,87 +31,53 @@ const fields = {
     },
 }
 
-function setError(field, message) {
-    field.element.classList.add('invalid');
-    field.element.classList.remove('valid');
-    if (field.errorElement) {
-        field.errorElement.textContent = message;
-        field.errorElement.classList.add('visible');
-    }
-}
-
-function setValid(field) {
-    field.element.classList.remove('invalid');
-    field.element.classList.add('valid');
-    if (field.errorElement) {
-        field.errorElement.textContent = '';
-        field.errorElement.classList.remove('visible');
-    }
-}
-
-function isButtonClickable() {
-    const allValid = Object.values(fields).every(
-        field => field.element.classList.contains('valid')
-    );
-    loginButton.classList.toggle('disabled', !allValid);
-}
-
-
-function validateEmail() {
-    const value = fields.email.element.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!value) {
-        setError(fields.email, "Email is required");
-        return false;
-    }
-
-    if (!emailRegex.test(value)) {
-        setError(fields.email, "Email address is not valid.");
-        return false;
-    }
-
-    setValid(fields.email);
-    return true;
-}
-
-
-function validatePassword() {
-    const value = fields.password.element.value;
-
-    if (!value) {
-        setError(fields.password, "Password is required");
-        return false;
-    }
-
-    if (value.length < 8) {
-        setError(fields.password, "Password must be atleast 8 character long.");
-        return false;
-    }
-
-    setValid(fields.password);
-    return true;
-}
-
-
 fields.email.element.addEventListener('blur', () => {
-    validateEmail();
-    isButtonClickable();
+    validateEmail(fields);
+    isButtonClickable(fields, loginButton);
 });
 
 fields.password.element.addEventListener('input', () => {
-    validatePassword();
-    isButtonClickable();
+    validatePassword(fields);
+    isButtonClickable(fields, loginButton);
 });
 
-loginButton.addEventListener('click', (e) => {
+loginButton.addEventListener('click', async (e) => {
     e.preventDefault();
     const validations = [
-        validateEmail(),
-        validatePassword(),
+        validateEmail(fields),
+        validatePassword(fields),
     ];
 
-    isButtonClickable();
+    isButtonClickable(fields, loginButton);
 
-    // submit logic will be added here.
+    if (validations.every(Boolean)) {
+        const loginData = {
+            email: fields.email.element.value.trim(),
+            password: fields.password.element.value,
+        };
+        try {
+            const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/login";
+            const resp = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(loginData),
+                credentials: "include"
+            })
+            const data = await resp.json();
+
+            if (data.httpCode === 200) {
+                loginForm.reset();
+                window.location.replace("index.html");
+            } else {
+                showMessage(messageBox, feedbackMessage, data.message, "error");
+            }
+        } catch (error) {
+            showMessage(messageBox, feedbackMessage, "Sign in failed, please try again later", "error");
+
+            console.error(error)
+
+        }
+    }
 });

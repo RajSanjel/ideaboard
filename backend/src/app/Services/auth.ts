@@ -1,8 +1,9 @@
 import { Request } from "express";
-import { LoginPayload, SignUpPayload } from "../../@types/Auth";
+import { LoginPayload, SignUpPayload, UserProfile } from "../../@types/Auth";
 import dbPool from "../../db";
 import { ApiResponse } from "../../@types/ApiResponse";
 import { hashVerifier, passwordHasher } from "../../helper/hash";
+import { VerifyJwtToken } from "../../helper/token";
 
 export async function register(req: Request) {
 	try {
@@ -103,6 +104,60 @@ export async function login(req: Request) {
 			message: "Internal Server Errror",
 		};
 
+		return errorResponse;
+	}
+}
+
+export async function me(req: Request) {
+	try {
+		const jwt = req.cookies.auth_token;
+		if (!jwt) {
+			const errorResponse: ApiResponse = {
+				success: false,
+				httpCode: 401,
+				message: "Unauthorized",
+			};
+			return errorResponse;
+		}
+		const { id } = VerifyJwtToken(jwt);
+
+		const sqlQuery = `SELECT id, name, email, is_admin, is_staff from users WHERE id=$1`;
+		const value = [id];
+		const result = await dbPool.query<UserProfile>(sqlQuery, value);
+		const row = result.rows[0];
+
+		if (!row) {
+			const errorResponse: ApiResponse = {
+				success: false,
+				httpCode: 404,
+				message: "User not found",
+			};
+
+			return errorResponse;
+		}
+
+		const { name, email, is_admin, is_staff } = row;
+		const userData = {
+			id,
+			name,
+			email,
+			isAdmin: is_admin,
+			isStaff: is_staff,
+		};
+		const successResponse: ApiResponse = {
+			success: true,
+			httpCode: 200,
+			message: "User is logged in",
+			data: userData,
+		};
+		return successResponse;
+	} catch (error) {
+		console.error(error);
+		const errorResponse: ApiResponse = {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
 		return errorResponse;
 	}
 }

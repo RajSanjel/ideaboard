@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IdeaBoard - Login</title>
+    <title>IdeaBoard - Sign Up</title>
     <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/header_footer.css">
     <link rel="stylesheet" href="./css/auth.css">
 
-    <script src="./js/signup.js" defer></script>
+    <script src="./js/signup.js" type="module" defer></script>
 </head>
 
 <body>
@@ -38,19 +38,21 @@
 
         </div>
         <div class=" left">
-            <ul class="nav_items">
+            <div class=" left" id="nav__auth_dependent">
                 <li>
                     <a href="./login.html">
                         Sign in
                     </a>
                 </li>
-            </ul>
-        </div>
+                </ul>
+            </div>
     </nav>
 
     <main class="form_container">
-
-        <form class="form">
+        <div class="backendFeedback hidden" id="signUpMessage">
+            <p id="feedbackMessage"></p>
+        </div>
+        <form class="form" id="signUpForm">
 
             <div class="form_header">
 

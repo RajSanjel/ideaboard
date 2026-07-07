@@ -1,9 +1,25 @@
-const signUpButton = document.getElementById("signUpButton");
+import { me } from "./global/auth.js"
+import API_CONFIG from "./config/api.js";
+import {
+    showMessage,
+    isButtonClickable,
+    getErrorElement,
+    setError,
+    setValid,
+    validateEmail,
+    validatePassword
+} from "./util/auth-ui.js";
 
+const user = await me();
 
-function getErrorElement(fieldName) {
-    return document.querySelector(`.error[data-for="${fieldName}"]`);
+if (user) {
+    window.location.replace("index.html");
 }
+
+const signUpForm = document.getElementById("signUpForm");
+const signUpButton = document.getElementById("signUpButton");
+const messageBox = document.getElementById("signUpMessage");
+const feedbackMessage = document.getElementById("feedbackMessage");
 
 const fields = {
     firstName: {
@@ -28,30 +44,6 @@ const fields = {
     }
 }
 
-function setError(field, message) {
-    field.element.classList.add('invalid');
-    field.element.classList.remove('valid');
-    if (field.errorElement) {
-        field.errorElement.textContent = message;
-        field.errorElement.classList.add('visible');
-    }
-}
-
-function setValid(field) {
-    field.element.classList.remove('invalid');
-    field.element.classList.add('valid');
-    if (field.errorElement) {
-        field.errorElement.textContent = '';
-        field.errorElement.classList.remove('visible');
-    }
-}
-
-function isButtonClickable() {
-    const allValid = Object.values(fields).every(
-        field => field.element.classList.contains('valid')
-    );
-    signUpButton.classList.toggle('disabled', !allValid);
-}
 function validateFirstName() {
     const value = fields.firstName.element.value.trim();
     if (!value) {
@@ -68,7 +60,6 @@ function validateFirstName() {
     return true;
 }
 
-
 function validateLastName() {
     const value = fields.lastName.element.value.trim();
     if (!value) {
@@ -84,44 +75,6 @@ function validateLastName() {
     setValid(fields.lastName);
     return true;
 }
-
-
-function validateEmail() {
-    const value = fields.email.element.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!value) {
-        setError(fields.email, "Email is required");
-        return false;
-    }
-
-    if (!emailRegex.test(value)) {
-        setError(fields.email, "Email address is not valid.");
-        return false;
-    }
-
-    setValid(fields.email);
-    return true;
-}
-
-
-function validatePassword() {
-    const value = fields.password.element.value;
-
-    if (!value) {
-        setError(fields.password, "Password is required");
-        return false;
-    }
-
-    if (value.length < 8) {
-        setError(fields.password, "Password must be atleast 8 character long.");
-        return false;
-    }
-
-    setValid(fields.password);
-    return true;
-}
-
 
 function confirmPassword() {
     const value = fields.confirmPassword.element.value;
@@ -143,43 +96,88 @@ function confirmPassword() {
 
 fields.firstName.element.addEventListener('blur', () => {
     validateFirstName();
-    isButtonClickable();
+    isButtonClickable(fields, signUpButton);
 });
 
 fields.lastName.element.addEventListener('blur', () => {
     validateLastName();
-    isButtonClickable();
+    isButtonClickable(fields, signUpButton);
 });
 
 fields.email.element.addEventListener('blur', () => {
-    validateEmail();
-    isButtonClickable();
+    validateEmail(fields);
+    isButtonClickable(fields, signUpButton);
 });
 
 fields.password.element.addEventListener('input', () => {
-    validatePassword();
+    validatePassword(fields);
     if (fields.confirmPassword.element.value) {
         confirmPassword();
     }
-    isButtonClickable();
+    isButtonClickable(fields, signUpButton);
 });
 
 fields.confirmPassword.element.addEventListener('input', () => {
     confirmPassword();
-    isButtonClickable();
+    isButtonClickable(fields, signUpButton);
 });
 
-signUpButton.addEventListener('click', (e) => {
+function resetValidation() {
+    Object.values(fields).forEach(field => {
+        field.element.classList.remove("valid", "invalid");
+
+        if (field.errorElement) {
+            field.errorElement.textContent = "";
+            field.errorElement.classList.remove("visible");
+        }
+    });
+
+    signUpButton.classList.add("disabled");
+}
+
+signUpButton.addEventListener('click', async (e) => {
     e.preventDefault();
     const validations = [
         validateFirstName(),
         validateLastName(),
-        validateEmail(),
-        validatePassword(),
+        validateEmail(fields),
+        validatePassword(fields),
         confirmPassword()
     ];
+    isButtonClickable(fields, signUpButton);
 
-    isButtonClickable();
+    if (validations.every(Boolean)) {
+        const signUpData = {
+            firstName: fields.firstName.element.value.trim(),
+            lastName: fields.lastName.element.value.trim(),
+            email: fields.email.element.value.trim(),
+            password: fields.password.element.value,
+            confirmPassword: fields.confirmPassword.element.value,
+        };
+        try {
+            const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/register";
+            const resp = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(signUpData)
+            })
+            const data = await resp.json();
 
-    // submit logic will be added here.
+            if (data.httpCode === 201) {
+                showMessage(messageBox, feedbackMessage, data.message + ` You can now <a href="./login.html" class="form_link">sign in</a>.`, "success");
+                signUpForm.reset();
+                resetValidation();
+                isButtonClickable(fields, signUpButton);
+            } else {
+                showMessage(messageBox, feedbackMessage, data.message, "error");
+            }
+        } catch (error) {
+            showMessage(messageBox, feedbackMessage, "Sign up failed, please try again later", "error");
+
+            console.error(error)
+
+        }
+    }
 });

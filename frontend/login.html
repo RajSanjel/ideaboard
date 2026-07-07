@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/header_footer.css">
     <link rel="stylesheet" href="./css/auth.css">
 
-    <script src="./js/login.js" defer></script>
+    <script src="./js/login.js" type="module"></script>
 </head>
 
 <body>
@@ -37,7 +37,7 @@
             </ul>
 
         </div>
-        <div class=" left">
+        <div class=" left" id="nav__auth_dependent">
             <ul class="nav_items">
                 <li class="active">
                     <a href="./login.html">
@@ -49,7 +49,10 @@
     </nav>
 
     <main class="form_container">
-        <form class="form">
+        <div class="backendFeedback hidden" id="signUpMessage">
+            <p id="feedbackMessage"></p>
+        </div>
+        <form class="form" id="loginForm">
             <div class="form_header">
                 <h1>
                     Sign in to IdeaBoard
