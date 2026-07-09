@@ -1,7 +1,5 @@
 import API_CONFIG from '../config/api.js';
 
-window.App = window.App || {};
-
 export async function me() {
     const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/me";
     let user;
@@ -13,8 +11,8 @@ export async function me() {
 
         const respData = await resp.json();
         if (respData.httpCode !== 200) {
-            this.user = null;
-            return null;
+            user = null;
+            return user;
         }
         user = respData.data;
         return user;
