@@ -1,0 +1,66 @@
+@import url('./global.css');
+
+main {
+    width: 90%;
+    margin: 60px auto;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.upper_collection {
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+}
+
+.suggestion_agenda {
+    width: 500px;
+    background-image: linear-gradient(var(--color-bg), var(--color-surface-muted));
+    border: 1px solid var(--color-border-strong);
+    padding: 18px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.suggestion_agenda_name {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.suggestion_agenda_title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--text-primary);
+}
+
+.suggestion_agenda_desc {
+    font-size: 13px;
+    font-family: var(--font-sans);
+    color: var(--text-tertiary);
+}
+
+.submit_suggestion_btn {
+    border: none;
+    outline: none;
+    padding: 8px 22px;
+    background-color: var(--color-accent);
+    color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.suggestion_agenda_buttons a {
+    text-decoration: none;
+    color: var(--text-muted);
+
+}
