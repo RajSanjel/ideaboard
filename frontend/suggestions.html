@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestions - IdeaBoard</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/header_footer.css">
+    <link rel="stylesheet" href="./css/suggestions.css">
+    <script src="./js/global/navbar-inject.js" type="module" defer></script>
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <ul class="logo">
+                <span class="logo_design">
+                    I
+                </span>
+                <li class="logo_text">
+                    IdeaBoard
+                </li>
+            </ul>
+            <ul class="nav_items">
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="./suggestions.html" class="active">
+                        Suggestion
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+        <div class=" left">
+            <div class=" left" id="nav__auth_dependent">
+                <li>
+                    <a href="./login.html">
+                        Sign in
+                    </a>
+                </li>
+                </ul>
+            </div>
+    </nav>
+
+    <main>
+        <div class="upper_collection">
+            <div class="right">
+                <section class="suggestion_agenda">
+                    <span class="suggestion_agenda_name">IdeaBoard</span>
+                    <h1 class="suggestion_agenda_title">Share ideas for your college</h1>
+                    <p class="suggestion_agenda_desc">
+                        Post a suggestion, back the ones you believe in, and follow each one through to a decision.
+                    </p>
+                    <div class="suggestion_agenda_buttons">
+                        <button class="submit_suggestion_btn disabled" id="submit_suggestion_btn">Submit a
+                            suggestion</button>
+                        <a href="./index.html#guideline">Guidelines &#8594;</a>
+                    </div>
+                </section>
+
+                <section class="suggestions_stats_container">
+                    <span class="suggestions_stats_container_title">
+                        AT A GLANCE
+                    </span>
+                    <div>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">5</span>
+                            <span class="suggestions_stat_text">Suggestions</span>
+                        </span>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">3</span>
+                            <span class="suggestions_stat_text">OPEN</span>
+                        </span>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">2</span>
+                            <span class="suggestions_stat_text">IN PROGRESS</span>
+                        </span>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">1</span>
+                            <span class="suggestions_stat_text">COMPLETED</span>
+                        </span>
+                    </div>
+                </section>
+
+                <section class="stats_visual_container">
+                    <span class="stats_visual_title">BY STATUS</span>
+                    <span class="stats_visual_item">
+                        <span class="stats_visual_topic">Submitted</span>
+                        <span class="stats_visual_line"></span>
+                    </span>
+                    <span class="stats_visual_item">
+                        <span class="stats_visual_topic">Reviewing</span>
+                        <span class="stats_visual_line"></span>
+                    </span>
+                    <span class="stats_visual_item">
+                        <span class="stats_visual_topic">On the agenda</span>
+                        <span class="stats_visual_line"></span>
+                    </span>
+                    <span class="stats_visual_item">
+                        <span class="stats_visual_topic">In Progress</span>
+                        <span class="stats_visual_line"></span>
+                    </span>
+                    <span class="stats_visual_item">
+                        <span class="stats_visual_topic">In Place</span>
+                        <span class="stats_visual_line"></span>
+                    </span>
+                </section>
+            </div>
+            <div class="left">
+                <section class="top_voted_suggestion">
+                    <span class="top_voted_indicator">
+                        <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
+                        TOP VOTED
+                    </span>
+                    <p class="top_voted_title">
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                    <span class="top_voted_tags">
+                        <span class="tag on_agenda">
+                            On the agenda
+                        </span>
+                        <span class="top_voted_vote_count">
+                            <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
+                            130 votes
+                        </span>
+                    </span>
+                    <p class="top_voted_desc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente mollitia sint quidem pariatur
+                        facilis molestiae quam quae consequatur. Nulla, nesciunt. Voluptas suscipit autem molestiae,
+                        expedita fugiat, laudantium, odio facilis nostrum vero officia reprehenderit! Voluptates, quidem
+                        tempore quae architecto voluptatum atque velit nostrum molestias quos suscipit dicta ipsa
+                        possimus,
+                        nulla in! Dicta voluptas totam, maxime veritatis laboriosam laborum. Quod omnis iusto laborum
+                        delectus aspernatur blanditiis, ipsam a? Vel et vitae, nisi ipsa dolorem ex ipsam est quo
+                        expedita
+                        non, incidunt minus, at iste beatae veritatis sit voluptatibus. Vel quidem, tempore atque fugiat
+                        harum consequatur cum voluptatibus. Facilis aspernatur enim odio mollitia!
+                    </p>
+                    <a href="#" class="top_voted_link">View Suggestion &#8594;</a>
+                </section>
+
+                <section class="browse_by_category">
+                    <div class="categories">
+                        <span class="browse_category category_selected">
+                            All
+                        </span>
+                        <span class="browse_category">
+                            Category 1
+                        </span>
+                        <span class="browse_category">
+                            Category 2
+                        </span>
+                        <span class="browse_category">
+                            Category 3
+                        </span>
+                        <span class="browse_category">
+                            Category 4
+                        </span>
+                        <span class="browse_category">
+                            Category 5
+                        </span>
+                        <span class="browse_category">
+                            Category 6
+                        </span>
+                        <span class="browse_category">
+                            Category 7
+                        </span>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="suggestions_lists">
+            <div class="suggestions_list_header">
+                <span class="suggestions_list_title">All Suggestions</span>
+                <select class="suggestions_list_sortby">
+                    <option value="default">Default</option>
+                    <option value="default">Most votes</option>
+                    <option value="default">Least votes</option>
+                </select>
+                <div class="suggestions_list_search">
+                    <input type="text" placeholder="Search Ideas" class="suggestions_list_search_input">
+                </div>
+            </div>
+
+            <section>
+                <div class="suggestion_container">
+                    <div class="left vote_btn disabled">
+                        <span class="vote_count">
+                            <img src="./public/vote.svg" height="20px">
+                            <span class="vote_count">200</span>
+                        </span>
+                    </div>
+                    <div class="middle">
+                        <p class="suggestion_title">
+                            Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                        <p class="suggestion_desc">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, at dignissimos fuga, error
+                            labore expedita nulla delectus sint non rem possimus recusandae ullam harum totam debitis
+                            minus. Ex iusto, officiis fugiat, dolore recusandae, quos quaerat unde laborum ea voluptas
+                            doloribus accusamus! Maiores sunt velit labore consequatur expedita quo accusamus
+                            consectetur!
+                        </p>
+                        <div class="details">
+                            <span>Username</span>
+                            <span>Category</span>
+                            <span>5 Comments</span>
+                            <span>6 days ago</span>
+                        </div>
+                    </div>
+                    <div class="left">
+                        <span class="tag on_agenda">
+                            On the agenda
+                        </span>
+                        <span class="suggestion_progress_line">
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
+                        </span>
+                        <span class="suggestion_ref_id">S-100</span>
+                    </div>
+                </div>
+                <div class="suggestion_container">
+                    <div class="left vote_btn disabled">
+                        <span class="vote_count">
+                            <img src="./public/vote.svg" height="20px">
+                            <span class="vote_count">200</span>
+                        </span>
+                    </div>
+                    <div class="middle">
+                        <p class="suggestion_title">
+                            Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                        <p class="suggestion_desc">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, at dignissimos fuga, error
+                            labore expedita nulla delectus sint non rem possimus recusandae ullam harum totam debitis
+                            minus. Ex iusto, officiis fugiat, dolore recusandae, quos quaerat unde laborum ea voluptas
+                            doloribus accusamus! Maiores sunt velit labore consequatur expedita quo accusamus
+                            consectetur!
+                        </p>
+                        <div class="details">
+                            <span>Username</span>
+                            <span>Category</span>
+                            <span>5 Comments</span>
+                            <span>6 days ago</span>
+                        </div>
+                    </div>
+                    <div class="left">
+                        <span class="tag submitted">
+                            On the agenda
+                        </span>
+                        <span class="suggestion_progress_line">
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
+                        </span>
+                        <span class="suggestion_ref_id">S-100</span>
+                    </div>
+                </div>
+                <div class="suggestion_container">
+                    <div class="left vote_btn disabled">
+                        <span class="vote_count">
+                            <img src="./public/vote.svg" height="20px">
+                            <span class="vote_count">200</span>
+                        </span>
+                    </div>
+                    <div class="middle">
+                        <p class="suggestion_title">
+                            Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                        <p class="suggestion_desc">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, at dignissimos fuga, error
+                            labore expedita nulla delectus sint non rem possimus recusandae ullam harum totam debitis
+                            minus. Ex iusto, officiis fugiat, dolore recusandae, quos quaerat unde laborum ea voluptas
+                            doloribus accusamus! Maiores sunt velit labore consequatur expedita quo accusamus
+                            consectetur!
+                        </p>
+                        <div class="details">
+                            <span>Username</span>
+                            <span>Category</span>
+                            <span>5 Comments</span>
+                            <span>6 days ago</span>
+                        </div>
+                    </div>
+                    <div class="left">
+                        <span class="tag reviewing">
+                            Reviewing
+                        </span>
+                        <span class="suggestion_progress_line">
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
+                        </span>
+                        <span class="suggestion_ref_id">S-100</span>
+                    </div>
+                </div>
+                <div class="suggestion_container">
+                    <div class="left vote_btn disabled">
+                        <span class="vote_count">
+                            <img src="./public/vote.svg" height="20px">
+                            <span class="vote_count">200</span>
+                        </span>
+                    </div>
+                    <div class="middle">
+                        <p class="suggestion_title">
+                            Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                        <p class="suggestion_desc">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, at dignissimos fuga, error
+                            labore expedita nulla delectus sint non rem possimus recusandae ullam harum totam debitis
+                            minus. Ex iusto, officiis fugiat, dolore recusandae, quos quaerat unde laborum ea voluptas
+                            doloribus accusamus! Maiores sunt velit labore consequatur expedita quo accusamus
+                            consectetur!
+                        </p>
+                        <div class="details">
+                            <span>Username</span>
+                            <span>Category</span>
+                            <span>5 Comments</span>
+                            <span>6 days ago</span>
+                        </div>
+                    </div>
+                    <div class="left">
+                        <span class="tag in_progress">
+                            In Progress
+                        </span>
+                        <span class="suggestion_progress_line">
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
+                        </span>
+                        <span class="suggestion_ref_id">S-100</span>
+                    </div>
+                </div>
+                <div class="suggestion_container">
+                    <div class="left vote_btn disabled">
+                        <span class="vote_count "><img src="./public/vote.svg" height="20px">
+                            <span class="vote_count">200</span>
+                        </span>
+                    </div>
+                    <div class="middle">
+                        <p class="suggestion_title">
+                            Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                        <p class="suggestion_desc">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, at dignissimos fuga, error
+                            labore expedita nulla delectus sint non rem possimus recusandae ullam harum totam debitis
+                            minus. Ex iusto, officiis fugiat, dolore recusandae, quos quaerat unde laborum ea voluptas
+                            doloribus accusamus! Maiores sunt velit labore consequatur expedita quo accusamus
+                            consectetur!
+                        </p>
+                        <div class="details">
+                            <span>Username</span>
+                            <span>Category</span>
+                            <span>5 Comments</span>
+                            <span>6 days ago</span>
+                        </div>
+                    </div>
+                    <div class="left">
+                        <span class="tag done">
+                            Done
+                        </span>
+                        <span class="suggestion_progress_line">
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
+                        </span>
+                        <span class="suggestion_ref_id">S-100</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer_first">
+            <ul class="logo">
+                <span class="logo_design">
+                    I
+                </span>
+                <li class="logo_text">
+                    IdeaBoard
+                </li>
+            </ul>
+            <p class="footer_text">Suggestion board for ABC College. Built for transparent college decisions.
+            </p>
+        </div>
+        <div class="footer_middle">
+            <ul class="footer_list">
+                <li class="footer_title">
+                    Explore
+                </li>
+                <span class="footer_items">
+
+                    <li class="footer_link">
+                        <a href="./suggestion.html">Suggestion Board</a>
+                    </li>
+                    <li class="footer_link">
+                        <a href="./login.html">Sign in</a>
+                    </li>
+                    <li class="footer_link">
+                        <a href="./signup.html">Create account</a>
+                    </li>
+                </span>
+            </ul>
+        </div>
+        <div class="footer_last">
+            <ul class="footer_list">
+                <li class="footer_title">
+                    Contact
+                </li>
+                <span class="footer_items">
+                    <li class="footer_info">
+                        ABC College
+                    </li>
+                    <li class="footer_info">
+                        info@ideaboard.edu.np
+                    </li>
+                    <li class="footer_info">
+                        +977 9841098036
+                    </li>
+                </span>
+            </ul>
+        </div>
+    </footer>
+    <p class="footer_copyright">
+        IdeaBoard · 2026 · All suggestions are public within the college community.
+    </p>
+</body>
+
+
+</html>
