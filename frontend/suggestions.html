@@ -63,22 +63,27 @@
                 </section>
 
                 <section class="suggestions_stats_container">
-                    <span class="suggestions_stat_item">
-                        <span class="suggestions_stat_data">5</span>
-                        <span class="suggestions_stat_text">Suggestions</span>
+                    <span class="suggestions_stats_container_title">
+                        AT A GLANCE
                     </span>
-                    <span class="suggestions_stat_item">
-                        <span class="suggestions_stat_data">3</span>
-                        <span class="suggestions_stat_text">OPEN</span>
-                    </span>
-                    <span class="suggestions_stat_item">
-                        <span class="suggestions_stat_data">2</span>
-                        <span class="suggestions_stat_text">IN PROGRESS</span>
-                    </span>
-                    <span class="suggestions_stat_item">
-                        <span class="suggestions_stat_data">1</span>
-                        <span class="suggestions_stat_text">COMPLETED</span>
-                    </span>
+                    <div>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">5</span>
+                            <span class="suggestions_stat_text">Suggestions</span>
+                        </span>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">3</span>
+                            <span class="suggestions_stat_text">OPEN</span>
+                        </span>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">2</span>
+                            <span class="suggestions_stat_text">IN PROGRESS</span>
+                        </span>
+                        <span class="suggestions_stat_item">
+                            <span class="suggestions_stat_data">1</span>
+                            <span class="suggestions_stat_text">COMPLETED</span>
+                        </span>
+                    </div>
                 </section>
 
                 <section class="stats_visual_container">
@@ -108,6 +113,7 @@
             <div class="left">
                 <section class="top_voted_suggestion">
                     <span class="top_voted_indicator">
+                        <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
                         TOP VOTED
                     </span>
                     <p class="top_voted_title">
@@ -118,6 +124,7 @@
                             On the agenda
                         </span>
                         <span class="top_voted_vote_count">
+                            <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
                             130 votes
                         </span>
                     </span>
@@ -182,9 +189,9 @@
 
             <section>
                 <div class="suggestion_container">
-                    <div class="left">
+                    <div class="left vote_btn disabled">
                         <span class="vote_count">
-                            ^
+                            <img src="./public/vote.svg" height="20px">
                             <span class="vote_count">200</span>
                         </span>
                     </div>
@@ -211,14 +218,21 @@
                             On the agenda
                         </span>
                         <span class="suggestion_progress_line">
-                            <span class="suggestion_ref_id">S-100</span>
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
                         </span>
+                        <span class="suggestion_ref_id">S-100</span>
                     </div>
                 </div>
                 <div class="suggestion_container">
-                    <div class="left">
+                    <div class="left vote_btn disabled">
                         <span class="vote_count">
-                            ^
+                            <img src="./public/vote.svg" height="20px">
                             <span class="vote_count">200</span>
                         </span>
                     </div>
@@ -245,14 +259,21 @@
                             On the agenda
                         </span>
                         <span class="suggestion_progress_line">
-                            <span class="suggestion_ref_id">S-100</span>
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
                         </span>
+                        <span class="suggestion_ref_id">S-100</span>
                     </div>
                 </div>
                 <div class="suggestion_container">
-                    <div class="left">
+                    <div class="left vote_btn disabled">
                         <span class="vote_count">
-                            ^
+                            <img src="./public/vote.svg" height="20px">
                             <span class="vote_count">200</span>
                         </span>
                     </div>
@@ -279,14 +300,21 @@
                             Reviewing
                         </span>
                         <span class="suggestion_progress_line">
-                            <span class="suggestion_ref_id">S-100</span>
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
                         </span>
+                        <span class="suggestion_ref_id">S-100</span>
                     </div>
                 </div>
                 <div class="suggestion_container">
-                    <div class="left">
+                    <div class="left vote_btn disabled">
                         <span class="vote_count">
-                            ^
+                            <img src="./public/vote.svg" height="20px">
                             <span class="vote_count">200</span>
                         </span>
                     </div>
@@ -313,14 +341,20 @@
                             In Progress
                         </span>
                         <span class="suggestion_progress_line">
-                            <span class="suggestion_ref_id">S-100</span>
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
                         </span>
+                        <span class="suggestion_ref_id">S-100</span>
                     </div>
                 </div>
                 <div class="suggestion_container">
-                    <div class="left">
-                        <span class="vote_count">
-                            ^
+                    <div class="left vote_btn disabled">
+                        <span class="vote_count "><img src="./public/vote.svg" height="20px">
                             <span class="vote_count">200</span>
                         </span>
                     </div>
@@ -347,8 +381,15 @@
                             Done
                         </span>
                         <span class="suggestion_progress_line">
-                            <span class="suggestion_ref_id">S-100</span>
+                            <span class="suggestion_progress_line">
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step completed"></span>
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </span>
                         </span>
+                        <span class="suggestion_ref_id">S-100</span>
                     </div>
                 </div>
             </section>
