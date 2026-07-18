@@ -1,9 +1,9 @@
 import { Request } from "express";
-import { LoginPayload, SignUpPayload, UserProfile } from "../../@types/Auth";
-import dbPool from "../../db";
-import { ApiResponse } from "../../@types/ApiResponse";
-import { hashVerifier, passwordHasher } from "../../helper/hash";
-import { VerifyJwtToken } from "../../helper/token";
+import { LoginPayload, SignUpPayload, UserProfile } from "../../@types/Auth.js";
+import dbPool from "../../db.js";
+import { ApiResponse } from "../../@types/ApiResponse.js";
+import { hashVerifier, passwordHasher } from "../../helper/hash.js";
+import { VerifyJwtToken } from "../../helper/token.js";
 
 export async function register(req: Request) {
 	try {

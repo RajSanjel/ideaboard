@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import * as AuthProvider from "../../Services/auth";
+import * as AuthProvider from "../../Services/auth.js";
 import {
 	clearAuthCookie,
 	GenerateJwtToken,

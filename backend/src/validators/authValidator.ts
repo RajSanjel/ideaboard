@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { ApiResponse } from "../@types/ApiResponse";
-import { SignUpPayload } from "../@types/Auth";
+import { ApiResponse } from "../@types/ApiResponse.js";
+import { SignUpPayload } from "../@types/Auth.js";
 
 const isValidEmail = (email: string): boolean => {
 	const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

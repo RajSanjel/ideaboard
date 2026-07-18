@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
-import dbPool from "./db";
-import apiRoutes from "./routes/api";
+import dbPool from "./db.js";
+import apiRoutes from "./routes/api.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 const app = express();
