@@ -1,0 +1,11 @@
+import { Request, Response } from "express";
+import * as SuggestionProvider from "../../Services/suggestions.js";
+
+const SuggestionController = {
+	create: async (req: Request, res: Response) => {
+		const result = await SuggestionProvider.createSuggestion(req, res);
+		res.status(result.httpCode).json(result);
+	},
+};
+
+export default SuggestionController;
