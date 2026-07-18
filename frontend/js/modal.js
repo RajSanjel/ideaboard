@@ -1,3 +1,6 @@
+import API_CONFIG from "./config/api.js";
+import { getCachedUser } from './global/auth.js';
+
 async function getCategories() {
     try {
         const response = await fetch('../../shared/categories.json');
@@ -8,11 +11,13 @@ async function getCategories() {
         return [];
     }
 }
-function buildModalHTML(categories) {
+function buildModalHTML(categories, user) {
     let categoryOptions = '<option value="" disabled selected>Select Category</option>';
     categories.forEach(category => {
         categoryOptions += `<option value="${category.id}">${category.label}</option>`;
     });
+
+    const authorName = user ? user.name : 'Anonymous';
 
     return `
         <div class="modal-content">
@@ -48,7 +53,7 @@ function buildModalHTML(categories) {
             
            <div class="modal-footer">
                 <div class="footer-text">
-                    Posting as <strong>User name</strong>. Your name is visible to other readers.
+                    Posting as <strong>${authorName}</strong>. Your name is visible to other readers.
                 </div>
                 <div class="footer-actions">
                     <button type="button" id="closeModal" class="btn-cancel">Cancel</button>
@@ -167,17 +172,61 @@ function setupModalEvents(modal) {
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            submitSuggestion(data);
-            closeHandler();
+            submitSuggestion(data, modal);
         }
     });
 }
 
-function submitSuggestion(data) {
-    console.log('Suggestion Validated & Submitted:', data);
-    // post request will be here.
-}
+async function submitSuggestion(formData, modalElement) {
 
+    const url = API_CONFIG.BASE_URL + API_CONFIG.SUGGESTIONS_ENGPOINT;
+
+    try {
+        const resp = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData),
+            credentials: "include"
+        });
+
+        const responseData = await resp.json();
+
+        if (responseData.httpCode === 201) {
+            const newRefId = responseData.data.ref;
+
+            const modalContent = modalElement.querySelector('.modal-content');
+
+            modalContent.innerHTML = `
+                <div class="success-message" style="text-align: center; padding: 40px;">
+                    <h3>Success!</h3>
+                    <p>Your suggestion was added successfully.</p>
+                       <p style="font-size: 1.1em; margin-top: 10px;">
+                        Your reference ID is <strong>${newRefId}</strong>
+                    </p>
+                    
+                    <div class="modal-actions" style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                        <a href="/suggestion.html?refId=${newRefId}" class="btn-submit" style="text-decoration: none;">
+                            View Suggestion
+                        </a>
+                        <button id="closeModalSuccessBtn" class="btn-cancel">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("closeModalSuccessBtn").addEventListener("click", () => {
+                closeAndClearModal(modalElement);
+            });
+        } else {
+            console.error("Server rejected submission:", responseData.message);
+        }
+    } catch (error) {
+        console.error("Submission failed:", error);
+    }
+}
 function closeAndClearModal(modalElement) {
     modalElement.classList.remove('show');
     modalElement.innerHTML = '';
@@ -190,9 +239,22 @@ async function showSuggestionModal() {
     document.body.style.overflow = 'hidden';
 
     const categories = await getCategories();
+    const user = getCachedUser();
 
-    modal.innerHTML = buildModalHTML(categories);
+
+    modal.innerHTML = buildModalHTML(categories, user);
     modal.classList.add('show');
 
     setupModalEvents(modal);
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const triggerBtns = document.querySelectorAll(".toggle_disabled_class");
+
+    triggerBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            showSuggestionModal();
+        });
+    });
+});

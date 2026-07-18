@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/modal.css">
     <script src="./js/global/navbar-inject.js" type="module" defer></script>
-    <script src="./js/modal.js" defer></script>
+    <script src="./js/modal.js" type="module" defer></script>
 
 </head>
 
@@ -60,8 +60,7 @@
                     <button class="button btn-view">
                         View Suggestion Board
                     </button>
-                    <button class="button btn-submit-suggestion disabled" id="toggle_disabled_class"
-                        onclick="showSuggestionModal()" disabled>
+                    <button class="button btn-submit-suggestion disabled toggle_disabled_class" disabled>
                         Submit a suggestion
                     </button>
                 </div>

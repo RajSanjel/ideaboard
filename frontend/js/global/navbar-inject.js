@@ -2,7 +2,7 @@ import { me, logout } from "./auth.js"
 
 const user = await me();
 const navToChageElement = document.getElementById("nav__auth_dependent");
-const buttonsToEnable = document.querySelectorAll("#toggle_disabled_class");
+const buttonsToEnable = document.querySelectorAll(".toggle_disabled_class");
 if (user) {
     const toReplaceInNav = `
             <ul class="nav_items">  

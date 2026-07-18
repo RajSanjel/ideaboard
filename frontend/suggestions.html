@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/suggestions.css">
     <link rel="stylesheet" href="./css/modal.css">
     <script src="./js/global/navbar-inject.js" type="module" defer></script>
-    <script src="./js/modal.js" defer></script>
+    <script src="./js/modal.js" type="module" defer></script>
 
 </head>
 
@@ -61,8 +61,7 @@
                         Post a suggestion, back the ones you believe in, and follow each one through to a decision.
                     </p>
                     <div class="suggestion_agenda_buttons">
-                        <button class="submit_suggestion_btn disabled" id="toggle_disabled_class"
-                            onclick="showSuggestionModal()" disabled>Submit a
+                        <button class="submit_suggestion_btn toggle_disabled_class disabled" disabled>Submit a
                             suggestion</button>
                         <a href="./index.html#guideline">Guidelines &#8594;</a>
                     </div>
