@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{base_url}}/api/auth/register"
+method: POST
+queryParams:
+  - key: ""
+    value: null
+    disabled: true
+body:
+  type: json
+  content: "{}"
+order: 2000

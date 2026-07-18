@@ -1,0 +1,12 @@
+owner: "35179494"
+team: null
+lastUpdatedBy: "35179494"
+lastRevision: 1782900653000
+name: development
+color: 0
+values:
+  - key: base_url
+    value: ""
+    enabled: true
+createdAt: 2026-07-01T10:10:22.000Z
+updatedAt: 2026-07-01T10:10:53.000Z

@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions"
+method: POST
+queryParams:
+  - key: ""
+    value: null
+    disabled: true
+body:
+  type: json
+  content: |-
+    {
+      "title": "",
+      "details": "The current cafeteria seating is often insufficient during the lunch rush, leaving many students without a place to eat. I suggest we add more round tables and perhaps some outdoor picnic benches to accommodate everyone comfortably, especially during the spring and summer months. This would greatly improve the overall student experience."
+    }
+order: 4000

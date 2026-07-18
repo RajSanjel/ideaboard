@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{base_url}}/api/auth/logout"
+method: POST
+body:
+  type: text
+  content: ""
+order: 1000
