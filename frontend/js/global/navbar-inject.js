@@ -22,6 +22,7 @@ if (user) {
     });
 
     for (const button of buttonsToEnable) {
+        button.disabled = false;
         button.classList.remove("disabled");
         button.classList.add("enabled_button");
     }
