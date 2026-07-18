@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions"
+method: POST
+queryParams:
+  - key: ""
+    value: null
+    disabled: true
+body:
+  type: json
+  content: |-
+    {
+      "title": "Upgrade the cafeteria seating",
+      "details": ""
+    }
+order: 5000

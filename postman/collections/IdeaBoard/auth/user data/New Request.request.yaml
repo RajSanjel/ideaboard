@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{base_url}}/api/auth/me"
+method: GET
+queryParams:
+  - key: ""
+    value: null
+    disabled: true
+body:
+  type: text
+  content: ""
+order: 1000

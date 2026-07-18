@@ -6,6 +6,10 @@ const SuggestionController = {
 		const result = await SuggestionProvider.createSuggestion(req, res);
 		res.status(result.httpCode).json(result);
 	},
+	getAll: async (req: Request, res: Response) => {
+		const result = await SuggestionProvider.getAllSuggestions(req);
+		res.status(result.httpCode).json(result);
+	},
 };
 
 export default SuggestionController;

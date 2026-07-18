@@ -6,4 +6,6 @@ import SuggestionController from "../../app/Http/Controllers/suggestionsControll
 const router: Router = Router();
 
 router.post("/", verifyAuth, validateSuggestion, SuggestionController.create);
+router.get("/", SuggestionController.getAll);
+
 export default router;

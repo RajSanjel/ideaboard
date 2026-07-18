@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions?page=random&limit=random"
+method: GET
+queryParams:
+  page: random
+  limit: random
+order: 5000

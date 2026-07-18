@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions?page=-5&limit=-20"
+method: GET
+queryParams:
+  page: "-5"
+  limit: "-20"
+order: 3000

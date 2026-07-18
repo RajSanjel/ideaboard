@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions?page=5000"
+method: GET
+queryParams:
+  page: "5000"
+order: 6000

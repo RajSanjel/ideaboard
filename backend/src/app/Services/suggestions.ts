@@ -58,3 +58,49 @@ export async function createSuggestion(req: Request, res: Response) {
 		return errResponse;
 	}
 }
+
+export async function getAllSuggestions(req: Request): Promise<ApiResponse> {
+	try {
+		const page = Math.max(1, parseInt(req.query.page as string) || 1);
+		const limit = Math.min(
+			100,
+			Math.max(1, parseInt(req.query.limit as string) || 10),
+		);
+		const offset = (page - 1) * limit;
+
+		const countQuery = `SELECT COUNT(*) FROM suggestions`;
+		const countResult = await dbPool.query(countQuery);
+		const total = parseInt(countResult.rows[0].count, 10);
+
+		const dataQuery = `
+			SELECT * FROM suggestions 
+			ORDER BY created_at DESC 
+			LIMIT $1 OFFSET $2;
+		`;
+		const dataResult = await dbPool.query(dataQuery, [limit, offset]);
+
+		const successResponse: ApiResponse = {
+			success: true,
+			httpCode: 200,
+			message: "Suggestions fetched successfully.",
+			data: dataResult.rows,
+			meta: {
+				page: page,
+				limit: limit,
+				total: total,
+			},
+		};
+
+		return successResponse;
+	} catch (error) {
+		console.error("Error fetching suggestions:", (error as Error).message);
+
+		const errResponse: ApiResponse = {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+
+		return errResponse;
+	}
+}
