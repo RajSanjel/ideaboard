@@ -1,0 +1,38 @@
+[
+    {
+        "id": "bell_schedule",
+        "label": "Bell schedule"
+    },
+    {
+        "id": "cafeteria",
+        "label": "Cafeteria"
+    },
+    {
+        "id": "facilities",
+        "label": "Facilities"
+    },
+    {
+        "id": "family_communications",
+        "label": "Family communications"
+    },
+    {
+        "id": "programs",
+        "label": "Programs"
+    },
+    {
+        "id": "transport",
+        "label": "Transport"
+    },
+    {
+        "id": "wellness",
+        "label": "Wellness"
+    },
+    {
+        "id": "athletics",
+        "label": "Athletics"
+    },
+    {
+        "id": "calendar",
+        "label": "Calendar"
+    }
+]
