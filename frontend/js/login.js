@@ -69,6 +69,7 @@ loginButton.addEventListener('click', async (e) => {
 
             if (data.httpCode === 200) {
                 loginForm.reset();
+                sessionStorage.removeItem('user_status');
                 window.location.replace("index.html");
             } else {
                 showMessage(messageBox, feedbackMessage, data.message, "error");
