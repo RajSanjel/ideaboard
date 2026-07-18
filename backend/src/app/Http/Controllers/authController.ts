@@ -4,8 +4,8 @@ import {
 	clearAuthCookie,
 	GenerateJwtToken,
 	setAuthCookie,
-} from "../../../helper/token";
-import { ApiResponse } from "../../../@types/ApiResponse";
+} from "../../../helper/token.js";
+import { ApiResponse } from "../../../@types/ApiResponse.js";
 
 const AuthController = {
 	register: async (req: Request, res: Response) => {
