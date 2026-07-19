@@ -3,7 +3,7 @@ url: "{{base_url}}/api/auth/me"
 method: GET
 queryParams:
   - key: ""
-    value: null
+    value: ""
     disabled: true
 body:
   type: text

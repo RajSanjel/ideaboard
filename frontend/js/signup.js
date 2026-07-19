@@ -155,7 +155,7 @@ signUpButton.addEventListener('click', async (e) => {
             confirmPassword: fields.confirmPassword.element.value,
         };
         try {
-            const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/register";
+            const url = ` ${API_CONFIG.BASE_URL}/${API_CONFIG.AUTH_ENDPOINT}/register`;
             const resp = await fetch(url, {
                 method: "POST",
                 headers: {

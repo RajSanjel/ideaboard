@@ -3,7 +3,7 @@ url: "{{base_url}}/api/auth/register"
 method: POST
 queryParams:
   - key: ""
-    value: null
+    value: ""
     disabled: true
 body:
   type: json

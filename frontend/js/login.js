@@ -56,7 +56,7 @@ loginButton.addEventListener('click', async (e) => {
             password: fields.password.element.value,
         };
         try {
-            const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/login";
+            const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.AUTH_ENDPOINT}/login`;
             const resp = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -69,6 +69,7 @@ loginButton.addEventListener('click', async (e) => {
 
             if (data.httpCode === 200) {
                 loginForm.reset();
+                sessionStorage.removeItem('user_status');
                 window.location.replace("index.html");
             } else {
                 showMessage(messageBox, feedbackMessage, data.message, "error");

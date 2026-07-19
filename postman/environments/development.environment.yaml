@@ -5,8 +5,8 @@ lastRevision: 1782900653000
 name: development
 color: 0
 values:
-  - key: base_url
-    value: ""
-    enabled: true
+    - key: base_url
+      value: "http://localhost:4000"
+      enabled: true
 createdAt: 2026-07-01T10:10:22.000Z
 updatedAt: 2026-07-01T10:10:53.000Z
