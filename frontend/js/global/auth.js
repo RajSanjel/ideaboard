@@ -30,7 +30,7 @@ export async function me(forceRefresh = false) {
         return authRequestPromise;
     }
 
-    const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/me";
+    const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.AUTH_ENDPOINT}/me`;
     authRequestPromise = (async () => {
         try {
             const resp = await fetch(url, {
@@ -63,7 +63,7 @@ export async function me(forceRefresh = false) {
 
 
 export async function logout() {
-    const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/logout";
+    const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.AUTH_ENDPOINT}/logout`;
     try {
         await fetch(url, {
             method: "POST",

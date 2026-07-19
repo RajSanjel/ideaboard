@@ -56,7 +56,7 @@ loginButton.addEventListener('click', async (e) => {
             password: fields.password.element.value,
         };
         try {
-            const url = API_CONFIG.BASE_URL + API_CONFIG.AUTH_ENDPOINT + "/login";
+            const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.AUTH_ENDPOINT}/login`;
             const resp = await fetch(url, {
                 method: "POST",
                 headers: {

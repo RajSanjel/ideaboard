@@ -179,7 +179,7 @@ function setupModalEvents(modal) {
 
 async function submitSuggestion(formData, modalElement) {
 
-    const url = API_CONFIG.BASE_URL + API_CONFIG.SUGGESTIONS_ENGPOINT;
+    const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}`;
 
     try {
         const resp = await fetch(url, {
@@ -199,15 +199,15 @@ async function submitSuggestion(formData, modalElement) {
             const modalContent = modalElement.querySelector('.modal-content');
 
             modalContent.innerHTML = `
-                <div class="success-message" style="text-align: center; padding: 40px;">
+                <div class="success_message_container">
                     <h3>Success!</h3>
                     <p>Your suggestion was added successfully.</p>
-                       <p style="font-size: 1.1em; margin-top: 10px;">
+                    <p class="success_message_ref">
                         Your reference ID is <strong>${newRefId}</strong>
                     </p>
                     
-                    <div class="modal-actions" style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
-                        <a href="/suggestion.html?refId=${newRefId}" class="btn-submit" style="text-decoration: none;">
+                    <div class="success_modal_actions">
+                        <a href="/suggestion.html?refId=${newRefId}" class="btn-submit">
                             View Suggestion
                         </a>
                         <button id="closeModalSuccessBtn" class="btn-cancel">

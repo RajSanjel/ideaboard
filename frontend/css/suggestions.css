@@ -345,10 +345,18 @@ main {
     display: flex;
     gap: 20px;
     border: 1px solid var(--color-border-strong);
+    border-left-width: 5px;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 16px;
     background-color: var(--color-surface);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.suggestion_container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* Left Vote Box */
@@ -463,30 +471,30 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 10px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 99px;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
     font-family: var(--font-sans);
     white-space: nowrap;
 }
 
-.tag.submitted {
+.tag.open {
     color: var(--status-open);
     background-color: var(--status-open-bg);
 }
 
-.tag.reviewing {
+.tag.review {
     color: var(--status-review);
     background-color: var(--status-review-bg);
 }
 
-.tag.on_agenda {
+.tag.planned {
     color: var(--status-planned);
     background-color: var(--status-planned-bg);
 }
 
-.tag.in_progress {
+.tag.progress {
     color: var(--status-progress);
     background-color: var(--status-progress-bg);
 }
@@ -496,8 +504,159 @@ main {
     background-color: var(--status-done-bg);
 }
 
+.tag.rejected {
+    color: var(--error-text);
+    background-color: var(--error-bg);
+}
+
 .vote_btn.disabled {
     opacity: 0.5;
     cursor: not-allowed;
     /* filter: grayscale(100%); */
+}
+
+/* --- Dynamic Container Borders based on Status --- */
+.suggestion_container.open {
+    border-left-color: var(--status-open);
+}
+
+.suggestion_container.review {
+    border-left-color: var(--status-review);
+}
+
+.suggestion_container.planned {
+    border-left-color: var(--status-planned);
+}
+
+.suggestion_container.progress {
+    border-left-color: var(--status-progress);
+}
+
+.suggestion_container.done {
+    border-left-color: var(--status-done);
+}
+
+.suggestion_container.rejected {
+    border-left-color: var(--error-text);
+}
+
+/* --- Modal Success Message --- */
+.success_message_container {
+    text-align: center;
+    padding: 40px;
+    font-family: var(--font-sans);
+}
+
+.success_message_ref {
+    font-size: 1.1em;
+    margin-top: 10px;
+    color: var(--text-secondary);
+}
+
+.success_modal_actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.success_modal_actions a {
+    text-decoration: none;
+}
+
+/* --- Pagination & Secondary Buttons --- */
+.pagination_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    font-family: var(--font-sans);
+}
+
+.page_indicator {
+    font-weight: 300;
+    color: var(--text-secondary);
+}
+
+.button_secondary {
+    padding: 8px 16px;
+    background-color: var(--color-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.button_secondary:hover:not(.disabled) {
+    background-color: var(--color-border-strong);
+    color: var(--text-primary);
+}
+
+.button_secondary.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --- Vote Button Interactions --- */
+.vote_btn {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    /* Instantly tells the user this is interactive */
+    cursor: pointer;
+}
+
+/* Explicitly force the not-allowed cursor if they aren't logged in */
+.vote_btn.disabled:hover {
+    cursor: not-allowed;
+}
+
+/* Subtle hover effect ONLY when it is active */
+.vote_btn:not(.disabled):hover {
+    background-color: var(--color-surface-hover);
+    transform: scale(1.05);
+}
+
+.vote_btn:not(.disabled):active {
+    transform: scale(0.95);
+}
+
+/* --- Empty State --- */
+.empty_suggestions_state {
+    text-align: center;
+    padding: 60px 20px;
+    border: 1px dashed var(--color-border-strong);
+    border-radius: 8px;
+    background-color: var(--color-surface-muted);
+    margin-bottom: 16px;
+    font-family: var(--font-sans);
+}
+
+.empty_suggestions_state .empty_title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.empty_suggestions_state .empty_desc {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* --- Error Fallback State --- */
+.empty_suggestions_state.error_state {
+    background-color: var(--error-bg);
+    border-color: var(--error-border);
+}
+
+.empty_suggestions_state.error_state .empty_title {
+    color: var(--error-text);
+}
+
+.empty_suggestions_state.error_state .button_secondary {
+    background-color: var(--color-surface);
+    color: var(--text-primary);
 }
