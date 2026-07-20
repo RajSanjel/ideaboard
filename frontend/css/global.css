@@ -53,10 +53,9 @@
     --success-bg: #d4edda;
     --success-border: #c3e6cb;
 
-    --error-text: #a71d2a;
-    --error-bg: #f8d7da;
-    --error-border: #f5c2c7;
-
+    --danger-text: #a71d2a;
+    --danger-bg: #f8d7da;
+    --danger-border: #f5c2c7;
 }
 
 button:hover {
@@ -76,4 +75,28 @@ button:hover {
 * {
     padding: 0px;
     margin: 0px;
+}
+
+.shadow-sm {
+    box-shadow: 0 4px 8px -2px #0F141D14;
+}
+
+.shadow-md {
+    box-shadow: 0 8px 16px -4px #0F141D1A, 0 4px 8px -4px #0F141D0F;
+}
+
+.shadow-lg {
+    box-shadow: 0 16px 32px -8px #0F141D1F, 0 8px 16px -6px #0F141D14;
+}
+
+.shadow-xl {
+    box-shadow: 0 24px 48px -12px #0F141D26, 0 12px 24px -8px #0F141D14;
+}
+
+.shadow-2xl {
+    box-shadow: 0 32px 64px -16px #0F141D2E, 0 16px 32px -10px #0F141D1A;
+}
+
+.shadow-inner {
+    box-shadow: inset 0 2px 4px 0 #0F141D0F;
 }

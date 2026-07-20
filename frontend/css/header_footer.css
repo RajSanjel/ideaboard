@@ -71,6 +71,7 @@ nav li a {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 180px;
+    border-top: 1px solid var(--color-border);
 }
 
 .footer_title,
@@ -122,7 +123,7 @@ nav li a {
 /* logout section */
 .button_logout {
     padding: 5px 8px;
-    color: var(--status-danger);
+    color: var(--danger-text);
     background-color: transparent;
     border: none;
     outline: none;

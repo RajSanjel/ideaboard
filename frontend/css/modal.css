@@ -190,20 +190,20 @@
 .form-group input.invalid,
 .form-group textarea.invalid,
 .form-group select.invalid {
-    border-color: var(--error-border);
+    border-color: var(--danger-border);
 }
 
 /* Ensure focus state overrides error border if user starts typing */
 .form-group input.invalid:focus,
 .form-group textarea.invalid:focus,
 .form-group select.invalid:focus {
-    border-color: var(--error-text);
+    border-color: var(--danger-text);
     outline: none;
 }
 
 /* The Error Message Text */
 .error-message {
-    color: var(--error-text);
+    color: var(--danger-text);
     font-size: 13px;
     margin-top: 6px;
     font-weight: 500;
