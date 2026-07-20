@@ -505,8 +505,8 @@ main {
 }
 
 .tag.rejected {
-    color: var(--error-text);
-    background-color: var(--error-bg);
+    color: var(--danger-text);
+    background-color: var(--danger-bg);
 }
 
 .vote_btn.disabled {
@@ -537,7 +537,7 @@ main {
 }
 
 .suggestion_container.rejected {
-    border-left-color: var(--error-text);
+    border-left-color: var(--danger-text);
 }
 
 /* --- Modal Success Message --- */
@@ -648,12 +648,12 @@ main {
 
 /* --- Error Fallback State --- */
 .empty_suggestions_state.error_state {
-    background-color: var(--error-bg);
-    border-color: var(--error-border);
+    background-color: var(--danger-bg);
+    border-color: var(--danger-border);
 }
 
 .empty_suggestions_state.error_state .empty_title {
-    color: var(--error-text);
+    color: var(--danger-text);
 }
 
 .empty_suggestions_state.error_state .button_secondary {

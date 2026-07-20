@@ -53,6 +53,7 @@ main {
 
 .btn-view {
     background-color: var(--color-accent);
+    text-decoration: none;
 }
 
 .btn-submit-suggestion {

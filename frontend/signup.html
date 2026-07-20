@@ -52,7 +52,7 @@
         <div class="backendFeedback hidden" id="signUpMessage">
             <p id="feedbackMessage"></p>
         </div>
-        <form class="form" id="signUpForm">
+        <form class="form shadow-xl" id="signUpForm">
 
             <div class="form_header">
 
@@ -88,18 +88,19 @@
                 <input type="email" name="email" id="email" placeholder="username@email.com" class="form_input">
                 <span class="error" data-for="email"></span>
                 <label for="password" class="form_label">Password</label>
-                <input type="password" name="password" id="password" placeholder="password" class="form_input">
+                <input type="password" name="password" id="password" placeholder="Enter your password"
+                    class="form_input">
                 <span class="error" data-for="password"></span>
 
                 <label for="cpassword" class="form_label"> Confirm Password</label>
-                <input type="password" name="cpassword" id="cpassword" placeholder="confirm password"
+                <input type="password" name="cpassword" id="cpassword" placeholder="Retype your password"
                     class="form_input">
                 <span class="error" id="cpasswordError" data-for="cpassword"></span>
 
             </div>
 
             <div class="form_footer">
-                <button type="button" class="form_button disabled" id="signUpButton">
+                <button type="button" class="form_button disabled" id="signUpButton" disabled>
                     Create Account
                 </button>
             </div>
@@ -129,7 +130,7 @@
                 <span class="footer_items">
 
                     <li class="footer_link">
-                        <a href="./suggestion.html">Suggestion Board</a>
+                        <a href="./suggestions.html">Suggestion Board</a>
                     </li>
                     <li class="footer_link">
                         <a href="./login.html">Sign in</a>

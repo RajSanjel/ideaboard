@@ -52,7 +52,7 @@
         <div class="backendFeedback hidden" id="signUpMessage">
             <p id="feedbackMessage"></p>
         </div>
-        <form class="form" id="loginForm">
+        <form class="form shadow-xl" id="loginForm">
             <div class="form_header">
                 <h1>
                     Sign in to IdeaBoard
@@ -67,11 +67,12 @@
                 <input type="email" name="email" id="email" placeholder="username@email.com" class="form_input">
                 <span class="error" data-for="email"></span>
                 <label for="password" class="form_label">Password</label>
-                <input type="password" name="password" id="password" placeholder="password" class="form_input">
+                <input type="password" name="password" id="password" placeholder="Enter your password"
+                    class="form_input">
                 <span class="error" data-for="password"></span>
             </div>
             <div class="form_footer">
-                <button type="button" class="form_button disabled" id="signInBtn">
+                <button type="button" class="form_button disabled" id="signInBtn" disabled>
                     Sign in
                 </button>
                 <p class="form_footer_text">
@@ -103,7 +104,7 @@
                 <span class="footer_items">
 
                     <li class="footer_link">
-                        <a href="./suggestion.html">Suggestion Board</a>
+                        <a href="./suggestions.html">Suggestion Board</a>
                     </li>
                     <li class="footer_link">
                         <a href="./login.html">Sign in</a>
