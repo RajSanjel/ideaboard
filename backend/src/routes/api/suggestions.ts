@@ -7,5 +7,6 @@ const router: Router = Router();
 
 router.post("/", verifyAuth, validateSuggestion, SuggestionController.create);
 router.get("/", SuggestionController.getAll);
+router.get("/stats", SuggestionController.getStats);
 
 export default router;

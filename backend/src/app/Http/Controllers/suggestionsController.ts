@@ -10,6 +10,10 @@ const SuggestionController = {
 		const result = await SuggestionProvider.getAllSuggestions(req);
 		res.status(result.httpCode).json(result);
 	},
+	getStats: async (req: Request, res: Response) => {
+		const result = await SuggestionProvider.getSuggestionStats(req);
+		res.status(result.httpCode).json(result);
+	},
 };
 
 export default SuggestionController;
