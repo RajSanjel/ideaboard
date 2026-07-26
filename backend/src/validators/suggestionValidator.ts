@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiResponse } from "../@types/ApiResponse.js";
 import { SuggestionPayload } from "../@types/Suggestion.js";
-import categoriesData from "../../../shared/categories.json";
+import categoriesData from "../../../shared/categories.json" with { type: "json" };
 
 const validCategoryIds = categoriesData.map((c) => c.id);
 

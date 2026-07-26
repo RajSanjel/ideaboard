@@ -1,0 +1,7 @@
+$kind: http-request
+name: get single status
+url: "{{base_url}}/api/suggestions?status=open"
+method: GET
+queryParams:
+  status: open
+order: 4031950726627955

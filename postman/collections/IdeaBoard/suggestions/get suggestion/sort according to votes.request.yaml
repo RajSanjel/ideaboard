@@ -1,0 +1,7 @@
+$kind: http-request
+name: sort according to votes
+url: "{{base_url}}/api/suggestions?sort=most_votes"
+method: GET
+queryParams:
+  sort: most_votes
+order: 4354440845668062

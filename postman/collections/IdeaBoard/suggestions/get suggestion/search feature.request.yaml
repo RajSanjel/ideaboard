@@ -1,0 +1,10 @@
+$kind: http-request
+name: search feature
+url: "{{base_url}}/api/suggestions?search=the cafeteria"
+method: GET
+queryParams:
+  - key: search
+    value: the cafeteria
+    disabled: false
+    description: ""
+order: 4502646412437102
