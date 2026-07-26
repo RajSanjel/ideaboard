@@ -54,7 +54,7 @@
 
     <main>
         <div class="upper_collection">
-            <div class="right">
+            <div class="left">
                 <section class="suggestion_agenda shadow-md">
                     <span class="suggestion_agenda_name">IdeaBoard</span>
                     <h1 class="suggestion_agenda_title">Share ideas for your college</h1>
@@ -69,127 +69,94 @@
                 </section>
 
                 <section class="suggestions_stats_container shadow-md">
-                    <span class="suggestions_stats_container_title">
-                        AT A GLANCE
-                    </span>
+                    <span class="suggestions_stats_container_title">AT A GLANCE</span>
                     <div>
                         <span class="suggestions_stat_item">
-                            <span class="suggestions_stat_data">5</span>
+                            <span class="suggestions_stat_data" id="stat-total">-</span>
                             <span class="suggestions_stat_text">Suggestions</span>
                         </span>
                         <span class="suggestions_stat_item">
-                            <span class="suggestions_stat_data">3</span>
+                            <span class="suggestions_stat_data" id="stat-open">-</span>
                             <span class="suggestions_stat_text">OPEN</span>
                         </span>
                         <span class="suggestions_stat_item">
-                            <span class="suggestions_stat_data">2</span>
+                            <span class="suggestions_stat_data" id="stat-progress">-</span>
                             <span class="suggestions_stat_text">IN PROGRESS</span>
                         </span>
                         <span class="suggestions_stat_item">
-                            <span class="suggestions_stat_data">1</span>
+                            <span class="suggestions_stat_data" id="stat-completed">-</span>
                             <span class="suggestions_stat_text">COMPLETED</span>
                         </span>
                     </div>
                 </section>
-
-                <section class="stats_visual_container shadow-md">
+                <section class="stats_visual_container shadow-md" id="status_filters">
                     <span class="stats_visual_title">BY STATUS</span>
-                    <span class="stats_visual_item">
+
+                    <!-- Added data-status attributes matching your backend values -->
+                    <span class="stats_visual_item" id="status-row-open" data-status="open">
                         <span class="stats_visual_topic">Submitted</span>
-                        <span class="stats_visual_line"></span>
+                        <span class="stats_visual_line" id="bar-open"></span>
                     </span>
-                    <span class="stats_visual_item">
+
+                    <span class="stats_visual_item" id="status-row-review" data-status="review">
                         <span class="stats_visual_topic">Reviewing</span>
-                        <span class="stats_visual_line"></span>
+                        <span class="stats_visual_line" id="bar-review"></span>
                     </span>
-                    <span class="stats_visual_item">
+
+                    <span class="stats_visual_item" id="status-row-planned" data-status="planned">
                         <span class="stats_visual_topic">On the agenda</span>
-                        <span class="stats_visual_line"></span>
+                        <span class="stats_visual_line" id="bar-planned"></span>
                     </span>
-                    <span class="stats_visual_item">
+
+                    <span class="stats_visual_item" id="status-row-progress" data-status="progress">
                         <span class="stats_visual_topic">In Progress</span>
-                        <span class="stats_visual_line"></span>
+                        <span class="stats_visual_line" id="bar-progress"></span>
                     </span>
-                    <span class="stats_visual_item">
+
+                    <span class="stats_visual_item" id="status-row-completed" data-status="done">
                         <span class="stats_visual_topic">In Place</span>
-                        <span class="stats_visual_line"></span>
+                        <span class="stats_visual_line" id="bar-completed"></span>
                     </span>
                 </section>
+
+
             </div>
-            <div class="left">
-                <section class="top_voted_suggestion shadow-md">
+            <div class="right">
+                <section class="top_voted_suggestion shadow-md" id="top_voted_container">
                     <span class="top_voted_indicator">
                         <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
                         TOP VOTED
                     </span>
-                    <p class="top_voted_title">
-                        Lorem ipsum dolor sit amet.
-                    </p>
+                    <p class="top_voted_title" id="top_voted_title">Loading...</p>
                     <span class="top_voted_tags">
-                        <span class="tag planned">
-                            On the agenda
-                        </span>
-                        <span class="top_voted_vote_count">
+                        <span class="tag" id="top_voted_status">-</span>
+                        <span class="top_voted_vote_count" id="top_voted_count">
                             <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
-                            130 votes
+                            0 votes
                         </span>
                     </span>
-                    <p class="top_voted_desc">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente mollitia sint quidem pariatur
-                        facilis molestiae quam quae consequatur. Nulla, nesciunt. Voluptas suscipit autem molestiae,
-                        expedita fugiat, laudantium, odio facilis nostrum vero officia reprehenderit! Voluptates, quidem
-                        tempore quae architecto voluptatum atque velit nostrum molestias quos suscipit dicta ipsa
-                        possimus,
-                        nulla in! Dicta voluptas totam, maxime veritatis laboriosam laborum. Quod omnis iusto laborum
-                        delectus aspernatur blanditiis, ipsam a? Vel et vitae, nisi ipsa dolorem ex ipsam est quo
-                        expedita
-                        non, incidunt minus, at iste beatae veritatis sit voluptatibus. Vel quidem, tempore atque fugiat
-                        harum consequatur cum voluptatibus. Facilis aspernatur enim odio mollitia!
-                    </p>
-                    <a href="#" class="top_voted_link">View Suggestion &#8594;</a>
+                    <p class="top_voted_desc" id="top_voted_desc">...</p>
+                    <a href="#" class="top_voted_link" id="top_voted_link">View Suggestion &#8594;</a>
                 </section>
 
                 <section class="browse_by_category shadow-md">
-                    <div class="categories">
-                        <span class="browse_category category_selected">
-                            All
-                        </span>
-                        <span class="browse_category">
-                            Category 1
-                        </span>
-                        <span class="browse_category">
-                            Category 2
-                        </span>
-                        <span class="browse_category">
-                            Category 3
-                        </span>
-                        <span class="browse_category">
-                            Category 4
-                        </span>
-                        <span class="browse_category">
-                            Category 5
-                        </span>
-                        <span class="browse_category">
-                            Category 6
-                        </span>
-                        <span class="browse_category">
-                            Category 7
-                        </span>
-                    </div>
+                    <div class="categories" id="category_tabs"></div>
                 </section>
+
             </div>
         </div>
 
         <div class="suggestions_lists">
             <div class="suggestions_list_header">
                 <span class="suggestions_list_title">All Suggestions</span>
-                <select class="suggestions_list_sortby">
+                <select class="suggestions_list_sortby" id="sortSelect">
                     <option value="default">Default</option>
-                    <option value="default">Most votes</option>
-                    <option value="default">Least votes</option>
+                    <option value="most_votes">Most votes</option>
+                    <option value="least_votes">Least votes</option>
                 </select>
                 <div class="suggestions_list_search">
-                    <input type="text" placeholder="Search Ideas" class="suggestions_list_search_input">
+                    <input type="text" id="searchInput" placeholder="Search Ideas"
+                        class="suggestions_list_search_input">
                 </div>
             </div>
             <section id="suggestions_container"></section>

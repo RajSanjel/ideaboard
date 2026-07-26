@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/modal.css">
     <script src="./js/global/navbar-inject.js" type="module" defer></script>
+    <script src="./js/index.js" type="module"></script>
     <script src="./js/modal.js" type="module" defer></script>
-
 </head>
 
 <body>
@@ -66,32 +66,31 @@
                 </div>
             </div>
             <div class="right">
-
                 <div class="card shadow-md">
                     <p class="card-heading">
                         RIGHT NOW
                     </p>
                     <div class="card-content">
                         <span class="card_item">
-                            <span class="data">5</span>
+                            <span class="data" id="stat-total">-</span>
                             <span class="text">Suggestions</span>
                         </span>
                         <span class="card_item">
-                            <span class="data">3</span>
+                            <span class="data" id="stat-open">-</span>
                             <span class="text">OPEN</span>
                         </span>
                         <span class="card_item">
-                            <span class="data">2</span>
+                            <span class="data" id="stat-progress">-</span>
                             <span class="text">IN PROGRESS</span>
                         </span>
                         <span class="card_item">
-                            <span class="data">1</span>
+                            <span class="data" id="stat-completed">-</span>
                             <span class="text">COMPLETED</span>
                         </span>
-
                     </div>
-
                 </div>
+            </div>
+            </div>
             </div>
         </section>
         <section class="testimonials">
