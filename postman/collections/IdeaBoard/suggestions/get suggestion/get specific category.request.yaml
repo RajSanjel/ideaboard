@@ -1,0 +1,7 @@
+$kind: http-request
+name: get specific category
+url: "{{base_url}}/api/suggestions?category=cafeteria"
+method: GET
+queryParams:
+  category: cafeteria
+order: 4235735914685521

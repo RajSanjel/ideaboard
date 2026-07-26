@@ -1,0 +1,30 @@
+$kind: http-request
+name: multiple things combined
+url: "{{base_url}}/api/suggestions?page=1&limit=5&category=cafeteria&status=open&sort=most_votes&search=improve"
+method: GET
+queryParams:
+  - key: page
+    value: "1"
+    disabled: false
+    description: ""
+  - key: limit
+    value: "5"
+    disabled: false
+    description: ""
+  - key: category
+    value: cafeteria
+    disabled: false
+    description: ""
+  - key: status
+    value: open
+    disabled: false
+    description: ""
+  - key: sort
+    value: most_votes
+    disabled: false
+    description: ""
+  - key: search
+    value: improve
+    disabled: false
+    description: ""
+order: 4481949832229511

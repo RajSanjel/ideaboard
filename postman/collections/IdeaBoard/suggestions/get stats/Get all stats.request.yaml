@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get all stats
+url: "{{base_url}}/api/suggestions/stats"
+method: GET
+order: 1785051729886
