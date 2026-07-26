@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Source+Serif+4:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Source+Serif+4:wght@200..900&display=swap');
+
 
 :root {
     /* Backgrounds & surfaces */
@@ -44,7 +46,7 @@
     --status-done-bg: #1A7F3724;
 
     /* Typography */
-    --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-sans: "SN Pro", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-serif: "Source Serif 4", ui-serif, Georgia, "Iowan Old Style", serif;
     --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
@@ -56,6 +58,15 @@
     --danger-text: #a71d2a;
     --danger-bg: #f8d7da;
     --danger-border: #f5c2c7;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background-color: var(--color-bg);
 }
 
 button:hover {
@@ -72,10 +83,6 @@ button:hover {
     opacity: 0.8;
 }
 
-* {
-    padding: 0px;
-    margin: 0px;
-}
 
 .shadow-sm {
     box-shadow: 0 4px 8px -2px #0F141D14;

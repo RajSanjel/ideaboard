@@ -1,35 +1,42 @@
-body {
-    margin: 0;
-    background: var(--color-bg);
-}
-
 main {
     width: min(1200px, 90%);
     margin: 0 auto;
     padding: 60px 0;
 }
 
-.right {
+/* --- Main Layout Container (Flexbox Fix) --- */
+.upper_collection {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.upper_collection>.left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.upper_collection>.right {
+    flex: 0 0 50%;
+    /* Strict, compact width to eliminate empty white space */
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.upper_collection {
-    display: flex;
-    flex-direction: row;
-    gap: 2%;
-}
-
+/* --- Suggestion Agenda --- */
 .suggestion_agenda {
-    width: 500px;
     background-image: linear-gradient(var(--color-bg), var(--color-surface-muted));
     border: 1px solid var(--color-border-strong);
     padding: 18px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 8px
+    gap: 8px;
 }
 
 .suggestion_agenda_name {
@@ -66,51 +73,16 @@ main {
 .suggestion_agenda_buttons a {
     text-decoration: none;
     color: var(--text-muted);
-
 }
 
-
-.suggestions_stats_container {
-    display: flex;
-    flex-direction: row;
-    border: 1px solid var(--color-border-strong);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.suggestions_stat_item {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.suggestions_stat_data {
-    font-size: 30px;
-    font-weight: 600;
-    font-family: var(--font-sans);
-}
-
-.suggestions_stat_text {
-    text-transform: uppercase;
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 13px;
-}
-
-/* Layout Adjustments */
-.upper_collection>.left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Stats Container (At a Glance) */
+/* --- Stats Container (At a Glance) --- */
 .suggestions_stats_container {
     display: flex;
     flex-direction: column;
     padding: 20px;
     background-color: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 10px;
     gap: 16px;
 }
 
@@ -119,50 +91,94 @@ main {
     font-family: var(--font-sans);
     color: var(--text-muted);
     font-size: 12px;
-
 }
 
 .suggestions_stats_container>div {
     display: flex;
-    justify-content: center;
-    gap: 50px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.suggestions_stat_item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex: 1;
+}
+
+.suggestions_stat_data {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    /* Default color for 'Total' */
+}
+
+/* --- 🔥 New Colors for Specific Stats --- */
+#stat-open {
+    color: var(--status-open);
+}
+
+#stat-progress {
+    color: var(--status-progress);
+}
+
+#stat-completed {
+    color: var(--status-done);
 }
 
 .suggestions_stat_text {
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 13px;
     color: var(--text-muted);
     margin-top: 4px;
 }
 
-.suggestions_stat_data {
-    color: var(--text-primary);
-}
-
-/* Stats Visual Container (By Status)*/
+/* --- Stats Visual Container (By Status) --- */
 .stats_visual_container {
     border: 1px solid var(--color-border-strong);
     border-radius: 10px;
-    padding: 20px;
+    padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1px;
     background-color: var(--color-surface);
+    font-family: var(--font-sans);
 }
 
 .stats_visual_title {
     font-size: 12px;
     text-transform: uppercase;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     letter-spacing: 0.5px;
 }
 
 .stats_visual_item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-size: 14px;
     color: var(--text-secondary);
-    --progress: 20%;
+    --progress: 0%;
     --count: "0";
+
+    cursor: pointer;
+    padding: 6px 12px;
+    margin: 0 -12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.stats_visual_item:hover {
+    background-color: var(--color-surface-muted);
+}
+
+.stats_visual_item.status_selected {
+    background-color: var(--color-surface-muted);
+    font-weight: 500;
 }
 
 .stats_visual_topic {
@@ -172,6 +188,7 @@ main {
 .stats_visual_line {
     flex: 1;
     height: 2px;
+    max-width: 100px;
     background-color: var(--color-border);
     margin: 0 15px;
     position: relative;
@@ -183,6 +200,7 @@ main {
     inset: 0 auto 0 0;
     width: var(--progress);
     background-color: var(--color-accent);
+    transition: width 0.4s ease-out;
 }
 
 .stats_visual_line::after {
@@ -194,16 +212,19 @@ main {
     color: var(--text-muted);
 }
 
-/* Top Voted Suggestion */
+/* --- Top Voted Suggestion --- */
 .top_voted_suggestion {
     border: 1px solid var(--color-border-strong);
     border-radius: 10px;
-    padding: 30px;
+    padding: 24px;
+    min-height: 318px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    justify-content: flex-start;
+    gap: 14px;
     background-color: var(--color-surface);
     font-family: var(--font-sans);
+    box-sizing: border-box;
 }
 
 .top_voted_indicator {
@@ -213,9 +234,8 @@ main {
     letter-spacing: 0.5px;
 }
 
-
 .top_voted_title {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 500;
     margin: 0;
     color: var(--text-primary);
@@ -228,29 +248,29 @@ main {
 }
 
 .top_voted_vote_count {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
     background-color: var(--color-surface-muted);
     padding: 4px 12px;
     border-radius: 12px;
 }
 
-
 .top_voted_desc {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
     line-height: 1.5;
+    margin: 0;
 }
 
 .top_voted_link {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--color-accent);
     text-decoration: none;
-    margin-top: 8px;
+    margin-top: 4px;
 }
 
-/* Browse By Category */
+/* --- Browse By Category --- */
 .browse_by_category {
     border: 1px solid var(--color-border-strong);
     border-radius: 10px;
@@ -262,10 +282,11 @@ main {
 .browse_by_category::before {
     content: "BROWSE BY CATEGORY";
     display: block;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 500;
     text-transform: uppercase;
     color: var(--text-muted);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     letter-spacing: 0.5px;
 }
 
@@ -277,9 +298,9 @@ main {
 
 .browse_category {
     border: 1px solid var(--color-border-strong);
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
     cursor: pointer;
     background-color: var(--color-surface);
@@ -291,7 +312,7 @@ main {
     border-color: var(--color-accent);
 }
 
-/*Suggestions List Header */
+/* --- Suggestions List Header --- */
 .suggestions_lists {
     font-family: var(--font-sans);
     margin-top: 40px;
@@ -340,7 +361,7 @@ main {
     width: 200px;
 }
 
-/* Suggestion Container Box */
+/* --- Suggestion Container Box --- */
 .suggestion_container {
     display: flex;
     gap: 20px;
@@ -371,7 +392,6 @@ main {
     align-items: center;
     flex-shrink: 0;
     margin: auto 0;
-
 }
 
 .suggestion_container>.left:first-child .vote_count {
@@ -466,7 +486,7 @@ main {
     color: var(--text-faint);
 }
 
-/* Status Tags */
+/* --- Status Tags --- */
 .tag {
     display: inline-flex;
     align-items: center;
@@ -509,35 +529,28 @@ main {
     background-color: var(--danger-bg);
 }
 
+/* --- Vote Button Interactions --- */
+.vote_btn {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    cursor: pointer;
+}
+
 .vote_btn.disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    /* filter: grayscale(100%); */
 }
 
-/* --- Dynamic Container Borders based on Status --- */
-.suggestion_container.open {
-    border-left-color: var(--status-open);
+.vote_btn.disabled:hover {
+    cursor: not-allowed;
 }
 
-.suggestion_container.review {
-    border-left-color: var(--status-review);
+.vote_btn:not(.disabled):hover {
+    background-color: var(--color-surface-hover);
+    transform: scale(1.05);
 }
 
-.suggestion_container.planned {
-    border-left-color: var(--status-planned);
-}
-
-.suggestion_container.progress {
-    border-left-color: var(--status-progress);
-}
-
-.suggestion_container.done {
-    border-left-color: var(--status-done);
-}
-
-.suggestion_container.rejected {
-    border-left-color: var(--danger-text);
+.vote_btn:not(.disabled):active {
+    transform: scale(0.95);
 }
 
 /* --- Modal Success Message --- */
@@ -601,29 +614,7 @@ main {
     cursor: not-allowed;
 }
 
-/* --- Vote Button Interactions --- */
-.vote_btn {
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    /* Instantly tells the user this is interactive */
-    cursor: pointer;
-}
-
-/* Explicitly force the not-allowed cursor if they aren't logged in */
-.vote_btn.disabled:hover {
-    cursor: not-allowed;
-}
-
-/* Subtle hover effect ONLY when it is active */
-.vote_btn:not(.disabled):hover {
-    background-color: var(--color-surface-hover);
-    transform: scale(1.05);
-}
-
-.vote_btn:not(.disabled):active {
-    transform: scale(0.95);
-}
-
-/* --- Empty State --- */
+/* --- Empty States --- */
 .empty_suggestions_state {
     text-align: center;
     padding: 60px 20px;
@@ -646,7 +637,7 @@ main {
     color: var(--text-muted);
 }
 
-/* --- Error Fallback State --- */
+/* Error Fallback State */
 .empty_suggestions_state.error_state {
     background-color: var(--danger-bg);
     border-color: var(--danger-border);
