@@ -4,6 +4,10 @@ import { getCachedUser } from "./global/auth.js";
 let currentPage = 1;
 const limit = 5;
 let isFetching = false;
+let currentCategory = "All";
+let currentStatus = "All";
+let currentSort = "default";
+let currentSearch = "";
 
 const container = document.getElementById("suggestions_container");
 const prevPageBtn = document.getElementById("prevPageBtn");
@@ -24,7 +28,12 @@ async function loadSuggestions(page) {
 
     pageIndicator.textContent = `Loading...`;
     try {
-        const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}?page=${page}&limit=${limit}`;
+        let url = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}?page=${page}&limit=${limit}`;
+
+        if (currentCategory && currentCategory !== "All") url += `&category=${encodeURIComponent(currentCategory)}`;
+        if (currentSort && currentSort !== "default") url += `&sort=${encodeURIComponent(currentSort)}`;
+        if (currentSearch) url += `&search=${encodeURIComponent(currentSearch)}`;
+        if (currentStatus && currentStatus !== "All") url += `&status=${encodeURIComponent(currentStatus)}`;
 
         const resp = await fetch(url);
 
@@ -85,6 +94,124 @@ async function loadSuggestions(page) {
         isFetching = false;
     }
 }
+async function renderCategoryTabs() {
+    const categoryTabsContainer = document.getElementById("category_tabs");
+    if (!categoryTabsContainer) return;
+
+    try {
+        const response = await fetch('../../shared/categories.json');
+
+        if (!response.ok) {
+            throw new Error(`Failed to load categories: ${response.status}`);
+        }
+
+        const categories = await response.json();
+
+        categoryTabsContainer.innerHTML = "";
+
+        const allSpan = document.createElement("span");
+        allSpan.dataset.category = "All";
+        allSpan.textContent = "All";
+        allSpan.className = `browse_category ${currentCategory === "All" ? "category_selected" : ""}`;
+        categoryTabsContainer.appendChild(allSpan);
+
+        categories.forEach(category => {
+            const span = document.createElement("span");
+
+            span.dataset.category = category.id;
+            span.textContent = category.label;
+
+            const isSelected = currentCategory === category.id ? "category_selected" : "";
+            span.className = `browse_category ${isSelected}`;
+
+            categoryTabsContainer.appendChild(span);
+        });
+
+    } catch (error) {
+        console.error("Error loading categories:", error);
+        categoryTabsContainer.innerHTML = `<span class="browse_category">Error loading categories</span>`;
+    }
+}
+
+async function fetchStats() {
+    try {
+        const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}/stats`;
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+            const stats = result.data;
+
+            const totalEl = document.getElementById('stat-total');
+            const openEl = document.getElementById('stat-open');
+            const progressEl = document.getElementById('stat-progress');
+            const completedEl = document.getElementById('stat-completed');
+
+            if (totalEl) totalEl.textContent = stats.total;
+            if (openEl) openEl.textContent = stats.open;
+            if (progressEl) progressEl.textContent = stats.in_progress;
+            if (completedEl) completedEl.textContent = stats.completed;
+
+            updateStatusBar('bar-open', stats.open, stats.total);
+            updateStatusBar('bar-review', stats.review, stats.total);
+            updateStatusBar('bar-planned', stats.planned, stats.total);
+            updateStatusBar('bar-progress', stats.in_progress, stats.total);
+            updateStatusBar('bar-completed', stats.completed, stats.total);
+        }
+    } catch (error) {
+        console.error('Error fetching suggestion stats:', error);
+    }
+}
+
+function updateStatusBar(elementId, count, total) {
+    const barEl = document.getElementById(elementId);
+    if (!barEl) return;
+
+    // Calculate percentage width (0% if no suggestions exist yet)
+    const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+
+    // Update CSS variables inline
+    barEl.style.setProperty('--progress', `${percentage}%`);
+    barEl.style.setProperty('--count', `"${count}"`);
+}
+
+
+async function fetchTopVoted() {
+    try {
+        const url = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}?sort=most_votes&limit=1`;
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const result = await response.json();
+        const topContainer = document.getElementById('top_voted_container');
+
+        if (result.success && result.data && result.data.length > 0) {
+            const suggestion = result.data[0];
+            const statusConfig = getStatusConfig(suggestion.status);
+
+            document.getElementById('top_voted_title').textContent = suggestion.title;
+            document.getElementById('top_voted_desc').textContent = suggestion.description.substring(0, 300) + '...';
+
+            const statusEl = document.getElementById('top_voted_status');
+            statusEl.textContent = statusConfig.label;
+            statusEl.className = `tag ${statusConfig.class}`;
+
+            document.getElementById('top_voted_count').innerHTML = `<img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> ${suggestion.votes || 0} votes`;
+            document.getElementById('top_voted_link').href = `suggestion.html?refId=${suggestion.ref}`;
+
+            if (topContainer) topContainer.style.display = '';
+        } else {
+            if (topContainer) topContainer.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error fetching top voted suggestion:', error);
+    }
+}
+
 
 function buildSuggestionCard(suggestion) {
     const statusConfig = getStatusConfig(suggestion.status);
@@ -165,10 +292,66 @@ function formatTimeAgo(date) {
     return Math.floor(seconds) + " seconds ago";
 }
 
+const categoryTabsContainer = document.getElementById("category_tabs");
+if (categoryTabsContainer) {
+    categoryTabsContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("browse_category")) {
+
+            currentCategory = e.target.dataset.category;
+            currentPage = 1;
+            renderCategoryTabs();
+            loadSuggestions(currentPage);
+        }
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
+    renderCategoryTabs();
     loadSuggestions(currentPage);
+    fetchStats();
+    fetchTopVoted();
 
+    const statusItems = document.querySelectorAll(".stats_visual_item");
+    statusItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            const clickedStatus = e.currentTarget.dataset.status;
+            if (currentStatus === clickedStatus) {
+                currentStatus = "All";
+                e.currentTarget.classList.remove("status_selected");
+            } else {
+                currentStatus = clickedStatus;
+                statusItems.forEach(i => i.classList.remove("status_selected"));
+                e.currentTarget.classList.add("status_selected");
+            }
+
+            currentPage = 1;
+            loadSuggestions(currentPage);
+        });
+    });
+
+    const sortSelect = document.getElementById("sortSelect");
+    if (sortSelect) {
+        sortSelect.addEventListener("change", (e) => {
+            currentSort = e.target.value;
+            currentPage = 1;
+            loadSuggestions(currentPage);
+        });
+    }
+
+    const searchInput = document.getElementById("searchInput");
+    let searchTimeout;
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = e.target.value.trim();
+                currentPage = 1;
+                loadSuggestions(currentPage);
+            }, 300);
+        });
+    }
     if (prevPageBtn) {
         prevPageBtn.addEventListener("click", () => {
             if (currentPage > 1) {
