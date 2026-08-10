@@ -4,11 +4,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do </title>
+    <title>Suggestion Details - IdeaBoard</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/header_footer.css">
+    <link rel="stylesheet" href="./css/suggestion-detail.css">
+    <link rel="stylesheet" href="./css/modal.css">
+    <script src="./js/global/navbar-inject.js" type="module" defer></script>
+    <script src="./js/suggestion-detail.js" type="module" defer></script>
 </head>
 
 <body>
-    404 - Code not found. Work not done.
+    <div class="modal" id="modal"></div>
+    <nav>
+        <div class="left">
+            <ul class="logo">
+                <span class="logo_design">
+                    I
+                </span>
+                <li class="logo_text">
+                    IdeaBoard
+                </li>
+            </ul>
+            <ul class="nav_items">
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="./suggestions.html" class="active">
+                        Suggestion
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+        <div class=" left">
+            <div class=" left" id="nav__auth_dependent">
+                <li>
+                    <a href="./login.html">
+                        Sign in
+                    </a>
+                </li>
+                </ul>
+            </div>
+    </nav>
+
+    <main class="detail_main">
+        <div class="back_nav_container">
+            <a href="./suggestions.html" class="back_link">&#8592; All suggestions</a>
+        </div>
+
+        <section class="suggestion_detail_card shadow-md">
+            <div class="suggestion_detail_header">
+                <div class="suggestion_detail_tags">
+                    <span class="tag planned" style="text-decoration: none;">On the agenda</span>
+                    <span class="category_pill">Category</span>
+                </div>
+                <span class="suggestion_ref_id">S-100</span>
+            </div>
+
+            <h1 class="suggestion_detail_title">Lorem ipsum dolor sit amet consectetur adipiscing elit.</h1>
+
+            <div class="suggestion_meta_bar">
+                <div class="user_profile_group">
+                    <div class="user_avatar">UN</div>
+                    <div class="user_info_text">
+                        <span class="user_name">User name</span>
+                        <span class="submission_date">Submitted Jan 1, 2026</span>
+                    </div>
+                </div>
+                <button class="vote_btn" id="detailVoteBtn">
+                    <img src="./public/vote.svg" height="10px" style="margin-right: 4px;">
+                    <span id="detailVoteCount">130 votes</span>
+                </button>
+            </div>
+
+            <hr class="section_divider">
+
+            <div class="suggestion_body_text">
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
+                    sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
+                    tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
+                    lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
+                    torquent per conubia nostra inceptos himenaeos.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
+                    sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
+                    tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
+                    lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
+                    torquent per conubia nostra inceptos himenaeos.</p>
+            </div>
+
+            <hr class="section_divider">
+
+            <div class="status_tracker_container">
+                <span class="status_tracker_label">STATUS</span>
+                <div class="status_steps_wrapper">
+                    <div class="tracker_step_item completed">
+                        <div class="tracker_node"><span class="checkmark">&#10003;</span></div>
+                        <span class="tracker_text" style="text-decoration: none;">Submitted</span>
+                    </div>
+                    <div class="tracker_connector completed"></div>
+
+                    <div class="tracker_step_item completed">
+                        <div class="tracker_node"><span class="checkmark">&#10003;</span></div>
+                        <span class="tracker_text" style="text-decoration: none;">Reviewing</span>
+                    </div>
+                    <div class="tracker_connector completed"></div>
+
+                    <div class="tracker_step_item active">
+                        <div class="tracker_node"></div>
+                        <span class="tracker_text" style="text-decoration: none;">On the agenda</span>
+                    </div>
+                    <div class="tracker_connector"></div>
+                    <div class="tracker_step_item">
+                        <div class="tracker_node"></div>
+                        <span class="tracker_text" style="text-decoration: none;">In Progress</span>
+                    </div>
+                    <div class="tracker_connector"></div>
+                    <div class="tracker_step_item">
+                        <div class="tracker_node"></div>
+                        <span class="tracker_text" style="text-decoration: none;">In Place</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="discussion_section">
+            <h2 class="discussion_heading">Discussion</h2>
+
+            <div class="comment_box_card shadow-md">
+                <div class="comment_box_top">
+                    <div class="user_avatar">UN</div>
+                    <textarea class="comment_textarea" placeholder="Share your view." rows="3"></textarea>
+                </div>
+                <div class="comment_box_footer">
+                    <span class="posting_as_text">Posting as User Name</span>
+                    <button class="button btn-view" id="postCommentBtn">Post Comment</button>
+                </div>
+            </div>
+
+            <div class="comments_thread_container">
+
+                <div class="comment_item">
+                    <div class="comment_main_content">
+                        <div class="user_avatar">UN</div>
+                        <div class="comment_content_body">
+                            <div class="comment_header_meta">
+                                <span class="user_name">User name</span>
+                                <span class="comment_time">• 1 day ago</span>
+                            </div>
+                            <p class="comment_text">
+                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit
+                                quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id.
+                                Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo
+                                eu aenean.Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing
+                                elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id.
+                                Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo
+                                eu aenean.
+                            </p>
+                            <div class="comment_actions">
+                                <button class="comment_vote_btn">
+                                    <img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> 40
+                                </button>
+                                <button class="comment_reply_btn">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment_replies_list">
+
+                        <div class="comment_item nested">
+                            <div class="comment_main_content">
+                                <div class="user_avatar">UN</div>
+                                <div class="comment_content_body">
+                                    <div class="comment_header_meta">
+                                        <span class="user_name">User name</span>
+                                        <span class="comment_time">• 1 day ago</span>
+                                    </div>
+                                    <p class="comment_text">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing
+                                        elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat
+                                        in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis
+                                        convallis tempus leo eu aenean.Lorem ipsum dolor sit amet consectetur
+                                        adipiscing.
+                                    </p>
+                                    <div class="comment_actions">
+                                        <button class="comment_vote_btn">
+                                            <img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> 40
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment_item nested">
+                            <div class="comment_main_content">
+                                <div class="user_avatar">UN</div>
+                                <div class="comment_content_body">
+                                    <div class="comment_header_meta">
+                                        <span class="user_name">User name</span>
+                                        <span class="comment_time">• 1 day ago</span>
+                                    </div>
+                                    <p class="comment_text">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing
+                                        elit quisque faucibus ex sapien vitae.
+                                    </p>
+                                    <div class="comment_actions">
+                                        <button class="comment_vote_btn">
+                                            <img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> 40
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer_first">
+            <ul class="logo">
+                <span class="logo_design">
+                    I
+                </span>
+                <li class="logo_text">
+                    IdeaBoard
+                </li>
+            </ul>
+            <p class="footer_text">Suggestion board for ABC College. Built for transparent college decisions.
+            </p>
+        </div>
+        <div class="footer_middle">
+            <ul class="footer_list">
+                <li class="footer_title">
+                    Explore
+                </li>
+                <span class="footer_items">
+
+                    <li class="footer_link">
+                        <a href="./suggestions.html">Suggestion Board</a>
+                    </li>
+                    <li class="footer_link">
+                        <a href="./login.html">Sign in</a>
+                    </li>
+                    <li class="footer_link">
+                        <a href="./signup.html">Create account</a>
+                    </li>
+                </span>
+            </ul>
+        </div>
+        <div class="footer_last">
+            <ul class="footer_list">
+                <li class="footer_title">
+                    Contact
+                </li>
+                <span class="footer_items">
+                    <li class="footer_info">
+                        ABC College
+                    </li>
+                    <li class="footer_info">
+                        info@ideaboard.edu.np
+                    </li>
+                    <li class="footer_info">
+                        +977 9841098036
+                    </li>
+                </span>
+            </ul>
+        </div>
+    </footer>
+    <p class="footer_copyright">
+        IdeaBoard · 2026 · All suggestions are public within the college community.
+    </p>
+
 </body>
 
 </html>
