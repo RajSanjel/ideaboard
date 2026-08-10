@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/suggestion-detail.css">
     <link rel="stylesheet" href="./css/modal.css">
     <script src="./js/global/navbar-inject.js" type="module" defer></script>
-    <script src="./js/suggestion-detail.js" type="module" defer></script>
+    <script src="./js/suggestion.js" type="module" defer></script>
 </head>
 
 <body>
@@ -46,8 +46,8 @@
                         Sign in
                     </a>
                 </li>
-                </ul>
             </div>
+        </div>
     </nav>
 
     <main class="detail_main">
@@ -55,176 +55,107 @@
             <a href="./suggestions.html" class="back_link">&#8592; All suggestions</a>
         </div>
 
-        <section class="suggestion_detail_card shadow-md">
-            <div class="suggestion_detail_header">
-                <div class="suggestion_detail_tags">
-                    <span class="tag planned" style="text-decoration: none;">On the agenda</span>
-                    <span class="category_pill">Category</span>
+        <!-- Initially hidden until JS validates and populates data, defaults to 404 error if invalid/missing -->
+        <div id="suggestion_content_wrapper" style="display: none;">
+            <section class="suggestion_detail_card shadow-md">
+                <div class="suggestion_detail_header">
+                    <div class="suggestion_detail_tags">
+                        <span class="tag planned" style="text-decoration: none;">On the agenda</span>
+                        <span class="category_pill">Category</span>
+                    </div>
+                    <span class="suggestion_ref_id">S-100</span>
                 </div>
-                <span class="suggestion_ref_id">S-100</span>
-            </div>
 
-            <h1 class="suggestion_detail_title">Lorem ipsum dolor sit amet consectetur adipiscing elit.</h1>
+                <h1 class="suggestion_detail_title">Loading suggestion...</h1>
 
-            <div class="suggestion_meta_bar">
-                <div class="user_profile_group">
-                    <div class="user_avatar">UN</div>
-                    <div class="user_info_text">
-                        <span class="user_name">User name</span>
-                        <span class="submission_date">Submitted Jan 1, 2026</span>
-                    </div>
-                </div>
-                <button class="vote_btn" id="detailVoteBtn">
-                    <img src="./public/vote.svg" height="10px" style="margin-right: 4px;">
-                    <span id="detailVoteCount">130 votes</span>
-                </button>
-            </div>
-
-            <hr class="section_divider">
-
-            <div class="suggestion_body_text">
-                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                    sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
-                    tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
-                    lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
-                    torquent per conubia nostra inceptos himenaeos.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                    sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
-                    tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
-                    lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
-                    torquent per conubia nostra inceptos himenaeos.</p>
-            </div>
-
-            <hr class="section_divider">
-
-            <div class="status_tracker_container">
-                <span class="status_tracker_label">STATUS</span>
-                <div class="status_steps_wrapper">
-                    <div class="tracker_step_item completed">
-                        <div class="tracker_node"><span class="checkmark">&#10003;</span></div>
-                        <span class="tracker_text" style="text-decoration: none;">Submitted</span>
-                    </div>
-                    <div class="tracker_connector completed"></div>
-
-                    <div class="tracker_step_item completed">
-                        <div class="tracker_node"><span class="checkmark">&#10003;</span></div>
-                        <span class="tracker_text" style="text-decoration: none;">Reviewing</span>
-                    </div>
-                    <div class="tracker_connector completed"></div>
-
-                    <div class="tracker_step_item active">
-                        <div class="tracker_node"></div>
-                        <span class="tracker_text" style="text-decoration: none;">On the agenda</span>
-                    </div>
-                    <div class="tracker_connector"></div>
-                    <div class="tracker_step_item">
-                        <div class="tracker_node"></div>
-                        <span class="tracker_text" style="text-decoration: none;">In Progress</span>
-                    </div>
-                    <div class="tracker_connector"></div>
-                    <div class="tracker_step_item">
-                        <div class="tracker_node"></div>
-                        <span class="tracker_text" style="text-decoration: none;">In Place</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="discussion_section">
-            <h2 class="discussion_heading">Discussion</h2>
-
-            <div class="comment_box_card shadow-md">
-                <div class="comment_box_top">
-                    <div class="user_avatar">UN</div>
-                    <textarea class="comment_textarea" placeholder="Share your view." rows="3"></textarea>
-                </div>
-                <div class="comment_box_footer">
-                    <span class="posting_as_text">Posting as User Name</span>
-                    <button class="button btn-view" id="postCommentBtn">Post Comment</button>
-                </div>
-            </div>
-
-            <div class="comments_thread_container">
-
-                <div class="comment_item">
-                    <div class="comment_main_content">
+                <div class="suggestion_meta_bar">
+                    <div class="user_profile_group">
                         <div class="user_avatar">UN</div>
-                        <div class="comment_content_body">
-                            <div class="comment_header_meta">
-                                <span class="user_name">User name</span>
-                                <span class="comment_time">• 1 day ago</span>
-                            </div>
-                            <p class="comment_text">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit
-                                quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id.
-                                Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo
-                                eu aenean.Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing
-                                elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id.
-                                Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo
-                                eu aenean.
-                            </p>
-                            <div class="comment_actions">
-                                <button class="comment_vote_btn">
-                                    <img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> 40
-                                </button>
-                                <button class="comment_reply_btn">Reply</button>
-                            </div>
+                        <div class="user_info_text">
+                            <span class="user_name">User name</span>
+                            <span class="submission_date">Submitted Jan 1, 2026</span>
                         </div>
                     </div>
+                    <button class="vote_btn" id="detailVoteBtn">
+                        <img src="./public/vote.svg" height="10px" style="margin-right: 4px;">
+                        <span id="detailVoteCount">0 votes</span>
+                    </button>
+                </div>
 
-                    <div class="comment_replies_list">
+                <hr class="section_divider">
 
-                        <div class="comment_item nested">
-                            <div class="comment_main_content">
-                                <div class="user_avatar">UN</div>
-                                <div class="comment_content_body">
-                                    <div class="comment_header_meta">
-                                        <span class="user_name">User name</span>
-                                        <span class="comment_time">• 1 day ago</span>
-                                    </div>
-                                    <p class="comment_text">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing
-                                        elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat
-                                        in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis
-                                        convallis tempus leo eu aenean.Lorem ipsum dolor sit amet consectetur
-                                        adipiscing.
-                                    </p>
-                                    <div class="comment_actions">
-                                        <button class="comment_vote_btn">
-                                            <img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> 40
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="suggestion_body_text">
+                    <p>Loading description...</p>
+                </div>
+
+                <hr class="section_divider">
+
+                <div class="status_tracker_container">
+                    <span class="status_tracker_label">STATUS</span>
+                    <div class="status_steps_wrapper">
+                        <div class="tracker_step_item completed">
+                            <div class="tracker_node"><span class="checkmark">&#10003;</span></div>
+                            <span class="tracker_text" style="text-decoration: none;">Submitted</span>
                         </div>
+                        <div class="tracker_connector completed"></div>
 
-                        <div class="comment_item nested">
-                            <div class="comment_main_content">
-                                <div class="user_avatar">UN</div>
-                                <div class="comment_content_body">
-                                    <div class="comment_header_meta">
-                                        <span class="user_name">User name</span>
-                                        <span class="comment_time">• 1 day ago</span>
-                                    </div>
-                                    <p class="comment_text">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing
-                                        elit quisque faucibus ex sapien vitae.
-                                    </p>
-                                    <div class="comment_actions">
-                                        <button class="comment_vote_btn">
-                                            <img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> 40
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="tracker_step_item completed">
+                            <div class="tracker_node"><span class="checkmark">&#10003;</span></div>
+                            <span class="tracker_text" style="text-decoration: none;">Reviewing</span>
                         </div>
+                        <div class="tracker_connector completed"></div>
 
+                        <div class="tracker_step_item active">
+                            <div class="tracker_node"></div>
+                            <span class="tracker_text" style="text-decoration: none;">On the agenda</span>
+                        </div>
+                        <div class="tracker_connector"></div>
+                        <div class="tracker_step_item">
+                            <div class="tracker_node"></div>
+                            <span class="tracker_text" style="text-decoration: none;">In Progress</span>
+                        </div>
+                        <div class="tracker_connector"></div>
+                        <div class="tracker_step_item">
+                            <div class="tracker_node"></div>
+                            <span class="tracker_text" style="text-decoration: none;">In Place</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="discussion_section">
+                <h2 class="discussion_heading">Discussion</h2>
+
+                <div class="comment_box_card shadow-md">
+                    <div class="comment_box_top">
+                        <div class="user_avatar">UN</div>
+                        <textarea class="comment_textarea" placeholder="Share your view." rows="3"></textarea>
+                    </div>
+                    <div class="comment_box_footer">
+                        <span class="posting_as_text">Posting as User Name</span>
+                        <button class="button btn-view" id="postCommentBtn">Post Comment</button>
                     </div>
                 </div>
 
-            </div>
-        </section>
+                <div class="comments_thread_container">
+                    <!-- Dynamic comments populated here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Default 404 Error Container View (Shown if refId is missing or fetch fails) -->
+        <div id="suggestion_error_container" class="suggestion_detail_card shadow-md"
+            style="text-align: center; padding: 60px 20px; display: none;">
+            <h1 style="font-size: 48px; color: var(--text-primary); margin-bottom: 12px;">404</h1>
+            <h2 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Suggestion
+                Not Found</h2>
+            <p id="error_message_text" style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">The
+                suggestion you are looking for does not exist or was removed.</p>
+            <a href="./suggestions.html" class="button btn-view"
+                style="text-decoration: none; display: inline-block;">Return to Board</a>
+        </div>
     </main>
+
     <footer class="footer">
         <div class="footer_first">
             <ul class="logo">
@@ -244,7 +175,6 @@
                     Explore
                 </li>
                 <span class="footer_items">
-
                     <li class="footer_link">
                         <a href="./suggestions.html">Suggestion Board</a>
                     </li>

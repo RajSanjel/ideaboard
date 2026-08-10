@@ -31,6 +31,8 @@
     border-radius: 12px;
     padding: 40px;
     margin-bottom: 40px;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .suggestion_detail_header {
@@ -106,6 +108,8 @@
     color: var(--text-primary);
     line-height: 1.3;
     margin-bottom: 24px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* Meta Bar (User info + Vote button) */
@@ -173,6 +177,14 @@
     background-color: var(--color-surface-muted);
 }
 
+/* NEW: Vote button disabled state */
+.vote_btn.disabled,
+.comment_vote_btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .section_divider {
     border: none;
     border-top: 1px solid var(--color-hairline);
@@ -187,6 +199,13 @@
     color: var(--text-tertiary);
     font-size: 15px;
     line-height: 1.7;
+    min-width: 0;
+}
+
+.suggestion_body_text p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    margin: 0;
 }
 
 /* Status Tracker Workflow */
@@ -224,7 +243,6 @@
     height: 28px;
     border-radius: 50%;
     border: 1px solid var(--color-accent);
-    /* background-color: var(--color); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -293,6 +311,7 @@
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 30px;
+    box-sizing: border-box;
 }
 
 .comment_box_top {
@@ -312,6 +331,7 @@
     resize: vertical;
     outline: none;
     transition: border-color 0.2s ease;
+    box-sizing: border-box;
 }
 
 .comment_textarea:focus {
@@ -352,6 +372,7 @@
     border: 1px solid var(--color-border-strong);
     border-radius: 12px;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .comment_content_body {
@@ -359,6 +380,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .comment_header_meta {
@@ -376,6 +398,8 @@
     font-size: 14px;
     color: var(--text-secondary);
     line-height: 1.6;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .comment_actions {
