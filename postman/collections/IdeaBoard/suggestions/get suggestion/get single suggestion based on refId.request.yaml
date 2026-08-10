@@ -1,5 +1,4 @@
 $kind: http-request
-name: New Request
 url: "{{base_url}}/api/suggestions/detail?refId=S-007"
 method: GET
 queryParams:
