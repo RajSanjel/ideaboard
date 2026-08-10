@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions/detail?refId=S-007"
+method: GET
+queryParams:
+  refId: S-007
+order: 4502923125044885

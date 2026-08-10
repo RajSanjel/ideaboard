@@ -187,3 +187,52 @@ export async function getSuggestionStats(_req: Request) {
 		return errResponse;
 	}
 }
+
+export async function getSuggestionByRef(req: Request) {
+	try {
+		const ref = req.query.refId as string;
+
+		if (!ref) {
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Suggestion reference code (ref) is required.",
+			};
+		}
+
+		const sqlQuery = `
+			SELECT * 
+			FROM suggestions 
+			WHERE ref = $1;
+		`;
+
+		const result = await dbPool.query(sqlQuery, [ref]);
+
+		if (result.rowCount === 0) {
+			return {
+				success: false,
+				httpCode: 404,
+				message: "Suggestion not found.",
+			};
+		}
+
+		const successResponse: ApiResponse = {
+			success: true,
+			httpCode: 200,
+			message: "Suggestion fetched successfully.",
+			data: result.rows[0],
+		};
+
+		return successResponse;
+	} catch (error) {
+		console.error(
+			"Error fetching suggestion by ref:",
+			(error as Error).message,
+		);
+		return {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+	}
+}

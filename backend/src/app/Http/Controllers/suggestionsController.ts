@@ -14,6 +14,10 @@ const SuggestionController = {
 		const result = await SuggestionProvider.getSuggestionStats(req);
 		res.status(result.httpCode).json(result);
 	},
+	getByref: async (req: Request, res: Response) => {
+		const result = await SuggestionProvider.getSuggestionByRef(req);
+		res.status(result.httpCode).json(result);
+	},
 };
 
 export default SuggestionController;
