@@ -22,7 +22,6 @@ main {
 
 .upper_collection>.right {
     flex: 0 0 50%;
-    /* Strict, compact width to eliminate empty white space */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -239,6 +238,10 @@ main {
     font-weight: 500;
     margin: 0;
     color: var(--text-primary);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .top_voted_tags {
@@ -260,6 +263,10 @@ main {
     color: var(--text-muted);
     line-height: 1.5;
     margin: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .top_voted_link {
@@ -423,6 +430,10 @@ main {
     font-weight: 600;
     color: var(--text-primary);
     margin: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .suggestion_desc {
@@ -430,6 +441,10 @@ main {
     color: var(--text-muted);
     line-height: 1.5;
     margin: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .suggestion_container .details {
@@ -538,6 +553,7 @@ main {
 .vote_btn.disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 .vote_btn.disabled:hover {
