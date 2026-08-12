@@ -81,8 +81,9 @@ const FormValidator = {
             errorElement.style.display = 'block';
         }
     },
-    isTitleValid: (val) => val.length >= 5,
-    isDetailsValid: (val) => val.length >= 100 && val.length <= 6000,
+
+    isTitleValid: (val) => val.length >= 5 && val.length < 200,
+    isDetailsValid: (val) => val.length >= 30 && val.length <= 6000,
 
     validateTitle: (inputElement) => {
         const titleVal = inputElement.value.trim();
@@ -92,8 +93,12 @@ const FormValidator = {
             FormValidator.showError('title', 'Please provide a title for your suggestion.');
             return false;
         }
-        if (!FormValidator.isTitleValid(titleVal)) {
+        if (titleVal.length < 5) {
             FormValidator.showError('title', 'Title must be at least 5 characters long.');
+            return false;
+        }
+        if (titleVal.length >= 200) {
+            FormValidator.showError('title', 'Title must be less than 200 characters.');
             return false;
         }
         return true;
@@ -107,8 +112,8 @@ const FormValidator = {
             FormValidator.showError('details', 'Please provide the details of your suggestion.');
             return false;
         }
-        if (detailsVal.length < 100) {
-            FormValidator.showError('details', 'Details must be more than 100 characters.');
+        if (detailsVal.length < 30) {
+            FormValidator.showError('details', 'Details must be at least 30 characters.');
             return false;
         }
         if (detailsVal.length > 6000) {
@@ -207,7 +212,7 @@ async function submitSuggestion(formData, modalElement) {
                     </p>
                     
                     <div class="success_modal_actions">
-                        <a href="/suggestion.html?refId=${newRefId}" class="btn-submit">
+                        <a href="/frontend/suggestion.html?refId=${newRefId}" class="btn-submit">
                             View Suggestion
                         </a>
                         <button id="closeModalSuccessBtn" class="btn-cancel">
@@ -248,7 +253,6 @@ async function showSuggestionModal() {
     setupModalEvents(modal);
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const triggerBtns = document.querySelectorAll(".toggle_disabled_class");
 
@@ -256,5 +260,14 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
             showSuggestionModal();
         });
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            const modal = document.getElementById("modal");
+            if (modal && modal.classList.contains("show")) {
+                closeAndClearModal(modal);
+            }
+        }
     });
 });

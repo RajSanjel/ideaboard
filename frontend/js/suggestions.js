@@ -1,5 +1,9 @@
 import API_CONFIG from "./config/api.js";
 import { getCachedUser } from "./global/auth.js";
+import {
+    getStatusConfig,
+    formatTimeAgo
+} from "./util/helpers.js";
 
 let currentPage = 1;
 const limit = 5;
@@ -9,14 +13,17 @@ let currentStatus = "All";
 let currentSort = "default";
 let currentSearch = "";
 
-const container = document.getElementById("suggestions_container");
-const prevPageBtn = document.getElementById("prevPageBtn");
-const nextPageBtn = document.getElementById("nextPageBtn");
-const pageIndicator = document.getElementById("pageIndicator");
+let categoryMap = {};
 
 async function loadSuggestions(page) {
     if (isFetching) return;
     isFetching = true;
+
+    const container = document.getElementById("suggestions_container");
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+    const pageIndicator = document.getElementById("pageIndicator");
+
     if (prevPageBtn) {
         prevPageBtn.disabled = true;
         prevPageBtn.classList.add("disabled");
@@ -26,7 +33,8 @@ async function loadSuggestions(page) {
         nextPageBtn.classList.add("disabled");
     }
 
-    pageIndicator.textContent = `Loading...`;
+    if (pageIndicator) pageIndicator.textContent = `Loading...`;
+
     try {
         let url = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}?page=${page}&limit=${limit}`;
 
@@ -43,38 +51,62 @@ async function loadSuggestions(page) {
 
         if (responseData.httpCode === 200) {
             const suggestions = responseData.data;
-            container.innerHTML = "";
+
+            if (suggestions.length === 0 && page > 1) {
+                currentPage = page - 1;
+
+                if (pageIndicator) pageIndicator.textContent = `Page ${currentPage}`;
+
+                if (prevPageBtn) {
+                    prevPageBtn.disabled = currentPage === 1;
+                    prevPageBtn.classList.toggle("disabled", currentPage === 1);
+                }
+                if (nextPageBtn) {
+                    nextPageBtn.disabled = true;
+                    nextPageBtn.classList.add("disabled");
+                }
+
+                return;
+            }
+
+            if (container) container.innerHTML = "";
 
             if (suggestions.length === 0) {
-                container.innerHTML = `
-                    <div class="empty_suggestions_state">
-                        <p class="empty_title">No suggestions found</p>
-                        <p class="empty_desc">Looks like there are no ideas here yet. Be the first to submit one!</p>
-                    </div>
-                `;
+                if (container) {
+                    container.innerHTML = `
+                        <div class="empty_suggestions_state">
+                            <p class="empty_title">No suggestions found</p>
+                            <p class="empty_desc">Looks like there are no ideas matching your criteria. Be the first to submit one!</p>
+                        </div>
+                    `;
+                }
             } else {
                 suggestions.forEach(suggestion => {
                     const cardHTML = buildSuggestionCard(suggestion);
-                    container.insertAdjacentHTML('beforeend', cardHTML);
+                    if (container) container.insertAdjacentHTML('beforeend', cardHTML);
                 });
             }
 
-            pageIndicator.textContent = `Page ${page}`;
+            if (pageIndicator) pageIndicator.textContent = `Page ${page}`;
 
-            if (page === 1) {
-                prevPageBtn.disabled = true;
-                prevPageBtn.classList.add("disabled");
-            } else {
-                prevPageBtn.disabled = false;
-                prevPageBtn.classList.remove("disabled");
+            if (prevPageBtn) {
+                if (page === 1) {
+                    prevPageBtn.disabled = true;
+                    prevPageBtn.classList.add("disabled");
+                } else {
+                    prevPageBtn.disabled = false;
+                    prevPageBtn.classList.remove("disabled");
+                }
             }
 
-            if (suggestions.length < limit) {
-                nextPageBtn.disabled = true;
-                nextPageBtn.classList.add("disabled");
-            } else {
-                nextPageBtn.disabled = false;
-                nextPageBtn.classList.remove("disabled");
+            if (nextPageBtn) {
+                if (suggestions.length < limit) {
+                    nextPageBtn.disabled = true;
+                    nextPageBtn.classList.add("disabled");
+                } else {
+                    nextPageBtn.disabled = false;
+                    nextPageBtn.classList.remove("disabled");
+                }
             }
         } else {
             throw new Error(responseData.message || "Failed to fetch data");
@@ -82,18 +114,25 @@ async function loadSuggestions(page) {
     } catch (error) {
         console.error("Failed to load suggestions:", error);
 
-        pageIndicator.textContent = `Error`;
-        container.innerHTML = `
-            <div class="empty_suggestions_state error_state">
-                <p class="empty_title">Oops! Something went wrong.</p>
-                <p class="empty_desc">We couldn't load the suggestions. Please check your connection and try again.</p>
-                <button onclick="window.location.reload()" class="button_secondary" style="margin-top: 15px;">Refresh Page</button>
-            </div>
-        `;
+        if (pageIndicator) pageIndicator.textContent = `Error`;
+        if (container) {
+            container.innerHTML = `
+                <div class="empty_suggestions_state error_state">
+                    <p class="empty_title">Oops! Something went wrong.</p>
+                    <p class="empty_desc">We couldn't load the suggestions. Please check your connection and try again.</p>
+                    <button onclick="window.location.reload()" class="button_secondary" style="margin-top: 15px;">Refresh Page</button>
+                </div>
+            `;
+        }
+
+        if (prevPageBtn) { prevPageBtn.disabled = true; prevPageBtn.classList.add("disabled"); }
+        if (nextPageBtn) { nextPageBtn.disabled = true; nextPageBtn.classList.add("disabled"); }
+
     } finally {
         isFetching = false;
     }
 }
+
 async function renderCategoryTabs() {
     const categoryTabsContainer = document.getElementById("category_tabs");
     if (!categoryTabsContainer) return;
@@ -106,7 +145,6 @@ async function renderCategoryTabs() {
         }
 
         const categories = await response.json();
-
         categoryTabsContainer.innerHTML = "";
 
         const allSpan = document.createElement("span");
@@ -116,8 +154,9 @@ async function renderCategoryTabs() {
         categoryTabsContainer.appendChild(allSpan);
 
         categories.forEach(category => {
-            const span = document.createElement("span");
+            categoryMap[category.id] = category.label;
 
+            const span = document.createElement("span");
             span.dataset.category = category.id;
             span.textContent = category.label;
 
@@ -170,14 +209,10 @@ function updateStatusBar(elementId, count, total) {
     const barEl = document.getElementById(elementId);
     if (!barEl) return;
 
-    // Calculate percentage width (0% if no suggestions exist yet)
     const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
-
-    // Update CSS variables inline
     barEl.style.setProperty('--progress', `${percentage}%`);
     barEl.style.setProperty('--count', `"${count}"`);
 }
-
 
 async function fetchTopVoted() {
     try {
@@ -193,15 +228,26 @@ async function fetchTopVoted() {
             const suggestion = result.data[0];
             const statusConfig = getStatusConfig(suggestion.status);
 
-            document.getElementById('top_voted_title').textContent = suggestion.title;
-            document.getElementById('top_voted_desc').textContent = suggestion.description.substring(0, 300) + '...';
-
+            const titleEl = document.getElementById('top_voted_title');
+            const descEl = document.getElementById('top_voted_desc');
             const statusEl = document.getElementById('top_voted_status');
-            statusEl.textContent = statusConfig.label;
-            statusEl.className = `tag ${statusConfig.class}`;
+            const countEl = document.getElementById('top_voted_count');
+            const linkEl = document.getElementById('top_voted_link');
 
-            document.getElementById('top_voted_count').innerHTML = `<img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> ${suggestion.votes || 0} votes`;
-            document.getElementById('top_voted_link').href = `suggestion.html?refId=${suggestion.ref}`;
+            if (titleEl) titleEl.textContent = suggestion.title;
+
+            if (descEl) {
+                const descText = suggestion.description || "";
+                descEl.textContent = descText.length > 300 ? descText.substring(0, 300) + '...' : descText;
+            }
+
+            if (statusEl) {
+                statusEl.textContent = statusConfig.label;
+                statusEl.className = `tag ${statusConfig.class}`;
+            }
+
+            if (countEl) countEl.innerHTML = `<img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> ${suggestion.votes || 0} votes`;
+            if (linkEl) linkEl.href = `suggestion.html?refId=${suggestion.ref}`;
 
             if (topContainer) topContainer.style.display = '';
         } else {
@@ -212,12 +258,16 @@ async function fetchTopVoted() {
     }
 }
 
-
 function buildSuggestionCard(suggestion) {
     const statusConfig = getStatusConfig(suggestion.status);
     const timeAgo = formatTimeAgo(new Date(suggestion.created_at));
     const user = getCachedUser();
     const voteBtnClass = user ? "" : "disabled";
+
+    const displayCategory = categoryMap[suggestion.category] || suggestion.category;
+
+    const descText = suggestion.description || "";
+    const truncatedDesc = descText.length > 200 ? descText.substring(0, 200) + '...' : descText;
 
     return `
        <div class="suggestion_container ${statusConfig.class}" onclick="window.location.href='suggestion.html?refId=${suggestion.ref}'">
@@ -231,10 +281,10 @@ function buildSuggestionCard(suggestion) {
             
             <div class="middle">
                 <p class="suggestion_title">${suggestion.title}</p>
-                <p class="suggestion_desc">${suggestion.description.substring(0, 200)}...</p>
+                <p class="suggestion_desc">${truncatedDesc}</p>
                 <div class="details">
                     <span>${suggestion.author_name}</span>
-                    <span>${suggestion.category}</span>
+                    <span>${displayCategory}</span>
                     <span>${suggestion.comments_count || 0} Comments</span>
                     <span>${timeAgo}</span>
                 </div>
@@ -252,63 +302,27 @@ function buildSuggestionCard(suggestion) {
     `;
 }
 
-function getStatusConfig(status) {
-    const lowerStatus = status.toLowerCase();
+document.addEventListener("DOMContentLoaded", async () => {
 
-    if (lowerStatus === 'open') {
-        return { class: 'open', label: 'Open', progressSteps: '<span class="step completed"></span><span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span>' };
-    }
-    if (lowerStatus === 'review') {
-        return { class: 'review', label: 'Reviewing', progressSteps: '<span class="step completed"></span><span class="step completed"></span><span class="step"></span><span class="step"></span><span class="step"></span>' };
-    }
-    if (lowerStatus === 'planned') {
-        return { class: 'planned', label: 'On Agenda', progressSteps: '<span class="step completed"></span><span class="step completed"></span><span class="step completed"></span><span class="step"></span><span class="step"></span>' };
-    }
-    if (lowerStatus === 'progress') {
-        return { class: 'progress', label: 'In Progress', progressSteps: '<span class="step completed"></span><span class="step completed"></span><span class="step completed"></span><span class="step completed"></span><span class="step"></span>' };
-    }
-    if (lowerStatus === 'done') {
-        return { class: 'done', label: 'Completed', progressSteps: '<span class="step completed"></span><span class="step completed"></span><span class="step completed"></span><span class="step completed"></span><span class="step completed"></span>' };
-    }
-    if (lowerStatus === 'rejected') {
-        return { class: 'rejected', label: 'Rejected', progressSteps: '<span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span>' };
+    const categoryTabsContainer = document.getElementById("category_tabs");
+
+    if (categoryTabsContainer) {
+        categoryTabsContainer.addEventListener("click", (e) => {
+            if (e.target.classList.contains("browse_category")) {
+                currentCategory = e.target.dataset.category;
+                currentPage = 1;
+
+                document.querySelectorAll(".browse_category").forEach(tab => {
+                    tab.classList.toggle("category_selected", tab.dataset.category === currentCategory);
+                });
+
+                loadSuggestions(currentPage);
+            }
+        });
     }
 
-    return { class: 'open', label: status, progressSteps: '<span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span>' };
-}
+    await renderCategoryTabs();
 
-function formatTimeAgo(date) {
-    const seconds = Math.floor((new Date() - date) / 1000);
-    let interval = seconds / 31536000;
-    if (interval > 1) return Math.floor(interval) + " years ago";
-    interval = seconds / 2592000;
-    if (interval > 1) return Math.floor(interval) + " months ago";
-    interval = seconds / 86400;
-    if (interval > 1) return Math.floor(interval) + " days ago";
-    interval = seconds / 3600;
-    if (interval > 1) return Math.floor(interval) + " hours ago";
-    interval = seconds / 60;
-    if (interval > 1) return Math.floor(interval) + " minutes ago";
-    return Math.floor(seconds) + " seconds ago";
-}
-
-const categoryTabsContainer = document.getElementById("category_tabs");
-if (categoryTabsContainer) {
-    categoryTabsContainer.addEventListener("click", (e) => {
-        if (e.target.classList.contains("browse_category")) {
-
-            currentCategory = e.target.dataset.category;
-            currentPage = 1;
-            renderCategoryTabs();
-            loadSuggestions(currentPage);
-        }
-    });
-}
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    renderCategoryTabs();
     loadSuggestions(currentPage);
     fetchStats();
     fetchTopVoted();
@@ -352,21 +366,38 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 300);
         });
     }
+
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+
     if (prevPageBtn) {
-        prevPageBtn.addEventListener("click", () => {
+        prevPageBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            if (prevPageBtn.classList.contains("disabled") || prevPageBtn.disabled) return;
+
             if (currentPage > 1) {
                 currentPage--;
-                loadSuggestions(currentPage);
-                document.querySelector('.suggestions_list_header').scrollIntoView({ behavior: 'smooth' });
+                await loadSuggestions(currentPage);
+                const header = document.querySelector('.suggestions_list_header');
+                if (header) header.scrollIntoView({ behavior: 'smooth' });
             }
         });
     }
 
     if (nextPageBtn) {
-        nextPageBtn.addEventListener("click", () => {
+        nextPageBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            if (nextPageBtn.classList.contains("disabled") || nextPageBtn.disabled) return;
+
+            const previousPage = currentPage;
             currentPage++;
-            loadSuggestions(currentPage);
-            document.querySelector('.suggestions_list_header').scrollIntoView({ behavior: 'smooth' });
+
+            await loadSuggestions(currentPage);
+
+            if (currentPage > previousPage) {
+                const header = document.querySelector('.suggestions_list_header');
+                if (header) header.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     }
 });
