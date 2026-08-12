@@ -33,12 +33,18 @@ export const validateSuggestion = (
 	const { title, details, category } = req.body as SuggestionPayload;
 	const errors: Record<string, string> = {};
 
-	if (!title || typeof title !== "string" || title.length < 5) {
+	if (!title || typeof title !== "string") {
+		errors.title = "Please provide a title for your suggestion.";
+	} else if (title.length < 5) {
 		errors.title = "Title must be at least 5 characters long.";
+	} else if (title.length >= 200) {
+		errors.title = "Title must be less than 200 characters.";
 	}
 
-	if (!details || typeof details !== "string" || details.length < 100) {
-		errors.details = "Details must be at least 100 characters long.";
+	if (!details || typeof details !== "string") {
+		errors.details = "Please provide the details of your suggestion.";
+	} else if (details.length < 30) {
+		errors.details = "Details must be at least 30 characters long.";
 	} else if (details.length > 6000) {
 		errors.details = "Details cannot be more than 6000 characters.";
 	}
