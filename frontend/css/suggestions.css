@@ -1,10 +1,10 @@
+/* --- Main Layout Container --- */
 main {
     width: min(1200px, 90%);
     margin: 0 auto;
     padding: 60px 0;
 }
 
-/* --- Main Layout Container (Flexbox Fix) --- */
 .upper_collection {
     display: flex;
     flex-direction: row;
@@ -27,7 +27,7 @@ main {
     gap: 20px;
 }
 
-/* --- Suggestion Agenda --- */
+/* --- Suggestion Agenda Banner --- */
 .suggestion_agenda {
     background-image: linear-gradient(var(--color-bg), var(--color-surface-muted));
     border: 1px solid var(--color-border-strong);
@@ -74,7 +74,7 @@ main {
     color: var(--text-muted);
 }
 
-/* --- Stats Container (At a Glance) --- */
+/* --- Stats Summary ("At a Glance") --- */
 .suggestions_stats_container {
     display: flex;
     flex-direction: column;
@@ -110,10 +110,8 @@ main {
     font-weight: 600;
     font-family: var(--font-sans);
     color: var(--text-primary);
-    /* Default color for 'Total' */
 }
 
-/* --- 🔥 New Colors for Specific Stats --- */
 #stat-open {
     color: var(--status-open);
 }
@@ -135,7 +133,7 @@ main {
     margin-top: 4px;
 }
 
-/* --- Stats Visual Container (By Status) --- */
+/* --- Stats Visual Breakdown ("By Status") --- */
 .stats_visual_container {
     border: 1px solid var(--color-border-strong);
     border-radius: 10px;
@@ -163,7 +161,6 @@ main {
     color: var(--text-secondary);
     --progress: 0%;
     --count: "0";
-
     cursor: pointer;
     padding: 6px 12px;
     margin: 0 -12px;
@@ -171,12 +168,12 @@ main {
     transition: background-color 0.2s ease;
 }
 
-.stats_visual_item:hover {
+.stats_visual_item:hover,
+.stats_visual_item.status_selected {
     background-color: var(--color-surface-muted);
 }
 
 .stats_visual_item.status_selected {
-    background-color: var(--color-surface-muted);
     font-weight: 500;
 }
 
@@ -211,16 +208,16 @@ main {
     color: var(--text-muted);
 }
 
-/* --- Top Voted Suggestion --- */
+/* --- Top Voted Suggestion (Fixed 318px Height) --- */
 .top_voted_suggestion {
     border: 1px solid var(--color-border-strong);
     border-radius: 10px;
     padding: 24px;
-    min-height: 318px;
+    height: 318px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 14px;
+    gap: 12px;
     background-color: var(--color-surface);
     font-family: var(--font-sans);
     box-sizing: border-box;
@@ -259,9 +256,9 @@ main {
 }
 
 .top_voted_desc {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--text-muted);
-    line-height: 1.5;
+    line-height: 1.4;
     margin: 0;
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -269,12 +266,39 @@ main {
     hyphens: auto;
 }
 
+/* --- Top Voted Stacked Metadata --- */
+.top_voted_details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--color-border-strong);
+}
+
+.meta_row {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.meta_label {
+    width: 75px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.meta_value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
 .top_voted_link {
     font-size: 14px;
     font-weight: 600;
     color: var(--color-accent);
     text-decoration: none;
-    margin-top: 4px;
+    margin-top: auto;
 }
 
 /* --- Browse By Category --- */
@@ -319,7 +343,7 @@ main {
     border-color: var(--color-accent);
 }
 
-/* --- Suggestions List Header --- */
+/* --- Suggestions Feed Controls (Header, Sort & Search) --- */
 .suggestions_lists {
     font-family: var(--font-sans);
     margin-top: 40px;
@@ -368,7 +392,7 @@ main {
     width: 200px;
 }
 
-/* --- Suggestion Container Box --- */
+/* --- Suggestion Feed Card Container --- */
 .suggestion_container {
     display: flex;
     gap: 20px;
@@ -387,7 +411,7 @@ main {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Suggestion Container Dynamic Border Colors --- */
+/* --- Dynamic Card Left Borders by Status --- */
 .suggestion_container.open {
     border-left-color: var(--status-open);
 }
@@ -412,7 +436,7 @@ main {
     border-left-color: var(--danger-text);
 }
 
-/* Left Vote Box */
+/* --- Suggestion Card Internal Layout --- */
 .suggestion_container>.left:first-child {
     border: 1px solid var(--color-border);
     border-radius: 8px;
@@ -442,7 +466,6 @@ main {
     color: var(--text-muted);
 }
 
-/* Middle Content */
 .suggestion_container>.middle {
     flex: 1;
     display: flex;
@@ -486,7 +509,6 @@ main {
     font-weight: bold;
 }
 
-/* Right Status Area */
 .suggestion_container>.left:last-child {
     display: flex;
     flex-direction: column;
@@ -526,7 +548,7 @@ main {
     color: var(--text-faint);
 }
 
-/* --- Status Tags --- */
+/* --- Status Badges / Tags --- */
 .tag {
     display: inline-flex;
     align-items: center;
@@ -569,7 +591,7 @@ main {
     background-color: var(--danger-bg);
 }
 
-/* --- Vote Button Interactions --- */
+/* --- Vote Button States --- */
 .vote_btn {
     transition: background-color 0.2s ease, transform 0.1s ease;
     cursor: pointer;
@@ -581,10 +603,6 @@ main {
     pointer-events: none;
 }
 
-.vote_btn.disabled:hover {
-    cursor: not-allowed;
-}
-
 .vote_btn:not(.disabled):hover {
     background-color: var(--color-surface-hover);
     transform: scale(1.05);
@@ -594,7 +612,7 @@ main {
     transform: scale(0.95);
 }
 
-/* --- Modal Success Message --- */
+/* --- Modal Success Actions --- */
 .success_message_container {
     text-align: center;
     padding: 40px;
@@ -618,7 +636,7 @@ main {
     text-decoration: none;
 }
 
-/* --- Pagination & Secondary Buttons --- */
+/* --- Pagination Controls --- */
 .pagination_container {
     display: flex;
     justify-content: space-between;
@@ -655,7 +673,7 @@ main {
     cursor: not-allowed;
 }
 
-/* --- Empty States --- */
+/* --- Empty & Error Feed States --- */
 .empty_suggestions_state {
     text-align: center;
     padding: 60px 20px;
@@ -678,7 +696,6 @@ main {
     color: var(--text-muted);
 }
 
-/* Error Fallback State */
 .empty_suggestions_state.error_state {
     background-color: var(--danger-bg);
     border-color: var(--danger-border);

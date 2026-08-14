@@ -15,6 +15,13 @@ let currentSearch = "";
 
 let categoryMap = {};
 
+function truncateText(text, maxLength = 130) {
+    if (!text || text.length <= maxLength) return text;
+    const trimmed = text.substring(0, maxLength);
+    const lastSpace = trimmed.lastIndexOf(" ");
+    return (lastSpace > 0 ? trimmed.substring(0, lastSpace) : trimmed) + "...";
+}
+
 async function loadSuggestions(page) {
     if (isFetching) return;
     isFetching = true;
@@ -234,11 +241,14 @@ async function fetchTopVoted() {
             const countEl = document.getElementById('top_voted_count');
             const linkEl = document.getElementById('top_voted_link');
 
+            const authorEl = document.getElementById('top_voted_author');
+            const categoryEl = document.getElementById('top_voted_category');
+            const dateEl = document.getElementById('top_voted_date');
+
             if (titleEl) titleEl.textContent = suggestion.title;
 
             if (descEl) {
-                const descText = suggestion.description || "";
-                descEl.textContent = descText.length > 300 ? descText.substring(0, 300) + '...' : descText;
+                descEl.textContent = truncateText(suggestion.description || "", 130);
             }
 
             if (statusEl) {
@@ -248,6 +258,13 @@ async function fetchTopVoted() {
 
             if (countEl) countEl.innerHTML = `<img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> ${suggestion.votes || 0} votes`;
             if (linkEl) linkEl.href = `suggestion.html?refId=${suggestion.ref}`;
+
+            const displayCategory = categoryMap[suggestion.category] || suggestion.category;
+            const timeAgo = formatTimeAgo(new Date(suggestion.created_at));
+
+            if (authorEl) authorEl.textContent = suggestion.author_name || "Anonymous";
+            if (categoryEl) categoryEl.textContent = displayCategory;
+            if (dateEl) dateEl.textContent = timeAgo;
 
             if (topContainer) topContainer.style.display = '';
         } else {
@@ -266,8 +283,7 @@ function buildSuggestionCard(suggestion) {
 
     const displayCategory = categoryMap[suggestion.category] || suggestion.category;
 
-    const descText = suggestion.description || "";
-    const truncatedDesc = descText.length > 200 ? descText.substring(0, 200) + '...' : descText;
+    const truncatedDesc = truncateText(suggestion.description || "", 180);
 
     return `
        <div class="suggestion_container ${statusConfig.class}" onclick="window.location.href='suggestion.html?refId=${suggestion.ref}'">

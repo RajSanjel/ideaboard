@@ -1,14 +1,26 @@
-/* Header part  */
+/* --- Navigation Bar --- */
 nav {
     display: flex;
-    padding: 0px 30px;
+    padding: 0 30px;
     justify-content: space-between;
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-bg-elevated);
 }
 
-.active {
-    border-bottom: 2px solid var(--color-accent);
+nav .left,
+.nav_items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--color-hairline);
+    height: 80%;
+    padding: 10px 30px 10px 10px;
 }
 
 .logo_design {
@@ -35,24 +47,6 @@ nav {
 .nav_items li {
     height: 100%;
     margin: 0 10px;
-
-}
-
-nav .left,
-.nav_items {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    border-right: 1px solid var(--color-hairline);
-    height: 80%;
-    padding: 10px;
-    padding-right: 30px;
 }
 
 nav li,
@@ -62,8 +56,22 @@ nav li a {
     color: var(--text-tertiary);
 }
 
+.active {
+    border-bottom: 2px solid var(--color-accent);
+}
 
-/* Footer area */
+/* --- Navigation Actions --- */
+.button_logout {
+    padding: 5px 8px;
+    color: var(--danger-text);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* --- Footer Section --- */
 .footer {
     background-color: var(--color-bg-elevated);
     padding: 30px 100px;
@@ -74,10 +82,16 @@ nav li a {
     border-top: 1px solid var(--color-border);
 }
 
+.footer .logo {
+    padding: 0;
+    margin-bottom: 10px;
+    border: none;
+}
+
 .footer_title,
 .footer_info,
-.footer_link a,
-.footer_link {
+.footer_link,
+.footer_link a {
     text-decoration: none;
     list-style: none;
 }
@@ -102,13 +116,7 @@ nav li a {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px
-}
-
-.footer .logo {
-    padding: 0px;
-    margin-bottom: 10px;
-    border: 0px;
+    gap: 10px;
 }
 
 .footer_copyright {
@@ -118,14 +126,4 @@ nav li a {
     margin: 0;
     color: var(--text-muted);
     font-size: 12px;
-}
-
-/* logout section */
-.button_logout {
-    padding: 5px 8px;
-    color: var(--danger-text);
-    background-color: transparent;
-    border: none;
-    outline: none;
-    border-radius: 5px;
 }
