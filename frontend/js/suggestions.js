@@ -231,44 +231,87 @@ async function fetchTopVoted() {
         const result = await response.json();
         const topContainer = document.getElementById('top_voted_container');
 
+        const titleEl = document.getElementById('top_voted_title');
+        const descEl = document.getElementById('top_voted_desc');
+        const statusEl = document.getElementById('top_voted_status');
+        const countEl = document.getElementById('top_voted_count');
+        const linkEl = document.getElementById('top_voted_link');
+        const tagsContainer = document.querySelector('.top_voted_tags');
+        const detailsContainer = document.getElementById('top_voted_details');
+
+        const authorEl = document.getElementById('top_voted_author');
+        const categoryEl = document.getElementById('top_voted_category');
+        const dateEl = document.getElementById('top_voted_date');
+
         if (result.success && result.data && result.data.length > 0) {
             const suggestion = result.data[0];
             const statusConfig = getStatusConfig(suggestion.status);
 
-            const titleEl = document.getElementById('top_voted_title');
-            const descEl = document.getElementById('top_voted_desc');
-            const statusEl = document.getElementById('top_voted_status');
-            const countEl = document.getElementById('top_voted_count');
-            const linkEl = document.getElementById('top_voted_link');
-
-            const authorEl = document.getElementById('top_voted_author');
-            const categoryEl = document.getElementById('top_voted_category');
-            const dateEl = document.getElementById('top_voted_date');
-
             if (titleEl) titleEl.textContent = suggestion.title;
+            if (descEl) descEl.textContent = truncateText(suggestion.description || "", 130);
 
-            if (descEl) {
-                descEl.textContent = truncateText(suggestion.description || "", 130);
-            }
+            if (tagsContainer) tagsContainer.style.display = '';
 
             if (statusEl) {
+                statusEl.style.display = '';
                 statusEl.textContent = statusConfig.label;
                 statusEl.className = `tag ${statusConfig.class}`;
             }
 
-            if (countEl) countEl.innerHTML = `<img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> ${suggestion.votes || 0} votes`;
-            if (linkEl) linkEl.href = `suggestion.html?refId=${suggestion.ref}`;
+            if (countEl) {
+                countEl.style.display = '';
+                countEl.innerHTML = `<img src="./public/vote.svg" height="8px" style="margin-right: 2px;"> ${suggestion.votes || 0} votes`;
+            }
+
+            if (linkEl) {
+                linkEl.style.display = '';
+                linkEl.href = `suggestion.html?refId=${suggestion.ref}`;
+                linkEl.textContent = "View Suggestion →";
+            }
 
             const displayCategory = categoryMap[suggestion.category] || suggestion.category;
             const timeAgo = formatTimeAgo(new Date(suggestion.created_at));
 
-            if (authorEl) authorEl.textContent = suggestion.author_name || "Anonymous";
-            if (categoryEl) categoryEl.textContent = displayCategory;
-            if (dateEl) dateEl.textContent = timeAgo;
+            if (authorEl) authorEl.textContent = suggestion.author_name || "—";
+            if (categoryEl) categoryEl.textContent = displayCategory || "—";
+            if (dateEl) dateEl.textContent = timeAgo || "—";
 
+            if (detailsContainer) detailsContainer.style.display = '';
             if (topContainer) topContainer.style.display = '';
         } else {
-            if (topContainer) topContainer.style.display = 'none';
+
+            if (titleEl) titleEl.textContent = "No suggestions yet";
+
+            if (descEl) {
+                descEl.innerHTML = `
+                    <div style="text-align: center; padding: 4px 0;">
+                        <img src="./public/not-found.svg" alt="No suggestions" style="width: 100%; max-width: 180px; height: auto; margin: 0 auto; display: block;" />
+                        <p style="margin-top: 10px; font-size: 0.95rem;">
+                            Click <a href="#" id="open_empty_modal_link" style="color: var(--color-accent); font-weight: 600; text-decoration: underline;">here</a> to submit a suggestion.
+                        </p>
+                    </div>
+                `;
+
+                const modalLink = descEl.querySelector('#open_empty_modal_link');
+                if (modalLink) {
+                    modalLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const triggerBtn = document.querySelector('.submit_suggestion_btn') || document.querySelector('.toggle_disabled_class');
+                        if (triggerBtn) {
+                            const wasDisabled = triggerBtn.disabled;
+                            triggerBtn.disabled = false;
+                            triggerBtn.click();
+                            triggerBtn.disabled = wasDisabled;
+                        }
+                    });
+                }
+            }
+
+            if (tagsContainer) tagsContainer.style.display = 'none';
+            if (linkEl) linkEl.style.display = 'none';
+            if (detailsContainer) detailsContainer.style.display = 'none';
+
+            if (topContainer) topContainer.style.display = '';
         }
     } catch (error) {
         console.error('Error fetching top voted suggestion:', error);
