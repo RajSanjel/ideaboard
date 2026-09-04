@@ -1,4 +1,4 @@
-/* 1. Update the overlay */
+/* --- Modal Overlay & Container --- */
 .modal {
     display: none;
     position: fixed;
@@ -9,8 +9,6 @@
     height: 100%;
     background-color: rgba(15, 20, 29, 0.4);
     font-family: var(--font-sans);
-
-    /* The fix for vertical squishing */
     padding: 24px;
     box-sizing: border-box;
     align-items: center;
@@ -21,22 +19,17 @@
     display: flex;
 }
 
-/* 2. Update the container to strictly follow the padding */
 .modal-content {
     background-color: var(--color-surface);
     width: 100%;
     max-width: 650px;
-
-    /* Force the modal to never be taller than the padded container */
     max-height: 100%;
-
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
 }
 
-/* 3. Keep the body scrollable (as we discussed) */
 .modal-body {
     padding: 32px 40px;
     flex: 1;
@@ -59,7 +52,7 @@
     line-height: 1.4;
 }
 
-/* Form Styles */
+/* --- Form Controls & Inputs --- */
 .form-group {
     margin-bottom: 24px;
     display: flex;
@@ -110,14 +103,13 @@
     margin-top: 6px;
 }
 
-/* Custom Select Dropdown Styling */
+/* --- Custom Select Dropdown --- */
 .select-wrapper {
     position: relative;
 }
 
 .select-wrapper select {
     appearance: none;
-    /* Removes default OS styling */
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
@@ -132,7 +124,6 @@
     transform: translateY(-50%);
     width: 16px;
     height: 10px;
-    /* Custom SVG chevron to match the heavy icon in your design */
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%230F141D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
     background-repeat: no-repeat;
     background-position: center;
@@ -140,7 +131,7 @@
     pointer-events: none;
 }
 
-/* Modal Footer */
+/* --- Modal Footer & Action Buttons --- */
 .modal-footer {
     background-color: var(--color-surface-muted);
     padding: 16px 40px;
@@ -173,6 +164,7 @@
     font-weight: 600;
     font-family: var(--font-sans);
     padding: 8px;
+    cursor: pointer;
 }
 
 .btn-submit {
@@ -184,16 +176,16 @@
     font-size: 15px;
     font-weight: 500;
     font-family: var(--font-sans);
+    cursor: pointer;
 }
 
-/* Validation Error States */
+/* --- Validation Error States --- */
 .form-group input.invalid,
 .form-group textarea.invalid,
 .form-group select.invalid {
     border-color: var(--danger-border);
 }
 
-/* Ensure focus state overrides error border if user starts typing */
 .form-group input.invalid:focus,
 .form-group textarea.invalid:focus,
 .form-group select.invalid:focus {
@@ -201,7 +193,6 @@
     outline: none;
 }
 
-/* The Error Message Text */
 .error-message {
     color: var(--danger-text);
     font-size: 13px;

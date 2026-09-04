@@ -1,3 +1,4 @@
+/* --- Form Page Container --- */
 .form_container {
     flex: 1;
     background-color: var(--color-bg);
@@ -9,6 +10,21 @@
     gap: 30px;
 }
 
+.form {
+    width: min(420px, 100%);
+    height: fit-content;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 10px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-serif);
+    gap: 30px;
+    box-sizing: border-box;
+}
+
+/* --- Feedback & Alert Messages --- */
 .backendFeedback {
     scroll-margin-top: 300px;
 }
@@ -29,27 +45,7 @@
     padding: 10px;
 }
 
-.hidden {
-    display: none;
-}
-
-.visible {
-    display: block;
-}
-
-.form {
-    width: 30%;
-    height: fit-content;
-    background-color: var(--color-bg-elevated);
-    border: 1.3px solid var(--color-border-strong);
-    border-radius: 10px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-serif);
-    gap: 30px;
-}
-
+/* --- Form Header --- */
 .form_header {
     display: flex;
     flex-direction: column;
@@ -59,15 +55,17 @@
 .form_header h1 {
     font-weight: 400;
     font-size: 25px;
+    margin: 0;
 }
 
 .form_header p {
     font-size: 14px;
     color: var(--text-secondary);
     font-weight: 400;
-
+    margin: 0;
 }
 
+/* --- Form Fields & Inputs --- */
 .form_details {
     display: flex;
     flex-direction: column;
@@ -99,8 +97,10 @@
 
 .form_input:focus {
     outline: none;
+    border-color: var(--color-accent);
 }
 
+/* --- Form Footer & Submission --- */
 .form_footer {
     display: flex;
     flex-direction: column;
@@ -111,7 +111,7 @@
     width: 100%;
     height: 45px;
     outline: none;
-    border: 0px;
+    border: none;
     align-items: center;
     border-radius: 8px;
     background-color: var(--color-accent);
@@ -119,6 +119,8 @@
     font-size: 20px;
     font-family: var(--font-sans);
     font-weight: 300;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .form_footer_text {
@@ -128,8 +130,14 @@
 
 .form_link {
     color: var(--color-accent);
+    text-decoration: none;
 }
 
+.form_link:hover {
+    text-decoration: underline;
+}
+
+/* --- Validation & Display States --- */
 .error {
     color: var(--danger-text);
     font-size: 12px;
@@ -138,10 +146,14 @@
     display: none;
 }
 
-.visible {
-    display: block;
-}
-
 .invalid {
     border: 1px solid var(--danger-border);
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }

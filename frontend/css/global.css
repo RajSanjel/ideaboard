@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Source+Serif+4:wght@200..900&display=swap');
 
-
 :root {
     /* Backgrounds & surfaces */
     --color-bg: #F9FAFC;
@@ -21,6 +20,9 @@
     --text-tertiary: #4B5059;
     --text-muted: #70757D;
     --text-faint: #979BA3;
+
+    /* Shadows (Tied to --text-primary: #0F141D) */
+    --color-shadow-base: 32, 36, 45;
 
     /* Accent */
     --color-accent: #4D6487;
@@ -83,27 +85,38 @@ button:hover {
     opacity: 0.8;
 }
 
-
+/* --- Elevation & Box Shadows --- */
 .shadow-sm {
-    box-shadow: 0 4px 8px -2px #0F141D14;
+    box-shadow:
+        0 1px 2px rgba(var(--color-shadow-base), 0.04),
+        0 2px 6px rgba(var(--color-shadow-base), 0.06);
 }
 
 .shadow-md {
-    box-shadow: 0 8px 16px -4px #0F141D1A, 0 4px 8px -4px #0F141D0F;
+    box-shadow:
+        0 2px 4px rgba(var(--color-shadow-base), 0.04),
+        0 8px 16px rgba(var(--color-shadow-base), 0.08);
 }
 
 .shadow-lg {
-    box-shadow: 0 16px 32px -8px #0F141D1F, 0 8px 16px -6px #0F141D14;
+    box-shadow:
+        0 4px 8px rgba(var(--color-shadow-base), 0.05),
+        0 12px 24px rgba(var(--color-shadow-base), 0.10);
 }
 
 .shadow-xl {
-    box-shadow: 0 24px 48px -12px #0F141D26, 0 12px 24px -8px #0F141D14;
+    box-shadow:
+        0 8px 16px rgba(var(--color-shadow-base), 0.06),
+        0 24px 48px rgba(var(--color-shadow-base), 0.12);
 }
 
 .shadow-2xl {
-    box-shadow: 0 32px 64px -16px #0F141D2E, 0 16px 32px -10px #0F141D1A;
+    box-shadow:
+        0 12px 24px rgba(var(--color-shadow-base), 0.08),
+        0 32px 64px rgba(var(--color-shadow-base), 0.15);
 }
 
 .shadow-inner {
-    box-shadow: inset 0 2px 4px 0 #0F141D0F;
+    box-shadow:
+        inset 0 1px 3px rgba(var(--color-shadow-base), 0.06);
 }

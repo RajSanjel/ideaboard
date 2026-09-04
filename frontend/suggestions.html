@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/header_footer.css">
     <link rel="stylesheet" href="./css/suggestions.css">
     <link rel="stylesheet" href="./css/modal.css">
-    <script src="./js/global/navbar-inject.js" type="module" defer></script>
+    <script src="./js/global/navbar-footer-inject.js" type="module" defer></script>
     <script src="./js/modal.js" type="module" defer></script>
     <script src="./js/suggestions.js" type="module" defer></script>
 
@@ -17,40 +17,8 @@
 
 <body>
     <div class="modal" id="modal"></div>
-    <nav>
-        <div class="left">
-            <ul class="logo">
-                <span class="logo_design">
-                    I
-                </span>
-                <li class="logo_text">
-                    IdeaBoard
-                </li>
-            </ul>
-            <ul class="nav_items">
-                <li>
-                    <a href="index.html">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="./suggestions.html" class="active">
-                        Suggestion
-                    </a>
-                </li>
-            </ul>
 
-        </div>
-        <div class=" left">
-            <div class=" left" id="nav__auth_dependent">
-                <li>
-                    <a href="./login.html">
-                        Sign in
-                    </a>
-                </li>
-                </ul>
-            </div>
-    </nav>
+    <div id="navbar_container"></div>
 
     <main>
         <div class="upper_collection">
@@ -121,12 +89,14 @@
 
             </div>
             <div class="right">
-                <section class="top_voted_suggestion shadow-md" id="top_voted_container">
+                <section class="top_voted_suggestion shadow-md" id="top_voted_container" style="display: none;">
                     <span class="top_voted_indicator">
                         <img src="./public/vote.svg" height="8px" style="margin-right: 2px;">
                         TOP VOTED
                     </span>
+
                     <p class="top_voted_title" id="top_voted_title">Loading...</p>
+
                     <span class="top_voted_tags">
                         <span class="tag" id="top_voted_status">-</span>
                         <span class="top_voted_vote_count" id="top_voted_count">
@@ -134,7 +104,25 @@
                             0 votes
                         </span>
                     </span>
+
                     <p class="top_voted_desc" id="top_voted_desc">...</p>
+
+                    <!-- 🎯 Stacked Vertical Metadata Column -->
+                    <div class="top_voted_details" id="top_voted_details">
+                        <div class="meta_row">
+                            <span class="meta_label">Author</span>
+                            <span class="meta_value" id="top_voted_author">-</span>
+                        </div>
+                        <div class="meta_row">
+                            <span class="meta_label">Category</span>
+                            <span class="meta_value" id="top_voted_category">-</span>
+                        </div>
+                        <div class="meta_row">
+                            <span class="meta_label">Posted</span>
+                            <span class="meta_value" id="top_voted_date">-</span>
+                        </div>
+                    </div>
+
                     <a href="#" class="top_voted_link" id="top_voted_link">View Suggestion &#8594;</a>
                 </section>
 
@@ -167,60 +155,8 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="footer_first">
-            <ul class="logo">
-                <span class="logo_design">
-                    I
-                </span>
-                <li class="logo_text">
-                    IdeaBoard
-                </li>
-            </ul>
-            <p class="footer_text">Suggestion board for ABC College. Built for transparent college decisions.
-            </p>
-        </div>
-        <div class="footer_middle">
-            <ul class="footer_list">
-                <li class="footer_title">
-                    Explore
-                </li>
-                <span class="footer_items">
 
-                    <li class="footer_link">
-                        <a href="./suggestions.html">Suggestion Board</a>
-                    </li>
-                    <li class="footer_link">
-                        <a href="./login.html">Sign in</a>
-                    </li>
-                    <li class="footer_link">
-                        <a href="./signup.html">Create account</a>
-                    </li>
-                </span>
-            </ul>
-        </div>
-        <div class="footer_last">
-            <ul class="footer_list">
-                <li class="footer_title">
-                    Contact
-                </li>
-                <span class="footer_items">
-                    <li class="footer_info">
-                        ABC College
-                    </li>
-                    <li class="footer_info">
-                        info@ideaboard.edu.np
-                    </li>
-                    <li class="footer_info">
-                        +977 9841098036
-                    </li>
-                </span>
-            </ul>
-        </div>
-    </footer>
-    <p class="footer_copyright">
-        IdeaBoard · 2026 · All suggestions are public within the college community.
-    </p>
+    <div id="footer_container"></div>
 </body>
 
 

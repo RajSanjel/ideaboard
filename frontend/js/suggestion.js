@@ -1,5 +1,11 @@
 import API_CONFIG from "./config/api.js";
 import { getCachedUser } from "./global/auth.js";
+import {
+    getStatusConfig,
+    getCategoryLabel,
+    formatDate,
+    getInitials
+} from "./util/helpers.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -48,23 +54,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const avatarEl = document.querySelector(".suggestion_meta_bar .user_avatar");
         if (avatarEl && suggestion.author_name) {
-            const initials = suggestion.author_name
-                .split(" ")
-                .map(n => n[0])
-                .join("")
-                .substring(0, 2)
-                .toUpperCase();
-            avatarEl.textContent = initials || "UN";
+            avatarEl.textContent = getInitials(suggestion.author_name);
         }
 
         if (suggestion.created_at) {
-            const formattedDate = new Date(suggestion.created_at).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            });
             const dateEl = document.querySelector(".submission_date");
-            if (dateEl) dateEl.textContent = `Submitted ${formattedDate}`;
+            if (dateEl) dateEl.textContent = `Submitted ${formatDate(suggestion.created_at)}`;
         }
 
         updateStatusTagAndTracker(suggestion.status);
@@ -98,12 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const postingAsEl = commentBoxCard.querySelector(".posting_as_text");
 
                 if (commentAvatarEl) {
-                    commentAvatarEl.textContent = user.name
-                        .split(" ")
-                        .map(n => n[0])
-                        .join("")
-                        .substring(0, 2)
-                        .toUpperCase();
+                    commentAvatarEl.textContent = getInitials(user.name);
                 }
                 if (postingAsEl) postingAsEl.textContent = `Posting as ${user.name}`;
             }
@@ -127,47 +117,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         showNotFoundError("An error occurred while connecting to the server.");
     }
 });
-
-
-
-async function getCategoryLabel(categoryId) {
-    const fallbackCategories = {
-        "bell_schedule": "Bell schedule",
-        "cafeteria": "Cafeteria",
-        "facilities": "Facilities",
-        "family_communications": "Family communications",
-        "programs": "Programs",
-        "transport": "Transport",
-        "wellness": "Wellness",
-        "athletics": "Athletics",
-        "calendar": "Calendar",
-        "general": "General"
-    };
-
-    try {
-        const response = await fetch('../../shared/categories.json');
-        if (!response.ok) throw new Error("Failed to load categories.json");
-        const categories = await response.json();
-        const found = categories.find(c => c.id === categoryId);
-        return found ? found.label : (fallbackCategories[categoryId] || categoryId);
-    } catch (error) {
-        console.warn("Using fallback categories mapping due to fetch error.");
-        return fallbackCategories[categoryId] || categoryId;
-    }
-}
-
-function getStatusConfig(status) {
-    const lowerStatus = (status || 'open').toLowerCase();
-
-    if (lowerStatus === 'open') return { class: 'open', label: 'Open', stepIndex: 0 };
-    if (lowerStatus === 'review') return { class: 'review', label: 'Reviewing', stepIndex: 1 };
-    if (lowerStatus === 'planned') return { class: 'planned', label: 'On Agenda', stepIndex: 2 };
-    if (lowerStatus === 'progress') return { class: 'progress', label: 'In Progress', stepIndex: 3 };
-    if (lowerStatus === 'done') return { class: 'done', label: 'Completed', stepIndex: 4, isComplete: true };
-    if (lowerStatus === 'rejected') return { class: 'rejected', label: 'Rejected', stepIndex: -1 };
-
-    return { class: 'open', label: status, stepIndex: 0 };
-}
 
 function showNotFoundError(message) {
     const contentWrapper = document.getElementById("suggestion_content_wrapper");
@@ -257,7 +206,7 @@ function initReplyToggle() {
 
             const user = getCachedUser();
             const userName = user ? user.name : "User Name";
-            const userInitials = userName !== "User Name" ? userName.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase() : "UN";
+            const userInitials = userName !== "User Name" ? getInitials(userName) : "UN";
 
             const replyBox = document.createElement('div');
 

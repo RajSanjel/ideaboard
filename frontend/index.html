@@ -10,47 +10,16 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/modal.css">
     <link rel="stylesheet" href="./css/suggestions.css">
-    <script src="./js/global/navbar-inject.js" type="module" defer></script>
+    <script src="./js/global/navbar-footer-inject.js" type="module" defer></script>
     <script src="./js/index.js" type="module"></script>
     <script src="./js/modal.js" type="module" defer></script>
 </head>
 
 <body>
     <div class="modal" id="modal"></div>
-    <nav>
-        <div class="left">
-            <ul class="logo">
-                <span class="logo_design">
-                    I
-                </span>
-                <li class="logo_text">
-                    IdeaBoard
-                </li>
-            </ul>
-            <ul class="nav_items">
-                <li class="active">
-                    <a href="index.html">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="./suggestions.html">
-                        Suggestion
-                    </a>
-                </li>
-            </ul>
 
-        </div>
-        <div class=" left" id="nav__auth_dependent">
-            <ul class="nav_items">
-                <li>
-                    <a href="./login.html">
-                        Sign in
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div id="navbar_container"></div>
+
     <main>
         <section class="introduction">
             <div class="left">
@@ -160,60 +129,7 @@
             </p>
         </section>
     </main>
-    <footer class="footer">
-        <div class="footer_first">
-            <ul class="logo">
-                <span class="logo_design">
-                    I
-                </span>
-                <li class="logo_text">
-                    IdeaBoard
-                </li>
-            </ul>
-            <p class="footer_text">Suggestion board for ABC College. Built for transparent college decisions.
-            </p>
-        </div>
-        <div class="footer_middle">
-            <ul class="footer_list">
-                <li class="footer_title">
-                    Explore
-                </li>
-                <span class="footer_items">
-
-                    <li class="footer_link">
-                        <a href="./suggestions.html">Suggestion Board</a>
-                    </li>
-                    <li class="footer_link">
-                        <a href="./login.html">Sign in</a>
-                    </li>
-                    <li class="footer_link">
-                        <a href="./signup.html">Create account</a>
-                    </li>
-                </span>
-            </ul>
-        </div>
-        <div class="footer_last">
-            <ul class="footer_list">
-                <li class="footer_title">
-                    Contact
-                </li>
-                <span class="footer_items">
-                    <li class="footer_info">
-                        ABC College
-                    </li>
-                    <li class="footer_info">
-                        info@ideaboard.edu.np
-                    </li>
-                    <li class="footer_info">
-                        +977 9841098036
-                    </li>
-                </span>
-            </ul>
-        </div>
-    </footer>
-    <p class="footer_copyright">
-        IdeaBoard · 2026 · All suggestions are public within the college community.
-    </p>
+    <div id="footer_container"></div>
 </body>
 
 </html>

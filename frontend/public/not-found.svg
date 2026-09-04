@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" width="100%" height="100%">
+  <defs>
+    <!-- Background Glow using Accent Color Variable -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--color-accent, #4F46E5)" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="var(--color-accent, #4F46E5)" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Box Gradient using Accent Color Variables -->
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--color-accent, #6366F1)"/>
+      <stop offset="100%" stop-color="var(--color-accent-dark, #4F46E5)"/>
+    </linearGradient>
+
+    <!-- Soft Shadow -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="var(--color-accent, #4338CA)" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Aura -->
+  <circle cx="120" cy="80" r="60" fill="url(#bgGlow)"/>
+
+  <!-- Sparkles / Accents -->
+  <circle cx="45" cy="40" r="3" fill="var(--color-accent, #818CF8)" opacity="0.6"/>
+  <circle cx="195" cy="45" r="4" fill="var(--color-accent, #818CF8)" opacity="0.4"/>
+  <circle cx="185" cy="105" r="2.5" fill="var(--color-accent, #818CF8)" opacity="0.8"/>
+  <path d="M 38 90 L 44 96 M 44 90 L 38 96" stroke="var(--color-accent, #818CF8)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Empty Box -->
+  <g filter="url(#softShadow)">
+    <path d="M 75 85 L 165 85 L 155 73 L 85 73 Z" fill="var(--color-accent-dark, #3730A3)" opacity="0.8"/>
+    <path d="M 70 85 L 170 85 L 160 127 L 80 127 Z" fill="url(#boxGrad)"/>
+    <path d="M 64 85 L 176 85 L 171 95 L 69 95 Z" fill="var(--color-accent-light, #818CF8)"/>
+  </g>
+
+  <!-- Sleeping Lightbulb -->
+  <g transform="translate(100, 18)">
+    <path d="M 20 0 C 31 0 40 9 40 20 C 40 27 35 33 32 37 L 31 43 L 9 43 L 8 37 C 5 33 0 27 0 20 C 0 9 9 0 20 0 Z" fill="#F8FAFC" stroke="var(--color-border, #CBD5E1)" stroke-width="2"/>
+    <rect x="12" y="43" width="16" height="4" rx="1" fill="#94A3B8"/>
+    <rect x="14" y="47" width="12" height="3" rx="1" fill="#64748B"/>
+    <path d="M 11 18 Q 15 22 18 18" stroke="#64748B" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M 22 18 Q 25 22 28 18" stroke="#64748B" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <text x="36" y="8" font-family="sans-serif" font-weight="800" font-size="11" fill="var(--color-accent, #6366F1)">z</text>
+    <text x="44" y="0" font-family="sans-serif" font-weight="800" font-size="8" fill="var(--color-accent-light, #818CF8)">z</text>
+  </g>
+</svg>
