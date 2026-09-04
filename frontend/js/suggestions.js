@@ -15,13 +15,6 @@ let currentSearch = "";
 
 let categoryMap = {};
 
-function truncateText(text, maxLength = 130) {
-    if (!text || text.length <= maxLength) return text;
-    const trimmed = text.substring(0, maxLength);
-    const lastSpace = trimmed.lastIndexOf(" ");
-    return (lastSpace > 0 ? trimmed.substring(0, lastSpace) : trimmed) + "...";
-}
-
 async function loadSuggestions(page) {
     if (isFetching) return;
     isFetching = true;
@@ -248,7 +241,8 @@ async function fetchTopVoted() {
             const statusConfig = getStatusConfig(suggestion.status);
 
             if (titleEl) titleEl.textContent = suggestion.title;
-            if (descEl) descEl.textContent = truncateText(suggestion.description || "", 130);
+            // Let CSS line-clamp handle truncation
+            if (descEl) descEl.textContent = suggestion.description || "";
 
             if (tagsContainer) tagsContainer.style.display = '';
 
@@ -326,8 +320,6 @@ function buildSuggestionCard(suggestion) {
 
     const displayCategory = categoryMap[suggestion.category] || suggestion.category;
 
-    const truncatedDesc = truncateText(suggestion.description || "", 180);
-
     return `
        <div class="suggestion_container ${statusConfig.class}" onclick="window.location.href='suggestion.html?refId=${suggestion.ref}'">
             
@@ -340,7 +332,8 @@ function buildSuggestionCard(suggestion) {
             
             <div class="middle">
                 <p class="suggestion_title">${suggestion.title}</p>
-                <p class="suggestion_desc">${truncatedDesc}</p>
+                <!-- Let CSS line-clamp handle truncation -->
+                <p class="suggestion_desc">${suggestion.description || ""}</p>
                 <div class="details">
                     <span>${suggestion.author_name}</span>
                     <span>${displayCategory}</span>

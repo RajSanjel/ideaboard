@@ -264,6 +264,10 @@ main {
     word-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* --- Top Voted Stacked Metadata --- */
@@ -493,6 +497,10 @@ main {
     word-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .suggestion_container .details {
