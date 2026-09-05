@@ -1,5 +1,7 @@
 # IdeaBoard
 
+Web-based college feedback and suggestion board.
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v18+)
@@ -11,27 +13,29 @@
 ### 1. Install dependencies
 
 ```bash
-cd server
+cd backend
 npm install
 ```
 
 ### 2. Configure environment
 
-Create `server/.env`:
+Create `backend/.env`:
 
 ```
 PORT=3000
+DATABASE_URL=postgresql://localhost/ideaboarddb
+JWT_PRIVATE_KEY=...
+JWT_PUBLIC_KEY=...
+JWT_LIFETIME=7d
 ```
 
 ### 3. Create the database
-
-In your terminal:
 
 ```bash
 psql postgres
 ```
 
-Then, at the `postgres=#` prompt, run:
+At the `postgres=#` prompt:
 
 ```sql
 CREATE DATABASE ideaboarddb;
@@ -40,25 +44,25 @@ CREATE DATABASE ideaboarddb;
 
 ### 4. Run migrations
 
-Back in your terminal, from the `server/` folder:
+From the `backend/` folder:
 
 ```bash
 npm run migrate
 ```
 
-Verify the tables were created:
+Verify the tables:
 
 ```bash
 psql ideaboarddb -c "\dt"
 ```
 
-You should see `users`.
+You should see `users`, `suggestions`, `comments`, `suggestion_votes`, and `comment_votes`.
 
 ## Running the app
 
 ### Backend
 
-From the `server/` folder:
+From the `backend/` folder:
 
 ```bash
 npm run dev
@@ -68,8 +72,12 @@ The API runs at `http://localhost:3000`.
 
 ### Frontend
 
-- Right-click `frontend/index.html` in VS Code and choose **Open with Live Server**.
-- Or open the file directly in your browser: `path-to-project/frontend/index.html`
+Point the frontend API base URL at port **3000** (`frontend/js/config/api.js` → `http://localhost:3000`).
+
+Then either:
+
+- Right-click `frontend/index.html` in VS Code and choose **Open with Live Server**, or
+- Open `frontend/index.html` directly in the browser.
 
 ## Useful commands
 
@@ -83,10 +91,8 @@ The API runs at `http://localhost:3000`.
 ### Inspecting the database
 
 ```bash
-psql ideaboarddb        # open a SQL shell on the database
+psql ideaboarddb
 ```
-
-Inside the shell:
 
 ```
 \dt              list tables
