@@ -2,7 +2,7 @@ import { me, logout } from "./auth.js";
 
 async function initLayout() {
     const user = await me();
-
+    console.log(user);
     const navbarContainer = document.getElementById("navbar_container");
     const footerContainer = document.getElementById("footer_container");
     const buttonsToEnable = document.querySelectorAll(".toggle_disabled_class");
@@ -17,9 +17,14 @@ async function initLayout() {
         const authNavHTML = user
             ? `
                 <ul class="nav_items">  
-                    <li class="nav_user_greeting">Hello, ${user.name || 'User'}</li>
+                ${user.isAdmin || user.isStaff
+                ? `<li><a href="./admin/">Staff Portal</a></li>`
+                : ''
+            }    
+                <li class="nav_user_greeting">Hello, ${user.name || 'User'}</li>
+                    
                     <li><button class="button_logout" id="button_logout">Logout</button></li>
-                </ul>
+                </ul>          
             `
             : `
                 <ul class="nav_items">
