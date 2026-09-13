@@ -1,0 +1,11 @@
+import { Request, Response } from "express";
+import * as AdminProvider from "../../Services/admin.js";
+
+const AdminController = {
+	updateSuggestionStatus: async (req: Request, res: Response) => {
+		const result = await AdminProvider.updateSuggestionStatus(req);
+		res.status(result.httpCode).json(result);
+	},
+};
+
+export default AdminController;
