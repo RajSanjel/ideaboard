@@ -6,6 +6,6 @@ body:
   type: json
   content: |-
     {
-        "status":"review"
+        "status":"planned"
     }
 order: 1789286602722

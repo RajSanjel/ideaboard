@@ -1,0 +1,5 @@
+$kind: http-request
+name: get users stats
+url: "{{base_url}}/api/admin/userStats"
+method: GET
+order: 4474362415817492

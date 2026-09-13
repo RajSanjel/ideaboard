@@ -4,8 +4,5 @@ url: "{{base_url}}/api/admin/suggestions/b9af44c6-4fa3-4046-8ae8-e80524d506d1/st
 method: PATCH
 body:
   type: json
-  content: |-
-    {
-        "status":"random"
-    }
+  content: ""
 order: 3237911195890481
