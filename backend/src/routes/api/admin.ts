@@ -9,5 +9,6 @@ router.patch(
 	verifyPerms,
 	AdminController.updateSuggestionStatus,
 );
-
+router.get("/users", verifyPerms, AdminController.getUsers);
+router.get("/userStats", verifyPerms, AdminController.getUserStats);
 export default router;
