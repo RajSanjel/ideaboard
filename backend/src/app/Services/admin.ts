@@ -11,25 +11,17 @@ const ALLOWED_STATUSES = [
 	"rejected",
 ] as const;
 
+const ALLOWED_ACCESS = ["admin", "staff", "member"] as const;
+
+type UserAccess = (typeof ALLOWED_ACCESS)[number];
 type SuggestionStatus = (typeof ALLOWED_STATUSES)[number];
 
 function isSuggestionStatus(value: string): value is SuggestionStatus {
 	return (ALLOWED_STATUSES as readonly string[]).includes(value);
 }
 
-function requireStaffPortal(req: Request): ApiResponse | null {
-	const isAdmin = Boolean(req.res?.locals.isAdmin);
-	const isStaff = Boolean(req.res?.locals.isStaff);
-
-	if (!isAdmin && !isStaff) {
-		return {
-			success: false,
-			httpCode: 403,
-			message: "Forbidden. Staff or admin access required.",
-		};
-	}
-
-	return null;
+function isUserAccess(value: string): value is UserAccess {
+	return (ALLOWED_ACCESS as readonly string[]).includes(value);
 }
 
 function accessType(isAdmin: boolean, isStaff: boolean) {
@@ -38,39 +30,32 @@ function accessType(isAdmin: boolean, isStaff: boolean) {
 	return "member";
 }
 
+function flagsForAccess(access: UserAccess) {
+	if (access === "admin") return { is_admin: true, is_staff: true };
+	if (access === "staff") return { is_admin: false, is_staff: true };
+	return { is_admin: false, is_staff: false };
+}
+
 export async function updateSuggestionStatus(req: Request) {
 	try {
-		const isAdmin = Boolean(req.res?.locals.isAdmin);
-		const isStaff = Boolean(req.res?.locals.isStaff);
-
-		if (!isAdmin && !isStaff) {
-			const forbidden: ApiResponse = {
-				success: false,
-				httpCode: 403,
-				message: "Forbidden. Staff or admin access required.",
-			};
-			return forbidden;
-		}
-
 		const suggestionId = req.params.id;
 		const status = String(req.body?.status ?? "").trim();
+
 		if (!suggestionId) {
-			const badRequest: ApiResponse = {
+			return {
 				success: false,
 				httpCode: 400,
 				message: "Suggestion id is required.",
 			};
-			return badRequest;
 		}
 
 		if (!isSuggestionStatus(status)) {
-			const badRequest: ApiResponse = {
+			return {
 				success: false,
 				httpCode: 400,
 				message:
 					"Invalid status. Allowed values: open, review, planned, progress, done, rejected.",
 			};
-			return badRequest;
 		}
 
 		const sqlQuery = `
@@ -84,37 +69,31 @@ export async function updateSuggestionStatus(req: Request) {
 		const result = await dbPool.query(sqlQuery, [status, suggestionId]);
 
 		if (result.rowCount === 0) {
-			const notFound: ApiResponse = {
+			return {
 				success: false,
 				httpCode: 404,
 				message: "Suggestion not found.",
 			};
-			return notFound;
 		}
 
-		const successResponse: ApiResponse = {
+		return {
 			success: true,
 			httpCode: 200,
 			message: "Suggestion status updated.",
 			data: result.rows[0],
 		};
-		return successResponse;
 	} catch (error) {
 		console.error(error);
-		const errorResponse: ApiResponse = {
+		return {
 			success: false,
 			httpCode: 500,
 			message: "Internal Server Error",
 		};
-		return errorResponse;
 	}
 }
 
 export async function getUsers(req: Request): Promise<ApiResponse> {
 	try {
-		const forbidden = requireStaffPortal(req);
-		if (forbidden) return forbidden;
-
 		const page = Math.max(1, parseInt(req.query.page as string) || 1);
 		const limit = Math.min(
 			100,
@@ -173,15 +152,13 @@ export async function getUsers(req: Request): Promise<ApiResponse> {
 			createdAt: row.created_at,
 		}));
 
-		const successResponse: ApiResponse = {
+		return {
 			success: true,
 			httpCode: 200,
 			message: "Users fetched successfully.",
 			data: people,
 			meta: { page, limit, total },
 		};
-
-		return successResponse;
 	} catch (error) {
 		console.error("Error fetching users:", (error as Error).message);
 		return {
@@ -192,11 +169,8 @@ export async function getUsers(req: Request): Promise<ApiResponse> {
 	}
 }
 
-export async function getUserStats(req: Request): Promise<ApiResponse> {
+export async function getUserStats(_req: Request): Promise<ApiResponse> {
 	try {
-		const forbidden = requireStaffPortal(req);
-		if (forbidden) return forbidden;
-
 		const sqlQuery = `
 			SELECT
 				COUNT(*) FILTER (WHERE is_admin = true) AS admins,
@@ -208,20 +182,96 @@ export async function getUserStats(req: Request): Promise<ApiResponse> {
 		const result = await dbPool.query(sqlQuery);
 		const row = result.rows[0];
 
-		const data = {
-			admins: parseInt(row.admins, 10) || 0,
-			staff: parseInt(row.staff, 10) || 0,
-			people: parseInt(row.people, 10) || 0,
-		};
-
 		return {
 			success: true,
 			httpCode: 200,
 			message: "User stats fetched.",
-			data,
+			data: {
+				admins: parseInt(row.admins, 10) || 0,
+				staff: parseInt(row.staff, 10) || 0,
+				people: parseInt(row.people, 10) || 0,
+			},
 		};
 	} catch (error) {
 		console.error("Error fetching user stats:", (error as Error).message);
+		return {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+	}
+}
+
+export async function updateUserAccess(req: Request): Promise<ApiResponse> {
+	try {
+		const isAdmin = Boolean(req.res?.locals.isAdmin);
+
+		if (!isAdmin) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "Forbidden. Admin access required.",
+			};
+		}
+
+		const id = req.params.id;
+		const access = String(req.body?.access ?? "").trim();
+
+		if (!id) {
+			return {
+				success: false,
+				httpCode: 400,
+				message: "User id is required.",
+			};
+		}
+
+		if (!isUserAccess(access)) {
+			return {
+				success: false,
+				httpCode: 400,
+				message:
+					"Invalid access. Allowed values: admin, staff, member.",
+			};
+		}
+
+		const { is_admin, is_staff } = flagsForAccess(access);
+
+		const sqlQuery = `
+			UPDATE users
+			SET is_admin = $1,
+			    is_staff = $2
+			WHERE id = $3
+			RETURNING id, name, email, role, is_admin, is_staff
+		`;
+
+		const result = await dbPool.query(sqlQuery, [is_admin, is_staff, id]);
+
+		if (result.rowCount === 0) {
+			return {
+				success: false,
+				httpCode: 404,
+				message: "User not found.",
+			};
+		}
+
+		const row = result.rows[0];
+
+		return {
+			success: true,
+			httpCode: 200,
+			message: "User access updated.",
+			data: {
+				id: row.id,
+				name: row.name,
+				email: row.email,
+				role: row.role,
+				isAdmin: row.is_admin,
+				isStaff: row.is_staff,
+				access: accessType(row.is_admin, row.is_staff),
+			},
+		};
+	} catch (error) {
+		console.error("Error updating user access:", (error as Error).message);
 		return {
 			success: false,
 			httpCode: 500,
