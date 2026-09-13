@@ -14,6 +14,10 @@ const AdminController = {
 		const result = await AdminProvider.getUserStats(req);
 		res.status(result.httpCode).json(result);
 	},
+	updateUserAccess: async (req: Request, res: Response) => {
+		const result = await AdminProvider.updateUserAccess(req);
+		res.status(result.httpCode).json(result);
+	},
 };
 
 export default AdminController;
