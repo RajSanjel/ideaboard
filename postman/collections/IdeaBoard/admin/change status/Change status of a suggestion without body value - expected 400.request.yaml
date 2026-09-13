@@ -1,0 +1,11 @@
+$kind: http-request
+name: Change status of a suggestion without body value | expected 400
+url: "{{base_url}}/api/admin/suggestions/b9af44c6-4fa3-4046-8ae8-e80524d506d1/status"
+method: PATCH
+body:
+  type: json
+  content: |-
+    {
+        "status":"random"
+    }
+order: 3237911195890481
