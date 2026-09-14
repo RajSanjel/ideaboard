@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get members only
+url: "{{base_url}}/api/admin/users?filter=member&page=1&limit=10"
+method: GET
+queryParams:
+  filter: member
+  page: "1"
+  limit: "10"
+order: 4303494065710545

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IdeaBoard - Admins & people</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/people.js" type="module" defer></script>
+</head>
+
+<body>
+    <div class="app_shell">
+        <aside class="admin_sidebar">
+            <div class="sidebar_brand">
+                <a href="index.html" class="logo"
+                    style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                    <img src="../public/logo.svg" alt="IdeaBoard" style="height: 35px; width: auto; display: block;" />
+                </a>
+            </div>
+
+            <div class="sidebar_workspace">
+                <span class="workspace_title">ABC College</span>
+                <span class="workspace_subtitle">Single-college workspace</span>
+            </div>
+
+            <nav class="sidebar_nav">
+                <a href="./index.html" class="nav_item" data-nav="suggestions">
+                    <img src="./public/list.svg" alt="">
+                    <span>Suggestions</span>
+                    <span class="nav_count" id="suggestion_count">0</span>
+                </a>
+                <a href="./people.html" class="nav_item nav_selected" data-nav="admins">
+                    <img src="./public/people.svg" alt="">
+                    <span>Admins &amp; people</span>
+                </a>
+            </nav>
+
+            <div class="sidebar_user">
+                <div class="brand_mark" aria-hidden="true">U</div>
+                <div class="user_copy">
+                    <span class="user_name">User Name</span>
+                    <span class="user_role"></span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="admin_main">
+            <header class="admin_top">
+                <div class="top_row">
+                    <div class="top_copy">
+                        <h1 class="page_title">Admins &amp; people</h1>
+                    </div>
+                    <div class="top_actions">
+                        <button type="button" class="ghost_button" id="sign_out_btn">
+                            <img src="./public/signout.svg" alt="">
+                            Sign out
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stat_row">
+                    <div class="stat_item" data-stat="admins">
+                        <span class="stat_label">Admins</span>
+                        <span class="stat_value">0</span>
+                        <span class="stat_hint">can change access</span>
+                    </div>
+                    <div class="stat_item" data-stat="staff">
+                        <span class="stat_label">Staff</span>
+                        <span class="stat_value">0</span>
+                        <span class="stat_hint">workspace members</span>
+                    </div>
+                    <div class="stat_item" data-stat="people">
+                        <span class="stat_label">People</span>
+                        <span class="stat_value">0</span>
+                        <span class="stat_hint">students &amp; parents</span>
+                    </div>
+                </div>
+
+                <div class="filter_tabs" id="people_tabs">
+                    <button type="button" class="filter_tab tab_selected" data-filter="all">All</button>
+                    <button type="button" class="filter_tab" data-filter="admin">Admins</button>
+                    <button type="button" class="filter_tab" data-filter="staff">Staff</button>
+                    <button type="button" class="filter_tab" data-filter="member">Members</button>
+                </div>
+            </header>
+
+            <section class="admin_content">
+                <div class="people_toolbar">
+                    <label class="people_search">
+                        <img src="./public/search.svg" alt="">
+                        <input type="search" id="people_search" placeholder="Search people">
+                    </label>
+                </div>
+
+                <div class="table_card shadow-sm">
+                    <table class="suggestion_table">
+                        <thead>
+                            <tr>
+                                <th>Person</th>
+                                <th>Access</th>
+                                <th>Email</th>
+                                <th>Access</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="people_tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="pagination_row">
+                    <span class="page_info">Showing 0–0 of 0</span>
+                    <div class="page_controls">
+                        <button type="button" class="page_btn disabled" disabled>Previous</button>
+                        <span class="page_current">Page 1 of 1</span>
+                        <button type="button" class="page_btn disabled" disabled>Next</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

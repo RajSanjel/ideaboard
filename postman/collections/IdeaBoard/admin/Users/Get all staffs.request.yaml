@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get all staffs
+url: "{{base_url}}/api/admin/users?filter=staff&page=1&limit=10"
+method: GET
+queryParams:
+  filter: staff
+  page: "1"
+  limit: "10"
+order: 4244276025539130

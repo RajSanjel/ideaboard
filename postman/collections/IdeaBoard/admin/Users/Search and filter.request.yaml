@@ -1,0 +1,22 @@
+$kind: http-request
+name: Search and filter
+url: "{{base_url}}/api/admin/users?filter=admin&search=raj&page=1&limit=10"
+method: GET
+queryParams:
+  - key: filter
+    value: admin
+    disabled: false
+    description: ""
+  - key: search
+    value: raj
+    disabled: false
+    description: ""
+  - key: page
+    value: "1"
+    disabled: false
+    description: ""
+  - key: limit
+    value: "10"
+    disabled: false
+    description: ""
+order: 4463093784822610

@@ -1,0 +1,16 @@
+$kind: http-request
+name: Change User's role
+url: "{{base_url}}/api/admin/userAccess/01489450-32b0-4a0d-a68f-6a8769cd87b6/access"
+method: PATCH
+queryParams:
+  - key: ""
+    value: ""
+    disabled: true
+    description: ""
+body:
+  type: json
+  content: |-
+    {
+        "access":"member"
+    }
+order: 4490570266712542

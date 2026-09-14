@@ -1,0 +1,8 @@
+$kind: http-request
+name: Get all users
+url: "{{base_url}}/api/admin/users?page=1&limit=10"
+method: GET
+queryParams:
+  page: "1"
+  limit: "10"
+order: 1789289312128
