@@ -1,6 +1,9 @@
 import API_CONFIG from "../../js/config/api.js";
 import { me, logout } from "../../js/global/auth.js";
 import { formatDate, getCategoryLabel } from "../../js/util/helpers.js";
+import { getInitials } from "../../js/util/helpers.js";
+import { showToast } from "../../js/util/toast.js";
+
 const STATUS_LABELS = {
     open: "Open",
     review: "Reviewing",
@@ -80,8 +83,15 @@ function buildListUrl() {
 
     if (state.search) params.set("search", state.search);
 
-    if (state.filter === "needs_response") {
-        params.set("status", "open");
+    if (
+        state.filter === "open" ||
+        state.filter === "review" ||
+        state.filter === "planned" ||
+        state.filter === "progress" ||
+        state.filter === "done" ||
+        state.filter === "rejected"
+    ) {
+        params.set("status", state.filter);
     }
 
     if (state.filter === "high_interest" || state.sort === "most_votes") {
@@ -185,9 +195,10 @@ async function onStatusChange(event) {
         select.value = prevStatus;
         wrap.dataset.status = prevStatus;
         row.dataset.status = prevStatus;
+        showToast(result.message || "Could not update status.", "error");
         return;
     }
-
+    showToast("Status updated.");
     loadStats();
 }
 
@@ -270,7 +281,7 @@ function wireUi() {
 }
 
 async function init() {
-    const user = await me();
+    const user = await me(true);
     if (!user || !(user.isAdmin || user.isStaff)) {
         window.location.replace("../index.html");
         return;
@@ -278,8 +289,15 @@ async function init() {
 
     const nameEl = document.querySelector(".sidebar_user .user_name");
     const roleEl = document.querySelector(".sidebar_user .user_role");
-    if (nameEl) nameEl.textContent = user.name || "User";
-    if (roleEl) roleEl.textContent = user.role || (user.isAdmin ? "Admin" : "Staff");
+    const markEl = document.querySelector(".sidebar_user .brand_mark");
+
+    const displayName = user.name || "User";
+
+    if (nameEl) nameEl.textContent = displayName;
+    if (roleEl) {
+        roleEl.textContent = user.role || (user.isAdmin ? "Admin" : "Staff");
+    }
+    if (markEl) markEl.textContent = getInitials(displayName);
 
     wireUi();
     await Promise.all([loadCount(), loadStats(), loadSuggestions()]);

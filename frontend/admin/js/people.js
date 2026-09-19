@@ -1,5 +1,7 @@
 import API_CONFIG from "../../js/config/api.js";
 import { me, logout } from "../../js/global/auth.js";
+import { getInitials } from "../../js/util/helpers.js";
+import { showToast } from "../../js/util/toast.js";
 
 const ADMIN_BASE = `${API_CONFIG.BASE_URL}/api/admin`;
 const SUGGESTIONS_URL = `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}`;
@@ -45,7 +47,8 @@ function accessOptions(current) {
 
 function rowTemplate(person) {
     const access = person.access || "member";
-    const canEdit = Boolean(currentUser?.isAdmin);
+    const isSelf = person.id === currentUser?.id;
+    const canEdit = Boolean(currentUser?.isAdmin) && !isSelf;
     const disabled = canEdit ? "" : "disabled";
 
     return `
@@ -159,9 +162,10 @@ async function onAccessChange(event) {
     const result = await setAccess(row.dataset.id, next);
     if (result.httpCode !== 200) {
         select.value = prev;
+        showToast(result.message || "Could not update access.", "error");
         return;
     }
-
+    showToast("Access updated.");
     await Promise.all([loadPeople(), loadStats()]);
 }
 
@@ -172,8 +176,11 @@ async function onRevoke(event) {
     const row = btn.closest("tr");
     const result = await setAccess(row.dataset.id, "member");
     if (result.httpCode === 200) {
+        showToast("Access updated.");
         await Promise.all([loadPeople(), loadStats()]);
+        return;
     }
+    showToast(result.message || "Could not update access.", "error");
 }
 
 function wireUi() {
@@ -219,7 +226,8 @@ function wireUi() {
 }
 
 async function init() {
-    currentUser = await me();
+    currentUser = await me(true);
+
     if (!currentUser || !(currentUser.isAdmin || currentUser.isStaff)) {
         window.location.replace("../index.html");
         return;
@@ -227,11 +235,15 @@ async function init() {
 
     const nameEl = document.querySelector(".sidebar_user .user_name");
     const roleEl = document.querySelector(".sidebar_user .user_role");
-    if (nameEl) nameEl.textContent = currentUser.name || "User";
+    const markEl = document.querySelector(".sidebar_user .brand_mark");
+
+    const displayName = currentUser.name || "User";
+
+    if (nameEl) nameEl.textContent = displayName;
     if (roleEl) {
-        roleEl.textContent =
-            currentUser.role || (currentUser.isAdmin ? "Admin" : "Staff");
+        roleEl.textContent = currentUser.role || (currentUser.isAdmin ? "Admin" : "Staff");
     }
+    if (markEl) markEl.textContent = getInitials(displayName);
 
     wireUi();
     await Promise.all([loadCount(), loadStats(), loadPeople()]);

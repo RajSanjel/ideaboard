@@ -215,6 +215,7 @@ export async function updateUserAccess(req: Request): Promise<ApiResponse> {
 		}
 
 		const id = req.params.id;
+		const currentUserId = String(req.res?.locals.userId ?? "");
 		const access = String(req.body?.access ?? "").trim();
 
 		if (!id) {
@@ -222,6 +223,14 @@ export async function updateUserAccess(req: Request): Promise<ApiResponse> {
 				success: false,
 				httpCode: 400,
 				message: "User id is required.",
+			};
+		}
+
+		if (id === currentUserId) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "You cannot change your own access.",
 			};
 		}
 

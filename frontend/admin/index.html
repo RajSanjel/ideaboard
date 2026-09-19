@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IdeaBoard - Admin overview</title>
+    <title>Admin overview - IdeaBoard</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="./css/index.css">
 </head>
@@ -37,7 +37,7 @@
             </nav>
 
             <div class="sidebar_user">
-                <div class="brand_mark" aria-hidden="true">U</div>
+                <div class="brand_mark user_avatar" aria-hidden="true">U</div>
                 <div class="user_copy">
                     <span class="user_name">User Name</span>
                     <span class="user_role"></span>
@@ -90,7 +90,12 @@
 
                 <div class="filter_tabs" id="filter_tabs">
                     <button type="button" class="filter_tab tab_selected" data-filter="all">All</button>
-                    <button type="button" class="filter_tab" data-filter="needs_response">Needs response</button>
+                    <button type="button" class="filter_tab" data-filter="open">Open</button>
+                    <button type="button" class="filter_tab" data-filter="review">Reviewing</button>
+                    <button type="button" class="filter_tab" data-filter="planned">On agenda</button>
+                    <button type="button" class="filter_tab" data-filter="progress">In progress</button>
+                    <button type="button" class="filter_tab" data-filter="done">Done</button>
+                    <button type="button" class="filter_tab" data-filter="rejected">Rejected</button>
                     <button type="button" class="filter_tab" data-filter="high_interest">High Interest</button>
                 </div>
             </header>
