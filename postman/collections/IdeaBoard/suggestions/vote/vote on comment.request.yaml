@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions/comments/933d8fa4-e893-47d5-989a-cac5a347397c/vote"
+method: POST
+order: 4062575609118749
