@@ -317,22 +317,18 @@ function buildSuggestionCard(suggestion) {
     const timeAgo = formatTimeAgo(new Date(suggestion.created_at));
     const user = getCachedUser();
     const voteBtnClass = user ? "" : "disabled";
-
     const displayCategory = categoryMap[suggestion.category] || suggestion.category;
 
     return `
        <div class="suggestion_container ${statusConfig.class}" onclick="window.location.href='suggestion.html?refId=${suggestion.ref}'">
-            
-            <div class="left vote_btn ${voteBtnClass}" onclick="event.stopPropagation(); console.log('Vote clicked for:', '${suggestion.ref}');">
+            <div class="left vote_btn ${voteBtnClass}" data-id="${suggestion.id}" onclick="event.stopPropagation();">
                 <span class="vote_count">
                     <img src="./public/vote.svg" height="20px">
                     <span class="vote_count">${suggestion.votes || 0}</span>
                 </span>
             </div>
-            
             <div class="middle">
                 <p class="suggestion_title">${suggestion.title}</p>
-                <!-- Let CSS line-clamp handle truncation -->
                 <p class="suggestion_desc">${suggestion.description || ""}</p>
                 <div class="details">
                     <span>${suggestion.author_name}</span>
@@ -355,7 +351,6 @@ function buildSuggestionCard(suggestion) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-
     const categoryTabsContainer = document.getElementById("category_tabs");
 
     if (categoryTabsContainer) {
@@ -378,6 +373,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadSuggestions(currentPage);
     fetchStats();
     fetchTopVoted();
+
+    document.getElementById("suggestions_container")?.addEventListener("click", async (event) => {
+        const btn = event.target.closest(".vote_btn");
+        if (!btn) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (btn.classList.contains("disabled") || !getCachedUser()) {
+            window.location.href = "./login.html";
+            return;
+        }
+
+        if (!btn.dataset.id) return;
+
+        const result = await fetch(
+            `${API_CONFIG.BASE_URL}/${API_CONFIG.SUGGESTIONS_ENDPOINT}/${btn.dataset.id}/vote`,
+            { method: "POST", credentials: "include" }
+        ).then((resp) => resp.json());
+
+        if (result.httpCode !== 200) return;
+
+        const countEl = btn.querySelector(".vote_count span");
+        if (countEl) countEl.textContent = result.data.votes;
+    }, true);
 
     const statusItems = document.querySelectorAll(".stats_visual_item");
     statusItems.forEach(item => {
@@ -430,8 +450,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (currentPage > 1) {
                 currentPage--;
                 await loadSuggestions(currentPage);
-                const header = document.querySelector('.suggestions_list_header');
-                if (header) header.scrollIntoView({ behavior: 'smooth' });
+                const header = document.querySelector(".suggestions_list_header");
+                if (header) header.scrollIntoView({ behavior: "smooth" });
             }
         });
     }
@@ -447,8 +467,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             await loadSuggestions(currentPage);
 
             if (currentPage > previousPage) {
-                const header = document.querySelector('.suggestions_list_header');
-                if (header) header.scrollIntoView({ behavior: 'smooth' });
+                const header = document.querySelector(".suggestions_list_header");
+                if (header) header.scrollIntoView({ behavior: "smooth" });
             }
         });
     }
