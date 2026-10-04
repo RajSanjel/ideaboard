@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions/fcd25c0d-51a5-4bef-8c7f-689d985ba814/comments"
+method: GET
+order: 1791088326842
