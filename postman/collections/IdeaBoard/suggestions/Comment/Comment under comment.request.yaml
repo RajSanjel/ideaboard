@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{base_url}}/api/suggestions/933d8fa4-e893-47d5-989a-cac5a347397c/comments"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "body":"This is comment under comment",
+        "parentId":"933d8fa4-e893-47d5-989a-cac5a347397c"
+    }
+order: 1080249276578963
