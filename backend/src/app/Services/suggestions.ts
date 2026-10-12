@@ -3,6 +3,16 @@ import { ApiResponse } from "../../@types/ApiResponse.js";
 import { SuggestionPayload } from "../../@types/Suggestion.js";
 import dbPool from "../../db.js";
 
+const EDIT_WINDOW_MS = 15 * 60 * 1000;
+
+function withinEditWindow(createdAt: string | Date) {
+	return Date.now() - new Date(createdAt).getTime() <= EDIT_WINDOW_MS;
+}
+
+function paramId(value: string | string[] | undefined) {
+	if (typeof value !== "string" || value.length === 0) return null;
+	return value;
+}
 export async function createSuggestion(req: Request, res: Response) {
 	try {
 		const suggestionPayload = req.body as SuggestionPayload;
@@ -229,6 +239,140 @@ export async function getSuggestionByRef(req: Request) {
 			"Error fetching suggestion by ref:",
 			(error as Error).message,
 		);
+		return {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+	}
+}
+
+export async function updateSuggestion(req: Request): Promise<ApiResponse> {
+	try {
+		const userId = req.res?.locals.userId as string | undefined;
+		const key = paramId(req.params.id);
+		const title = String(req.body?.title ?? "").trim();
+		const description = String(req.body?.description ?? "").trim();
+		const category = String(req.body?.category ?? "").trim();
+
+		if (!userId)
+			return { success: false, httpCode: 401, message: "Unauthorized." };
+		if (!key)
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Suggestion id is required.",
+			};
+		if (!title || !description || !category) {
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Title, description, and category are required.",
+			};
+		}
+
+		const existing = await dbPool.query(
+			`SELECT id, author_id, created_at FROM suggestions WHERE id::text = $1 OR ref = $1`,
+			[key],
+		);
+		if ((existing.rowCount ?? 0) === 0) {
+			return {
+				success: false,
+				httpCode: 404,
+				message: "Suggestion not found.",
+			};
+		}
+
+		const row = existing.rows[0];
+		if (row.author_id !== userId) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "You can only edit your own suggestion.",
+			};
+		}
+		if (!withinEditWindow(row.created_at)) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "Edit window has closed.",
+			};
+		}
+
+		const result = await dbPool.query(
+			`UPDATE suggestions
+			 SET title = $1, description = $2, category = $3, edited_at = now()
+			 WHERE id = $4
+			 RETURNING *`,
+			[title, description, category, row.id],
+		);
+
+		return {
+			success: true,
+			httpCode: 200,
+			message: "Suggestion updated.",
+			data: result.rows[0],
+		};
+	} catch (error) {
+		console.error("Error updating suggestion:", (error as Error).message);
+		return {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+	}
+}
+
+export async function deleteSuggestion(req: Request): Promise<ApiResponse> {
+	try {
+		const userId = req.res?.locals.userId as string | undefined;
+		const key = paramId(req.params.id);
+		if (!userId)
+			return { success: false, httpCode: 401, message: "Unauthorized." };
+		if (!key)
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Suggestion id is required.",
+			};
+
+		const existing = await dbPool.query(
+			`SELECT id, author_id, created_at FROM suggestions WHERE id::text = $1 OR ref = $1`,
+			[key],
+		);
+		if ((existing.rowCount ?? 0) === 0) {
+			return {
+				success: false,
+				httpCode: 404,
+				message: "Suggestion not found.",
+			};
+		}
+
+		const row = existing.rows[0];
+		if (row.author_id !== userId) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "You can only delete your own suggestion.",
+			};
+		}
+		if (!withinEditWindow(row.created_at)) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "Edit window has closed.",
+			};
+		}
+
+		await dbPool.query(`DELETE FROM suggestions WHERE id = $1`, [row.id]);
+		return {
+			success: true,
+			httpCode: 200,
+			message: "Suggestion deleted.",
+			data: { id: row.id },
+		};
+	} catch (error) {
+		console.error("Error deleting suggestion:", (error as Error).message);
 		return {
 			success: false,
 			httpCode: 500,

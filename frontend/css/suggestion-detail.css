@@ -6,7 +6,6 @@
     font-family: var(--font-sans);
 }
 
-/* --- Navigation & Header Links --- */
 .back_nav_container {
     margin-bottom: 20px;
 }
@@ -23,7 +22,6 @@
     color: var(--text-primary);
 }
 
-/* --- Main Detail Card --- */
 .suggestion_detail_card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border-strong);
@@ -38,6 +36,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     margin-bottom: 16px;
 }
 
@@ -45,6 +44,46 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    min-width: 0;
+}
+
+.detail_actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.icon_button {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.icon_button img {
+    width: 16px;
+    height: 16px;
+}
+
+.icon_button:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.icon_button:active {
+    transform: scale(0.95);
+}
+
+.icon_button_danger:hover {
+    background-color: var(--danger-bg);
+    border-color: var(--danger-border);
 }
 
 .suggestion_detail_title {
@@ -57,13 +96,77 @@
     word-break: break-word;
 }
 
+.edit_title_input,
+.edit_body_input,
+.edit_comment_input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--color-surface);
+    box-sizing: border-box;
+}
+
+.edit_title_input {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.edit_body_input,
+.edit_comment_input {
+    margin-top: 8px;
+    resize: vertical;
+}
+
+.edit_category_select {
+    width: auto;
+    max-width: 220px;
+    margin: 0;
+    padding: 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: none;
+    color: var(--text-primary);
+}
+
+.edit_actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+#save_suggestion_btn,
+.comment_text [data-action="save-comment"] {
+    align-self: flex-start;
+}
+
+#cancel_suggestion_btn,
+.comment_text [data-action="cancel-comment"] {
+    padding: 8px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background-color: var(--color-surface);
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    cursor: pointer;
+}
+
 .section_divider {
     border: none;
     border-top: 1px solid var(--color-hairline);
     margin: 24px 0;
 }
 
-/* --- Status Tags & Badges --- */
 .tag {
     display: inline-flex;
     align-items: center;
@@ -117,7 +220,6 @@
     text-transform: uppercase;
 }
 
-/* --- Metadata & Author Info Bar --- */
 .suggestion_meta_bar {
     display: flex;
     justify-content: space-between;
@@ -163,7 +265,6 @@
     color: var(--text-muted);
 }
 
-/* --- Detail Page Action Buttons --- */
 .suggestion_detail_card .vote_btn {
     display: flex;
     align-items: center;
@@ -190,15 +291,20 @@
     pointer-events: none;
 }
 
+.vote_selected {
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+}
+
 .btn-view {
     padding: 8px 10px;
     background-color: var(--color-accent);
     color: white;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 
-/* --- Suggestion Body Content --- */
 .suggestion_body_text {
     display: flex;
     flex-direction: column;
@@ -215,7 +321,6 @@
     margin: 0;
 }
 
-/* --- Status Tracker / Workflow --- */
 .status_tracker_container {
     margin-top: 32px;
     display: flex;
@@ -293,7 +398,6 @@
     margin: 0 20px;
 }
 
-/* --- Discussion & Comments Section --- */
 .discussion_section {
     margin-top: 50px;
 }
@@ -305,7 +409,6 @@
     margin-bottom: 20px;
 }
 
-/* Comment Form Card */
 .comment_box_card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border-strong);
@@ -352,7 +455,6 @@
     color: var(--text-muted);
 }
 
-/* Comment Thread Items */
 .comments_thread_container {
     display: flex;
     flex-direction: column;
@@ -441,7 +543,14 @@
     color: var(--text-primary);
 }
 
-/* Nested Replies Sub-thread */
+.comment_actions [data-action="delete-comment"] {
+    color: var(--danger-text);
+}
+
+.comment_actions [data-action="delete-comment"]:hover {
+    text-decoration: underline;
+}
+
 .comment_replies_list {
     margin-left: 48px;
     display: flex;

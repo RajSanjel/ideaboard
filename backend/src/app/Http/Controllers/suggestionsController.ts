@@ -18,6 +18,14 @@ const SuggestionController = {
 		const result = await SuggestionProvider.getSuggestionByRef(req);
 		res.status(result.httpCode).json(result);
 	},
+	update: async (req: Request, res: Response) => {
+		const result = await SuggestionProvider.updateSuggestion(req);
+		res.status(result.httpCode).json(result);
+	},
+	remove: async (req: Request, res: Response) => {
+		const result = await SuggestionProvider.deleteSuggestion(req);
+		res.status(result.httpCode).json(result);
+	},
 };
 
 export default SuggestionController;
