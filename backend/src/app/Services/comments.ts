@@ -2,6 +2,12 @@ import { Request } from "express";
 import dbPool from "../../db.js";
 import { ApiResponse } from "../../@types/ApiResponse.js";
 
+const EDIT_WINDOW_MS = 15 * 60 * 1000;
+
+function withinEditWindow(createdAt: string | Date) {
+	return Date.now() - new Date(createdAt).getTime() <= EDIT_WINDOW_MS;
+}
+
 function paramId(value: string | string[] | undefined) {
 	if (typeof value !== "string" || value.length === 0) return null;
 	return value;
@@ -128,6 +134,133 @@ export async function getComments(req: Request): Promise<ApiResponse> {
 		};
 	} catch (error) {
 		console.error("Error fetching comments:", (error as Error).message);
+		return {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+	}
+}
+
+export async function updateComment(req: Request): Promise<ApiResponse> {
+	try {
+		const userId = req.res?.locals.userId as string | undefined;
+		const commentId = paramId(req.params.id);
+		const body = String(req.body?.body ?? "").trim();
+
+		if (!userId)
+			return { success: false, httpCode: 401, message: "Unauthorized." };
+		if (!commentId)
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Comment id is required.",
+			};
+		if (!body)
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Comment body is required.",
+			};
+
+		const existing = await dbPool.query(
+			`SELECT id, author_id, created_at FROM comments WHERE id = $1`,
+			[commentId],
+		);
+		if ((existing.rowCount ?? 0) === 0) {
+			return {
+				success: false,
+				httpCode: 404,
+				message: "Comment not found.",
+			};
+		}
+
+		const row = existing.rows[0];
+		if (row.author_id !== userId) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "You can only edit your own comment.",
+			};
+		}
+		if (!withinEditWindow(row.created_at)) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "Edit window has closed.",
+			};
+		}
+
+		const result = await dbPool.query(
+			`UPDATE comments SET body = $1, edited_at = now() WHERE id = $2 RETURNING *`,
+			[body, commentId],
+		);
+		return {
+			success: true,
+			httpCode: 200,
+			message: "Comment updated.",
+			data: result.rows[0],
+		};
+	} catch (error) {
+		console.error("Error updating comment:", (error as Error).message);
+		return {
+			success: false,
+			httpCode: 500,
+			message: "Internal Server Error",
+		};
+	}
+}
+
+export async function deleteComment(req: Request): Promise<ApiResponse> {
+	try {
+		const userId = req.res?.locals.userId as string | undefined;
+		const commentId = paramId(req.params.id);
+		if (!userId)
+			return { success: false, httpCode: 401, message: "Unauthorized." };
+		if (!commentId)
+			return {
+				success: false,
+				httpCode: 400,
+				message: "Comment id is required.",
+			};
+
+		const existing = await dbPool.query(
+			`SELECT id, author_id, created_at FROM comments WHERE id = $1`,
+			[commentId],
+		);
+		if ((existing.rowCount ?? 0) === 0) {
+			return {
+				success: false,
+				httpCode: 404,
+				message: "Comment not found.",
+			};
+		}
+
+		const row = existing.rows[0];
+		if (row.author_id !== userId) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "You can only delete your own comment.",
+			};
+		}
+		if (!withinEditWindow(row.created_at)) {
+			return {
+				success: false,
+				httpCode: 403,
+				message: "Edit window has closed.",
+			};
+		}
+
+		await dbPool.query(`DELETE FROM comments WHERE id = $1`, [commentId]);
+		return {
+			success: true,
+			httpCode: 200,
+			message: "Comment deleted.",
+			data: { id: commentId },
+		};
+	} catch (error) {
+		console.error("Error deleting comment:", (error as Error).message);
 		return {
 			success: false,
 			httpCode: 500,
