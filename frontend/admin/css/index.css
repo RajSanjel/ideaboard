@@ -314,7 +314,7 @@
     color: var(--text-muted);
 }
 
-.sort_select {
+/* .sort_select {
     padding: 6px 10px;
     border: 1px solid var(--color-border);
     border-radius: 8px;
@@ -322,7 +322,7 @@
     font-family: var(--font-sans);
     font-size: 13px;
     color: var(--text-primary);
-}
+} */
 
 /* --- Table --- */
 .table_card {
@@ -517,14 +517,25 @@
     color: var(--status-planned);
 }
 
-.access_select {
+.access_select,
+.sort_select {
     border: 1px solid var(--color-border);
     border-radius: 8px;
     background-color: var(--color-surface);
-    padding: 6px 8px;
+    padding: 6px 28px 6px 8px;
+
     font-family: var(--font-sans);
     font-size: 12px;
     color: var(--text-secondary);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image: url("../public/chevron.svg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
+
 }
 
 .poster_cell {
