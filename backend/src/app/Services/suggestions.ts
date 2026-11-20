@@ -116,11 +116,18 @@ export async function getAllSuggestions(req: Request): Promise<ApiResponse> {
 			orderBy = "votes DESC, created_at DESC";
 		} else if (sort === "least_votes") {
 			orderBy = "votes ASC, created_at DESC";
+		} else if (sort === "most_comments") {
+			orderBy = "comments_count DESC, created_at DESC";
 		}
 
 		const dataQuery = `
-			SELECT * 
-			FROM suggestions 
+			SELECT 
+			  s.*,(
+			     SELECT COUNT(*)::int
+				 FROM comments c 
+				 WHERE c.suggestion_id = s.id
+			  ) AS comments_count
+			FROM suggestions s
 			${whereClause} 
 			ORDER BY ${orderBy} 
 			LIMIT $${paramIndex} OFFSET $${paramIndex + 1};
