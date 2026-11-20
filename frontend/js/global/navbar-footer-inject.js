@@ -39,6 +39,8 @@ async function initLayout() {
                     <ul class="nav_items">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="./suggestions.html">Suggestion</a></li>
+                        <li><a href="./about.html">About us</a></li>
+                        <li><a href="./guideline.html">Guidelines</a></li>
                     </ul>
                 </div>
                 <div class="left" id="nav__auth_dependent">
@@ -52,7 +54,8 @@ async function initLayout() {
         const authFooterLinks = user
             ? `
                 <li class="footer_link"><a href="./suggestions.html">Suggestion Board</a></li>
-                <li class="footer_link"><a href="./index.html#guideline">Guidelines to Post</a></li>
+                <li class="footer_link"><a href="./about.html">About Ideaboard</a></li>
+                <li class="footer_link"><a href="./guideline.html">Guidelines to Post</a></li>
             `
             : `
                 <li class="footer_link"><a href="./suggestions.html">Suggestion Board</a></li>
