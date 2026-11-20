@@ -7,6 +7,7 @@ import {
     formatTimeAgo,
     getInitials
 } from "./util/helpers.js";
+import { showConfirmModal } from "./util/confirmModal.js";
 
 const EDIT_WINDOW_MS = 15 * 60 * 1000;
 let suggestionRecord = null;
@@ -95,9 +96,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("edit_suggestion_btn").addEventListener("click", () => startSuggestionEdit(suggestionKey));
             document.getElementById("delete_suggestion_btn").addEventListener("click", async () => {
                 if (!canEdit(suggestionRecord.created_at)) return;
-                if (!confirm("Delete this suggestion?")) return;
-                const deleteResult = await api(`/${suggestionKey}`, { method: "DELETE" });
-                if (deleteResult.httpCode === 200) window.location.href = "./suggestions.html";
+                showConfirmModal({
+                    title: "Delete Suggestion?",
+                    message: "This suggestion will be permanently removed. This action cannot be undone.",
+                    confirmLabel: "Delete",
+                    cancelLabel: "Keep",
+                    isDanger: true,
+                    onConfirm: async () => {
+                        const deleteResult = await api(`/${suggestionKey}`, { method: "DELETE" });
+                        if (deleteResult.httpCode === 200) window.location.href = "./suggestions.html";
+                    }
+                });
+
             });
         }
 
@@ -155,9 +165,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             const deleteBtn = event.target.closest("[data-action='delete-comment']");
             if (deleteBtn) {
                 const item = deleteBtn.closest(".comment_item");
-                if (!confirm("Delete this comment?")) return;
-                const deleteResult = await api(`/comments/${item.dataset.id}`, { method: "DELETE" });
-                if (deleteResult.httpCode === 200) item.remove();
+                showConfirmModal({
+                    title: "Delete comment?",
+                    message: "This comment will be permanently removed. This action cannot be undone.",
+                    confirmLabel: "Delete",
+                    cancelLabel: "Keep",
+                    isDanger: true,
+                    onConfirm: async () => {
+                        const deleteResult = await api(`/comments/${item.dataset.id}`, { method: "DELETE" });
+                        if (deleteResult.httpCode === 200) item.remove();
+                    }
+                });
                 return;
             }
 
@@ -180,8 +198,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const cancelCommentBtn = event.target.closest("[data-action='cancel-comment']");
             if (cancelCommentBtn) {
-                const item = cancelCommentBtn.closest(".comment_item");
-                item.querySelector(".comment_text").textContent = cancelCommentBtn.dataset.original || "";
+                showConfirmModal({
+                    title: "Discard changes?",
+                    message: "You have unsaved edits. Are you sure you want to cancel?",
+                    confirmLabel: "Discard",
+                    cancelLabel: "Keep editing",
+                    isDanger: true,
+                    onConfirm: () => {
+                        const item = cancelCommentBtn.closest(".comment_item");
+                        item.querySelector(".comment_text").textContent = cancelCommentBtn.dataset.original || "";
+                    }
+                });
+
                 return;
             }
 
@@ -190,13 +218,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const item = saveCommentBtn.closest(".comment_item");
                 const body = item.querySelector(".edit_comment_input").value.trim();
                 if (!body) return;
-
-                const saveResult = await api(`/comments/${item.dataset.id}`, {
-                    method: "PATCH",
-                    body: JSON.stringify({ body }),
+                showConfirmModal({
+                    title: "Save changes?",
+                    message: "Update this comment with your new text?",
+                    confirmLabel: "Save",
+                    cancelLabel: "Back",
+                    isDanger: false,
+                    onConfirm: async () => {
+                        const saveResult = await api(`/comments/${item.dataset.id}`, {
+                            method: "PATCH",
+                            body: JSON.stringify({ body }),
+                        });
+                        if (saveResult.httpCode !== 200) return;
+                        item.querySelector(".comment_text").textContent = saveResult.data.body;
+                    }
                 });
-                if (saveResult.httpCode !== 200) return;
-                item.querySelector(".comment_text").textContent = saveResult.data.body;
+
                 return;
             }
 
@@ -249,14 +286,23 @@ async function startSuggestionEdit(suggestionKey) {
     `;
 
     document.getElementById("cancel_suggestion_btn").addEventListener("click", () => {
-        titleEl.textContent = suggestionRecord.title;
-        bodyEl.innerHTML = (suggestionRecord.description || "")
-            .split("\n")
-            .map((para) => `<p>${para}</p>`)
-            .join("");
+        showConfirmModal({
+            title: "Discard changes?",
+            message: "You have unsaved edits. Are you sure you want to cancel?",
+            confirmLabel: "Discard",
+            cancelLabel: "Keep editing",
+            isDanger: true,
+            onConfirm: () => {
+                titleEl.textContent = suggestionRecord.title;
+                bodyEl.innerHTML = (suggestionRecord.description || "")
+                    .split("\n")
+                    .map((para) => `<p>${para}</p>`)
+                    .join("");
 
-        const select = document.getElementById("edit_category_select");
-        if (select) select.outerHTML = `<span class="category_pill">${previousLabel}</span>`;
+                const select = document.getElementById("edit_category_select");
+                if (select) select.outerHTML = `<span class="category_pill">${previousLabel}</span>`;
+            }
+        });
     });
 
     document.getElementById("save_suggestion_btn").addEventListener("click", async () => {
@@ -267,23 +313,33 @@ async function startSuggestionEdit(suggestionKey) {
         const nextCategory = document.getElementById("edit_category_select")?.value;
         if (!nextTitle || !nextBody || !nextCategory) return;
 
-        const result = await api(`/${suggestionKey}`, {
-            method: "PATCH",
-            body: JSON.stringify({
-                title: nextTitle,
-                description: nextBody,
-                category: nextCategory,
-            }),
+        showConfirmModal({
+            title: "Save changes?",
+            message: "Update this suggestion with your new text?",
+            confirmLabel: "Save",
+            cancelLabel: "Back",
+            isDanger: false,
+            onConfirm: async () => {
+
+                const result = await api(`/${suggestionKey}`, {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        title: nextTitle,
+                        description: nextBody,
+                        category: nextCategory,
+                    }),
+                });
+                if (result.httpCode !== 200) return;
+
+                suggestionRecord = result.data;
+                titleEl.textContent = result.data.title;
+                bodyEl.innerHTML = result.data.description.split("\n").map((para) => `<p>${para}</p>`).join("");
+
+                const select = document.getElementById("edit_category_select");
+                const label = categories.find((category) => category.id === result.data.category)?.label || result.data.category;
+                if (select) select.outerHTML = `<span class="category_pill">${label}</span>`;
+            }
         });
-        if (result.httpCode !== 200) return;
-
-        suggestionRecord = result.data;
-        titleEl.textContent = result.data.title;
-        bodyEl.innerHTML = result.data.description.split("\n").map((para) => `<p>${para}</p>`).join("");
-
-        const select = document.getElementById("edit_category_select");
-        const label = categories.find((category) => category.id === result.data.category)?.label || result.data.category;
-        if (select) select.outerHTML = `<span class="category_pill">${label}</span>`;
     });
 }
 

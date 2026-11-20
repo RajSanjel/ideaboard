@@ -125,7 +125,7 @@
     width: auto;
     max-width: 220px;
     margin: 0;
-    padding: 6px 10px;
+    padding: 6px 28px 6px 10px;
     border: 1px solid var(--color-border);
     border-radius: 8px;
     background-color: var(--color-surface);
@@ -135,6 +135,16 @@
     line-height: 1.2;
     text-transform: none;
     color: var(--text-primary);
+    text-overflow: ellipsis;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image: url("../public/downarr.svg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 8px 10px;
 }
 
 .edit_actions {
